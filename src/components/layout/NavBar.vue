@@ -49,9 +49,11 @@
         <el-sub-menu index="3" v-if="isLogin">
             <!-- o头像 -->
             <template #title>
-                <el-icon class="avatar-icon">
+                <el-icon class="avatar-icon" v-if="mobileMode">
                     <el-avatar :src="avatar"></el-avatar>
                 </el-icon>
+                <el-avatar :src="avatar" v-if="!mobileMode"></el-avatar>
+
                 <span class="no-user-select">{{ userStore.name }}</span>
             </template>
 
