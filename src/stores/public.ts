@@ -5,6 +5,7 @@ export const usePublicStore = defineStore('public', () => {
   const authorization = ref("");
   const isLogin = computed(() => authorization.value !== "");
   const activeIndex = ref("/");
+  const accentColor = ref("#b100e8");
 
   function $reset() {
     authorization.value = "";
@@ -18,7 +19,11 @@ export const usePublicStore = defineStore('public', () => {
     activeIndex.value = index;
   }
 
-  return { authorization, isLogin, activeIndex, $reset, setAuthorization, setActiveIndex}
+  function setAccentColor(color: string) {
+    accentColor.value = color;
+  }
+
+  return { authorization, isLogin, activeIndex, accentColor, $reset, setAuthorization, setActiveIndex, setAccentColor}
 })
 
 // auth.js

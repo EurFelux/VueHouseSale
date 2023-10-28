@@ -3,6 +3,7 @@
         <!-- Header -->
         <el-header>
             <el-menu :default-active="activeIndex" class="menu" mode="horizontal" :ellipsis="false" router
+                :text-color="accentColor" :active-text-color="accentColor"
                 @select="handleSelect">
 
                 <!-- LOGO -->
@@ -87,6 +88,10 @@ const isDark = useDark()
 const toggleDark = useToggle(isDark)
 const colorModeIcon = computed(() => (isDark.value ? Moon : Sunny))
 
+// accentColor
+const accentColor = computed(() => store.accentColor)
+
+
 </script>
 
 
@@ -122,6 +127,7 @@ const colorModeIcon = computed(() => (isDark.value ? Moon : Sunny))
     flex-direction: column;
     justify-content: center;
     --el-font-size-base: 24px;
+    padding: 1rem;
 }
 
 
