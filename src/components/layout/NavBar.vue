@@ -93,13 +93,20 @@ function exit() {
 </script>
 
 
-<style scoped>
+<style scoped lang="scss">
 .el-menu {
     color: var(--el-menu-text-color);
+    --el-menu-bg-color: rgba(128, 128, 128, 0.5);
+    backdrop-filter: blur(14px);
+}
+
+.el-menu-item {
+    user-select: none;
 }
 
 .app-name {
     padding-right: 2rem;
+    user-select: none;
 }
 
 .flex-grow {

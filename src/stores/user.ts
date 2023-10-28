@@ -31,11 +31,11 @@ export const useUserStore = defineStore('user', () => {
     }
 
     function $reset() {
-        authorization.value = ""
+        authorization.value = "";
         id.value = 0;
-        name.value = "";
+        name.value = "otto";
         role.value = 0;
-        avatar.value = "";
+        avatar.value = "src/assets/otto.jpg";
     }
 
     return { authorization, id, name, role, avatar, isLogin, setAuthorization, setId, setName, setRole, setAvatar, $reset }

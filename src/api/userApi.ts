@@ -1,6 +1,6 @@
 import type { LoginForm, RegisterForm } from '@/api/request';
 import type { RegisterResponse, LoginResponse, NoDataResponse } from '@/api/response';
-import { usePublicStore } from '@/stores/public';
+import { useUserStore } from '@/stores/user';
 import axios from 'axios';
 
 const serverUrl = 'http://1.94.35.98:10010';
@@ -43,7 +43,7 @@ async function logout(userID: number): Promise<NoDataResponse> {
       userId: userID,
     },
     headers: {
-      Authorization: usePublicStore().authorization,
+      Authorization: useUserStore().authorization,
     }
   }
   return await axios.post(`${serverUrl}${Api.Logout}`, null, config);
@@ -57,7 +57,7 @@ async function deleteUser(userID: number): Promise<NoDataResponse> {
       userId: userID,
     },
     headers: {
-      Authorization: usePublicStore().authorization,
+      Authorization: useUserStore().authorization,
     }
   }
   return await axios.post(`${serverUrl}${Api.DeleteUser}`, null, config);
@@ -68,7 +68,7 @@ async function getAllUser(): Promise<NoDataResponse> {
   const config = {
     ...globalConfig,
     headers: {
-      Authorization: usePublicStore().authorization,
+      Authorization: useUserStore().authorization,
     }
   }
   return await axios.get(`${serverUrl}${Api.GetAllUser}`, config);
@@ -82,7 +82,7 @@ async function getUser(userID: number): Promise<NoDataResponse> {
       userId: userID,
     },
     headers: {
-      Authorization: usePublicStore().authorization,
+      Authorization: useUserStore().authorization,
     }
   }
   return await axios.get(`${serverUrl}${Api.GetUser}`, config);

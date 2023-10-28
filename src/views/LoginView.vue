@@ -1,26 +1,24 @@
 <template>
-    <main>
-        <div class="placeholder"></div>
-        <div class="login-background">
-            <h1>登录</h1>
-            <el-form :model="loginForm" label-width="auto" :rules="rules" :size="formSize" ref="loginFormRef">
-                <el-form-item label="手机号" prop="phone">
-                    <el-input placeholder="请输入手机号" v-model="loginForm.phone" required></el-input>
-                </el-form-item>
-                <el-form-item label="密码" prop="password">
-                    <el-input placeholder="请输入密码" v-model="loginForm.password" show-password required
-                        @keydown="handleKeydown"></el-input>
-                </el-form-item>
-            </el-form>
-            <div class="login-button-wrapper">
-                <el-button class="login-button" round @click="submitForm(loginFormRef)">登录</el-button>
-            </div>
-            <div class="login-button-wrapper">
-                <el-button class="login-button" round @click="fakeLogin" v-if="publicStore.debugMode">登录（伪）</el-button>
-            </div>
+    <div class="placeholder"></div>
+    <div class="login-background">
+        <h1>登录</h1>
+        <el-form :model="loginForm" label-width="auto" :rules="rules" :size="formSize" ref="loginFormRef">
+            <el-form-item label="手机号" prop="phone">
+                <el-input placeholder="请输入手机号" v-model="loginForm.phone" required></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+                <el-input placeholder="请输入密码" v-model="loginForm.password" show-password required
+                    @keydown="handleKeydown"></el-input>
+            </el-form-item>
+        </el-form>
+        <div class="login-button-wrapper">
+            <el-button class="login-button" round @click="submitForm(loginFormRef)">登录</el-button>
         </div>
-        <div class="placeholder"></div>
-    </main>
+        <div class="login-button-wrapper">
+            <el-button class="login-button" round @click="fakeLogin" v-if="publicStore.debugMode">登录（伪）</el-button>
+        </div>
+    </div>
+    <div class="placeholder"></div>
 </template>
 
 
@@ -76,7 +74,7 @@ async function submitForm(formEl: FormInstance | undefined) {
                 } else {
                     ElMessage.error(res.message || "登录失败")
                 }
-            
+
                 // console.log(res);
             }).catch((err) => {
                 // console.log(err);
@@ -104,30 +102,23 @@ function fakeLogin() {
 
 
 <style scoped>
-main {
-    background-image: url("@/assets/login-background.jpeg");
-    background-size: 100% auto;
-    background-position: center center;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: vertical;
-    align-items: center;
-    justify-content: center;
-}
 
 .placeholder {
     flex-grow: 1;
 }
 
 .login-background {
-    background-color: rgba(128, 128, 128, 0.1);
-    text-align: center;
-    color: aliceblue;
-    flex-grow: 1;
     max-width: 50%;
     height: 100%;
+
+    text-align: center;
+    color: aliceblue;
+    
+    background-color: rgba(128, 128, 128, 0.1);
     backdrop-filter: blur(10px);
+    
     display: flex;
+    flex-grow: 1;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -144,14 +135,14 @@ main {
 .el-form {
     max-width: 70%;
     padding-right: 3rem;
-    
+
 }
 
 h1 {
     font-size: 3rem;
     margin-top: 10rem;
     margin-bottom: 3rem;
-
+    user-select: none;
 }
 
 .login-button {
@@ -178,12 +169,13 @@ h1 {
         max-width: 100%;
     }
 
-    
+
 }
 </style>
 
 <style>
 .el-form-item__label {
     color: aliceblue;
+    user-select: none;
 }
 </style>

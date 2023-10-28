@@ -6,7 +6,9 @@
         </el-header>
 
         <!-- Main view -->
-        <router-view />
+        <el-main>
+            <router-view />
+        </el-main>
     </el-container>
 </template>
 
@@ -18,6 +20,10 @@
 
 <style scoped>
 .container {
+    background-image: url("@/assets/login-background.jpeg");
+    background-size: 100% auto;
+    background-position: center;
+    
     display: flex;
     flex: auto;
     flex-direction: column;
@@ -25,8 +31,18 @@
     height: 100vh;
 }
 
+
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: vertical;
+    align-items: center;
+    justify-content: center;
+}
+
 .el-header {
-    background-color: var(--el-menu-bg-color);
+    /* background-color: var(--el-menu-bg-color); */
     line-height: 60px;
     --el-header-padding: 0;
 }

@@ -6,28 +6,40 @@
 import AppLayout from '@/components/layout/AppLayout.vue';
 import { onBeforeMount } from 'vue';
 import { usePublicStore } from '@/stores/public';
+import { useUserStore } from './stores/user';
 
-const store = usePublicStore();
+const publicStore = usePublicStore();
+const userStore = useUserStore();
 
 onBeforeMount(() => {
-  // 在组件挂载时读取sessionStorage里的状态信息到store里
-  if (sessionStorage.getItem('store')) {
-    console.log('store', store) 
-    store.setActiveIndex(
-          sessionStorage.getItem('activeIndex') as string
-      )
-    }
+  // 读取系统颜色模式
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    publicStore.setColorMode('dark')
+  } else {
+    publicStore.setColorMode('light')
+  }
+  
+  // 读取sessionStorage里缓存的状态信息
+  if (sessionStorage.getItem('activeIndex')) {
+    publicStore.setActiveIndex(sessionStorage.getItem('activeIndex') as string);
+  }
+  if (sessionStorage.getItem('authorization')) {
+    userStore.setAuthorization(sessionStorage.getItem('authorization') as string);
+  }
+  if (sessionStorage.getItem('colorMode')) {
+    publicStore.setColorMode(sessionStorage.getItem('colorMode') as string);
+  }
 
-    // 在页面刷新时将store里的信息保存到sessionStorage里
-    // beforeunload事件在页面刷新时先触发
-    window.addEventListener('beforeunload', () => {
-      sessionStorage.setItem('activeIndex', store.activeIndex)
-    })
+  // 在页面刷新时将store里的信息保存到sessionStorage里
+  // beforeunload事件在页面刷新时先触发
+  window.addEventListener('beforeunload', () => {
+    sessionStorage.setItem('activeIndex', publicStore.activeIndex);
+    sessionStorage.setItem('authorization', userStore.authorization);
+    sessionStorage.setItem('colorMode', publicStore.colorMode);
+  })
 })
 
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
