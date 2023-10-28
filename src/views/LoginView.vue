@@ -15,6 +15,9 @@
             <div class="login-button-wrapper">
                 <el-button class="login-button" round @click="submitForm(loginFormRef)">登录</el-button>
             </div>
+            <div class="login-button-wrapper">
+                <el-button class="login-button" round @click="fakeLogin" v-if="publicStore.debugMode">登录（伪）</el-button>
+            </div>
         </div>
         <div class="placeholder"></div>
     </main>
@@ -25,6 +28,14 @@
 import type { LoginForm } from '@/api/request';
 import { reactive, ref } from 'vue';
 import { login } from '@/api/userApi';
+import { routesMap } from '@/router';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user';
+import { usePublicStore } from '@/stores/public';
+
+const router = useRouter()
+const userStore = useUserStore()
+const publicStore = usePublicStore()
 
 const loginForm = reactive<LoginForm>({
     phone: '',
@@ -58,9 +69,17 @@ async function submitForm(formEl: FormInstance | undefined) {
             console.log("accepted");
 
             login(loginForm).then((res) => {
-                console.log(res);
+                if (res.code == 200) {
+                    ElMessage.success("登录成功")
+                    userStore.setAuthorization(res.data.access_token)
+                    router.push({ path: routesMap.home.path })
+                } else {
+                    ElMessage.error(res.message || "登录失败")
+                }
+            
+                // console.log(res);
             }).catch((err) => {
-                console.log(err);
+                // console.log(err);
                 ElMessage.error(err.message || "登录失败")
             })
         }
@@ -74,12 +93,19 @@ function handleKeydown(e: KeyboardEvent) {
     }
 }
 
+// debug login
+function fakeLogin() {
+    ElMessage.success("登录成功")
+    userStore.setAuthorization("42")
+    router.push({ path: routesMap.home.path })
+}
+
 </script>
 
 
 <style scoped>
 main {
-    background-image: url(https://images.pexels.com/photos/933054/pexels-photo-933054.jpeg);
+    background-image: url("@/assets/login-background.jpeg");
     background-size: 100% auto;
     background-position: center center;
     flex-grow: 1;

@@ -1,3 +1,5 @@
+import { type User } from "./model";
+
 interface BasicResponse {
     code: number;
     message: string;
@@ -13,7 +15,10 @@ export type RegisterResponse = NoDataResponse;
 
 export interface LoginResponse extends BasicResponse {
     data: {
-        token: string;
+        access_token: string;
+        refresh_token: string;
+        expire_in: number;
+        user: User;
     }
 }
 

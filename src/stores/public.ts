@@ -2,17 +2,13 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const usePublicStore = defineStore('public', () => {
-  const authorization = ref("");
-  const isLogin = computed(() => authorization.value !== "");
   const activeIndex = ref("/");
   const accentColor = ref("#b100e8");
+  const debugMode = ref(true);
 
   function $reset() {
-    authorization.value = "";
-  }
-
-  function setAuthorization(token: string) {
-    authorization.value = token;
+    activeIndex.value = "/";
+    accentColor.value = "#b100e8";
   }
 
   function setActiveIndex(index: string) {
@@ -23,7 +19,7 @@ export const usePublicStore = defineStore('public', () => {
     accentColor.value = color;
   }
 
-  return { authorization, isLogin, activeIndex, accentColor, $reset, setAuthorization, setActiveIndex, setAccentColor}
+  return { activeIndex, accentColor, debugMode, $reset, setActiveIndex, setAccentColor}
 })
 
 // auth.js

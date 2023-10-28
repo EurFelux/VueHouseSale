@@ -3,7 +3,7 @@ import type { RegisterResponse, LoginResponse, NoDataResponse } from '@/api/resp
 import { usePublicStore } from '@/stores/public';
 import axios from 'axios';
 
-const serverUrl = 'http://localhost:3000';
+const serverUrl = 'http://1.94.35.98:10010';
 
 const globalConfig = {
   timeout: 1000,
@@ -32,11 +32,7 @@ async function register(form: RegisterForm): Promise<RegisterResponse> {
 
 // 登录
 async function login(form: LoginForm): Promise<LoginResponse> {
-  const config = {
-    ...globalConfig,
-    data: form,
-  }
-  return await axios.post(`${serverUrl}${Api.Login}`, config);
+  return await axios.post(`${serverUrl}${Api.Login}`, form, globalConfig);
 }
 
 // 登出
@@ -50,7 +46,7 @@ async function logout(userID: number): Promise<NoDataResponse> {
       Authorization: usePublicStore().authorization,
     }
   }
-  return await axios.post(`${serverUrl}${Api.Logout}`, config);
+  return await axios.post(`${serverUrl}${Api.Logout}`, null, config);
 }
 
 // 删除用户
@@ -64,7 +60,7 @@ async function deleteUser(userID: number): Promise<NoDataResponse> {
       Authorization: usePublicStore().authorization,
     }
   }
-  return await axios.post(`${serverUrl}${Api.DeleteUser}`, config);
+  return await axios.post(`${serverUrl}${Api.DeleteUser}`, null, config);
 }
 
 // 获取所有用户
