@@ -3,17 +3,17 @@
         <div class="placeholder"></div>
         <div class="login-background">
             <h1>登录</h1>
-            <div class="login-panel">
-                <el-form :model="loginForm" label-width="auto" :rules="rules" :size="formSize" ref="loginFormRef">
-                    <el-form-item label="手机号" prop="phone">
-                        <el-input placeholder="请输入手机号" v-model="loginForm.phone" required></el-input>
-                    </el-form-item>
-                    <el-form-item label="密码" prop="password">
-                        <el-input placeholder="请输入密码" v-model="loginForm.password" show-password required
-                            @keydown="handleKeydown"></el-input>
-                    </el-form-item>
-                </el-form>
-                <el-button type="primary" @click="submitForm(loginFormRef)">登录</el-button>
+            <el-form :model="loginForm" label-width="auto" :rules="rules" :size="formSize" ref="loginFormRef">
+                <el-form-item label="手机号" prop="phone">
+                    <el-input placeholder="请输入手机号" v-model="loginForm.phone" required></el-input>
+                </el-form-item>
+                <el-form-item label="密码" prop="password">
+                    <el-input placeholder="请输入密码" v-model="loginForm.password" show-password required
+                        @keydown="handleKeydown"></el-input>
+                </el-form-item>
+            </el-form>
+            <div class="login-button-wrapper">
+                <el-button class="login-button" round @click="submitForm(loginFormRef)">登录</el-button>
             </div>
         </div>
         <div class="placeholder"></div>
@@ -107,13 +107,18 @@ main {
     justify-content: center;
 }
 
-.login-panel {
+.login-button-wrapper {
     min-width: 35%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
 
+.el-form {
+    max-width: 70%;
+    padding-right: 3rem;
+    
 }
 
 h1 {
@@ -123,11 +128,15 @@ h1 {
 
 }
 
-.buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+.login-button {
+    margin-top: 2rem;
+    width: 80%;
+    max-width: 20rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 840px) {
@@ -136,6 +145,10 @@ h1 {
     }
 
     .login-background {
+        max-width: 100%;
+    }
+
+    .el-form {
         max-width: 100%;
     }
 
