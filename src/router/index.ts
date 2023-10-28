@@ -1,7 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
-export const navRoutes = {
+export interface RouteType {
+  path: string
+  name: string
+}
+
+export const navRoutes: Record<string, RouteType> = {
   home: {
     path: '/',
     name: 'Home',
@@ -12,7 +17,7 @@ export const navRoutes = {
   },
 }
 
-export const routesMap = {
+export const routesMap: Record<string, RouteType> = {
   ...navRoutes,
   login: {
     path: '/login',
@@ -31,7 +36,6 @@ export const routesMap = {
     name: 'not-found',
   },
 }
-
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

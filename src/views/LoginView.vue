@@ -13,8 +13,6 @@
         </el-form>
         <div class="login-button-wrapper">
             <el-button class="login-button" round @click="submitForm(loginFormRef)">登录</el-button>
-        </div>
-        <div class="login-button-wrapper">
             <el-button class="login-button" round @click="fakeLogin" v-if="publicStore.debugMode">登录（伪）</el-button>
         </div>
     </div>
@@ -140,7 +138,7 @@ function fakeLogin() {
 
 h1 {
     font-size: 3rem;
-    margin-top: 10rem;
+    margin-top: 4rem;
     margin-bottom: 3rem;
     user-select: none;
 }
@@ -156,10 +154,7 @@ h1 {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 }
 
-@media (max-width: 840px) {
-    main {
-        background-size: auto 100%;
-    }
+@media (max-width: 1024px) {
 
     .login-background {
         max-width: 100%;

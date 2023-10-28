@@ -5,11 +5,14 @@ export const usePublicStore = defineStore('public', () => {
   const activeIndex = ref("/");
   const accentColor = ref("#cccccc");
   const debugMode = ref(true);
-  const colorMode = ref("light");
+  const colorMode = ref("dark");
+  const mobileMode = ref(false);
 
   function $reset() {
     activeIndex.value = "/";
-    accentColor.value = "#b100e8";
+    accentColor.value = "#cccccc";
+    colorMode.value = "dark";
+    mobileMode.value = false;
   }
 
   function setActiveIndex(index: string) {
@@ -24,7 +27,11 @@ export const usePublicStore = defineStore('public', () => {
     colorMode.value = mode;
   }
 
-  return { activeIndex, accentColor, debugMode, colorMode, $reset, setActiveIndex, setAccentColor, setColorMode}
+  function setMobileMode(mode: boolean) {
+    mobileMode.value = mode;
+  }
+
+  return { activeIndex, accentColor, debugMode, colorMode, mobileMode, $reset, setActiveIndex, setAccentColor, setColorMode, setMobileMode }
 })
 
 // auth.js

@@ -11,6 +11,7 @@ import { useUserStore } from './stores/user';
 const publicStore = usePublicStore();
 const userStore = useUserStore();
 
+// App挂载前行为
 onBeforeMount(() => {
   // 读取系统颜色模式
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -39,6 +40,13 @@ onBeforeMount(() => {
   })
 })
 
+// 监听窗口大小变化
+const mobileModeThreshold = 1024
+onMounted(() => {
+  window.addEventListener('resize', () => {
+    publicStore.setMobileMode(window.innerWidth < mobileModeThreshold)
+  })
+})
 
 </script>
 

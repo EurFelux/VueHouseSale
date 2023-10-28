@@ -21,8 +21,9 @@
 <style scoped>
 .container {
     background-image: url("@/assets/login-background.jpeg");
-    background-size: 100% auto;
+    background-size: 120% auto;
     background-position: center;
+    background-repeat: no-repeat;
     
     display: flex;
     flex: auto;
@@ -30,8 +31,6 @@
     width: 100vw;
     height: 100vh;
 }
-
-
 
 main {
     flex-grow: 1;
@@ -47,6 +46,10 @@ main {
     --el-header-padding: 0;
 }
 
-@media (min-width: 1024px) {}
+@media (max-width: 1024px) {
+    .container {
+        background-size: auto 120%;
+    }
+}
 </style>
 
