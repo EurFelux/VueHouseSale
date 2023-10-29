@@ -62,15 +62,13 @@ async function submitForm(formEl: FormInstance | undefined) {
 
     await formEl.validate((valid, fileds) => {
         if (valid) {
-            console.log("accepted");
-
             login(loginForm).then((res) => {
-                if (res.code == 200) {
+                if (res.status == 200) {
                     ElMessage.success("登录成功")
-                    userStore.setAuthorization(res.data.access_token)
+                    userStore.setAuthorization(res.data.data.access_token)
                     router.push({ path: routesMap.home.path })
                 } else {
-                    ElMessage.error(res.message || "登录失败")
+                    ElMessage.error(res.data.message || "登录失败")
                 }
 
                 // console.log(res);

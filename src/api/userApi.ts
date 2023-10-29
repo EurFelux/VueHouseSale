@@ -1,7 +1,7 @@
 import type { LoginForm, RegisterForm } from '@/api/request';
 import type { RegisterResponse, LoginResponse, NoDataResponse } from '@/api/response';
 import { useUserStore } from '@/stores/user';
-import axios from 'axios';
+import axios, { type AxiosResponse } from 'axios';
 
 const serverUrl = 'http://1.94.35.98:10010';
 
@@ -10,7 +10,7 @@ const globalConfig = {
 }
 
 enum Api {
-  Register = '/register',
+  Register = '/auth/register',
   Login = '/auth/login',
   Logout = '/auth/logout',
   DeleteUser = '/user/delete',
@@ -22,21 +22,26 @@ enum Api {
 }
 
 // 注册
-async function register(form: RegisterForm): Promise<RegisterResponse> {
+async function register(form: RegisterForm): Promise<AxiosResponse<NoDataResponse, any>> {
+  let dataToSend = {
+    ...form,
+    confirmPassword: undefined,
+  }
+  delete dataToSend.confirmPassword
+
   const config = {
     ...globalConfig,
-    data: form,
   }
-  return await axios.post(`${serverUrl}${Api.Register}`, config);
+  return await axios.post(`${serverUrl}${Api.Register}`, dataToSend, config);
 }
 
 // 登录
-async function login(form: LoginForm): Promise<LoginResponse> {
+async function login(form: LoginForm): Promise<AxiosResponse<LoginResponse>> {
   return await axios.post(`${serverUrl}${Api.Login}`, form, globalConfig);
 }
 
 // 登出
-async function logout(userID: number): Promise<NoDataResponse> {
+async function logout(userID: number): Promise<AxiosResponse<NoDataResponse>> {
   const config = {
     ...globalConfig,
     params: {
@@ -50,7 +55,7 @@ async function logout(userID: number): Promise<NoDataResponse> {
 }
 
 // 删除用户
-async function deleteUser(userID: number): Promise<NoDataResponse> {
+async function deleteUser(userID: number): Promise<AxiosResponse<NoDataResponse>> {
   const config = {
     ...globalConfig,
     params: {
@@ -64,7 +69,7 @@ async function deleteUser(userID: number): Promise<NoDataResponse> {
 }
 
 // 获取所有用户
-async function getAllUser(): Promise<NoDataResponse> {
+async function getAllUser(): Promise<AxiosResponse<NoDataResponse>> {
   const config = {
     ...globalConfig,
     headers: {
@@ -75,7 +80,7 @@ async function getAllUser(): Promise<NoDataResponse> {
 }
 
 // 获取用户信息
-async function getUser(userID: number): Promise<NoDataResponse> {
+async function getUser(userID: number): Promise<AxiosResponse<NoDataResponse>> {
   const config = {
     ...globalConfig,
     params: {

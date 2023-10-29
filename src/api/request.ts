@@ -5,7 +5,11 @@ interface LoginForm {
     password: string;
 }
 
-export type { LoginForm };
+interface RegisterForm extends BasicUser {
+    confirmPassword: string;
+}
 
-export type RegisterForm = BasicUser;
+export type { LoginForm, RegisterForm };
+
+
 
