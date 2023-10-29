@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import type { LoginForm } from '@/api/request';
 import { reactive, ref } from 'vue';
-import { login } from '@/api/userApi';
+import { login } from '@/api/auth';
 import { routesMap } from '@/router';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';

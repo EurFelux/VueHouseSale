@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import type { RegisterForm } from '@/api/request';
 import { reactive, ref } from 'vue';
-import { register } from '@/api/userApi';
+import { register } from '@/api/auth';
 import { routesMap } from '@/router';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';

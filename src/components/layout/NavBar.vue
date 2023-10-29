@@ -150,7 +150,7 @@ watch(mobileMode, () => {
 
 
 // 用户操作
-import { logout } from '@/api/userApi';
+import { logout } from '@/api/auth';
 function exit() {
     logout(userStore.id).then((res) => {
         if (res.status == 200) {

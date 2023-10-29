@@ -17,5 +17,29 @@ interface User extends BasicUser {
     isDelete: number;
 }
 
+interface BasicHouseInfo {
+    id: number;
+    location: string;
+    layout: string;
+    description: string;   
+    isDelete: number;
+}
+
+interface VerificationForm {
+    id: number;
+    userId: number;
+    submissionDate: string;
+    status: number;
+    adminId: number;
+    verificationDate: string;
+    comment: string;
+    updateTime: string;
+    createTime: string;
+    isDelete: number;
+    identification: string;
+    realName: string;
+    houseId: string;
+}
+
 export type { BasicUser, User }
 
