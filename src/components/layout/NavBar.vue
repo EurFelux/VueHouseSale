@@ -6,7 +6,7 @@
 
         <!-- LOGO -->
         <!-- <el-image src="src/assets/logo.svg" preview-src-list='src/assets/logo.svg' fit="cover" /> -->
-        <img src="@/assets/logo.svg" alt="logo image" />
+        <img src="@/assets/logo.svg" alt="logo image" class="logo" />
         <div class="app-name no-user-select" v-if="!mobileMode">
             {{ appName }}
         </div>
@@ -22,6 +22,11 @@
         </el-menu-item>
 
         <div class="flex-grow"></div>
+
+        <!-- 切换颜色模式的按钮 -->
+        <div class="icon-button-wrapper" v-if="!mobileMode">
+                <el-button :icon="colorModeIcon" circle size="large" @click="toggleDark()" />
+        </div>
 
         <!-- 未登录状态显示 -->
         <el-menu-item :index="routesMap.login.path" v-if="!isLogin">
@@ -67,15 +72,16 @@
 
         </el-sub-menu>
 
-        <!-- 切换颜色模式的按钮 -->
-        <div class="icon-button-wrapper">
-            <el-button :icon="colorModeIcon" circle size="large" @click="toggleDark()" />
-            <!-- <el-icon :size="30" color="var(--el-menu-text-color)" @click="toggleDark()"><Sunny /></el-icon> -->
-        </div>
-
-        <!-- 移动端下垂直菜单的折叠按钮 -->
-        <div class="icon-button-wrapper" v-if="mobileMode">
-            <el-button :icon="collapseIcon" circle size="large" @click="toggleCollapse" />
+        
+        <!-- 移动端下垂直菜单的折叠按钮与切换颜色模式的按钮合并到一起 -->
+        <div class="row-wrapper" v-if="mobileMode">
+            <div class="icon-button-wrapper">
+                <el-button :icon="collapseIcon" circle size="large" @click="toggleCollapse" />
+            </div>
+            <!-- 切换颜色模式的按钮 -->
+            <div class="icon-button-wrapper">
+                <el-button :icon="colorModeIcon" circle size="large" @click="toggleDark()" />
+            </div>
         </div>
 
         <div class="safe-area-bottom"></div>
@@ -194,12 +200,18 @@ function exit() {
     flex-grow: 1;
 }
 
+.row-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .icon-button-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     --el-font-size-base: 24px;
-    padding: 1rem;
+    padding-right: 1rem;
 }
 
 .el-avatar {
@@ -217,14 +229,14 @@ function exit() {
     }
 
     .el-menu:not(.el-menu--collapse) {
-        min-width: 8rem;
-        max-width: 20vw;
+        width: 200px;
+        // min-width: 8rem;
+        // max-width: 20vw;
         min-height: 400px;
     }
 
     .el-menu--collapse {
         min-width: 50px;
-
         min-height: 400px;
     }
 
@@ -232,8 +244,14 @@ function exit() {
         margin-right: 0;
     }
 
-    .avatar-icon {
-        // margin-right: 1rem;
+    .logo {
+        width: 40px;
+        height: 40px;
+        margin: 1rem;
+    }
+
+    .icon-button-wrapper {
+        padding: 1rem 0 0 20px;
     }
 
     .safe-area-top {
