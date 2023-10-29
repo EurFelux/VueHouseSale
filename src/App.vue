@@ -55,4 +55,9 @@ onMounted(() => {
 
 </script>
 
-<style scoped></style>
+<!-- 全局样式，覆盖Element Plus的明亮模式 -->
+<style>
+:root {
+  --el-fill-color-blank: #ffffff5e;
+}
+</style>

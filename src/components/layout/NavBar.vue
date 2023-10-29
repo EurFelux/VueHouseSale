@@ -177,10 +177,12 @@ function exit() {
 .el-menu {
     color: var(--el-menu-text-color);
     --el-menu-bg-color: rgba(128, 128, 128, 0.5);
+    --el-menu-hover-bg-color: rgba(192, 192, 192, 0.5);
     backdrop-filter: blur(14px);
     overflow-x: auto;
     overflow-y: hidden;
     z-index: 100;
+
 }
 
 .no-user-select {
@@ -213,6 +215,15 @@ function exit() {
     --el-font-size-base: 24px;
     padding-right: 1rem;
 }
+
+.el-button {
+    --el-button-bg-color: transparent;
+    --el-button-hover-bg-color: rgba(192, 192, 192, 0.5);
+    --el-button-text-color: var(--el-menu-text-color);
+    --el-button-hover-text-color: var(--el-menu-text-color);
+    --el-button-border-color: var(--el-menu-text-color);
+}
+
 
 .el-avatar {
     margin-right: 1rem;
