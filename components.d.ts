@@ -28,6 +28,7 @@ declare module 'vue' {
     IconEcosystem: typeof import('./src/components/icons/IconEcosystem.vue')['default']
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
+    LogoItem: typeof import('./src/components/layout/LogoItem.vue')['default']
     NavBar: typeof import('./src/components/layout/NavBar.vue')['default']
     NavBottom: typeof import('./src/components/layout/NavBottom.vue')['default']
     NavCenter: typeof import('./src/components/layout/NavCenter.vue')['default']

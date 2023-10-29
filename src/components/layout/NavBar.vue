@@ -5,7 +5,8 @@
         <div class="safe-area-top"></div>
 
         <!-- LOGO -->
-        <el-image src="@/assets/logo.svg" preview-src-list='@/assets/logo.svg' fit="cover" />
+        <!-- <el-image src="src/assets/logo.svg" preview-src-list='src/assets/logo.svg' fit="cover" /> -->
+        <img src="@/assets/logo.svg" alt="logo image" />
         <div class="app-name no-user-select" v-if="!mobileMode">
             {{ appName }}
         </div>
