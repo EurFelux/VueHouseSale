@@ -1,10 +1,10 @@
-import type { LoginForm, RegisterForm } from '@/api/request';
-import type { RegisterResponse, LoginResponse, NoDataResponse } from '@/api/response';
-import { useUserStore } from '@/stores/user';
-import axios, { type AxiosResponse } from 'axios';
 import { globalConfig, serverUrl } from './api';
+import type {} from '@/api/request';
+import type { NoDataResponse } from '@/api/response';
 
+import { useUserStore } from '@/stores/user';
 
+import axios, { type AxiosResponse } from 'axios';
 
 enum Api {
   DeleteUser = '/user/delete',
