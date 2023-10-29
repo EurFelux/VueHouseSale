@@ -49,6 +49,7 @@ main {
 @media (max-width: 1024px) {
     .container {
         background-size: auto 120%;
+        flex-direction: row;
     }
 }
 </style>

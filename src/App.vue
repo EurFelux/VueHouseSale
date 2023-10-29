@@ -11,6 +11,9 @@ import { useUserStore } from './stores/user';
 const publicStore = usePublicStore();
 const userStore = useUserStore();
 
+const mobileModeThreshold = 1024
+
+
 // App挂载前行为
 onBeforeMount(() => {
   // 读取系统颜色模式
@@ -31,6 +34,10 @@ onBeforeMount(() => {
     publicStore.setColorMode(sessionStorage.getItem('colorMode') as string);
   }
 
+  // 判断是否为mobileMode
+
+  publicStore.setMobileMode(window.innerWidth < mobileModeThreshold)
+
   // 在页面刷新时将store里的信息保存到sessionStorage里
   // beforeunload事件在页面刷新时先触发
   window.addEventListener('beforeunload', () => {
@@ -41,7 +48,6 @@ onBeforeMount(() => {
 })
 
 // 监听窗口大小变化
-const mobileModeThreshold = 1024
 onMounted(() => {
   window.addEventListener('resize', () => {
     publicStore.setMobileMode(window.innerWidth < mobileModeThreshold)

@@ -2,8 +2,10 @@
     <el-menu :mode="menuMode" :default-active="activeIndex" class="menu" :collapse="isCollapsed" :ellipsis="false" router
         :text-color="accentColor" :active-text-color="accentColor" @select="handleSelect">
 
+        <div class="safe-area-top"></div>
+
         <!-- LOGO -->
-        <img class="no-user-select" style="width: 100px" src="@/assets/logo.svg" alt="Element logo" />
+        <el-image src="/src/assets/logo.svg" preview-src-list='/src/assets/logo.svg' fit="cover" />
         <div class="app-name no-user-select" v-if="!mobileMode">
             {{ appName }}
         </div>
@@ -18,13 +20,7 @@
             </template>
         </el-menu-item>
 
-        <div class="flex-grow" />
-
-        <!-- 切换颜色模式的按钮 -->
-        <div class="icon-button-wrapper">
-            <el-button :icon="colorModeIcon" circle size="large" @click="toggleDark()" />
-            <!-- <el-icon :size="30" color="var(--el-menu-text-color)" @click="toggleDark()"><Sunny /></el-icon> -->
-        </div>
+        <div class="flex-grow"></div>
 
         <!-- 未登录状态显示 -->
         <el-menu-item :index="routesMap.login.path" v-if="!isLogin">
@@ -70,10 +66,18 @@
 
         </el-sub-menu>
 
+        <!-- 切换颜色模式的按钮 -->
+        <div class="icon-button-wrapper">
+            <el-button :icon="colorModeIcon" circle size="large" @click="toggleDark()" />
+            <!-- <el-icon :size="30" color="var(--el-menu-text-color)" @click="toggleDark()"><Sunny /></el-icon> -->
+        </div>
+
         <!-- 移动端下垂直菜单的折叠按钮 -->
         <div class="icon-button-wrapper" v-if="mobileMode">
             <el-button :icon="collapseIcon" circle size="large" @click="toggleCollapse" />
         </div>
+
+        <div class="safe-area-bottom"></div>
 
     </el-menu>
 </template>
@@ -132,7 +136,7 @@ const avatar = computed(() => userStore.avatar)
 // 适应移动端，设置垂直导航栏
 const mobileMode = computed(() => publicStore.mobileMode)
 const menuMode = computed(() => mobileMode.value ? 'vertical' : 'horizontal')
-const isCollapsed = ref(false)
+const isCollapsed = ref(true)
 const collapseIcon = computed(() => isCollapsed.value ? Expand : Fold)
 
 function toggleCollapse() {
@@ -140,8 +144,10 @@ function toggleCollapse() {
 }
 
 watch(mobileMode, () => {
-    if (mobileMode.value) {
+    if (!mobileMode.value) {
         isCollapsed.value = false;
+    } else {
+        isCollapsed.value = true;
     }
 })
 
@@ -220,7 +226,15 @@ function exit() {
     }
 
     .avatar-icon {
-        margin-right: 2rem;
+        // margin-right: 1rem;
+    }
+
+    .safe-area-top {
+        height: 1rem;
+    }
+
+    .safe-area-bottom {
+        height: 1rem;
     }
 }
 </style>
