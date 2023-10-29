@@ -5,7 +5,7 @@
         <div class="safe-area-top"></div>
 
         <!-- LOGO -->
-        <el-image src="/src/assets/logo.svg" preview-src-list='/src/assets/logo.svg' fit="cover" />
+        <el-image src="@/assets/logo.svg" preview-src-list='@/assets/logo.svg' fit="cover" />
         <div class="app-name no-user-select" v-if="!mobileMode">
             {{ appName }}
         </div>
@@ -133,11 +133,18 @@ const accentColor = computed(() => publicStore.accentColor)
 const isLogin = computed(() => userStore.isLogin)
 const avatar = computed(() => userStore.avatar)
 
+// 判断是否为mobileMode
+const mobileModeThreshold = 1024;
+onBeforeMount(() => {
+    publicStore.setMobileMode(window.innerWidth < mobileModeThreshold)
+})
+
 // 适应移动端，设置垂直导航栏
 const mobileMode = computed(() => publicStore.mobileMode)
 const menuMode = computed(() => mobileMode.value ? 'vertical' : 'horizontal')
 const isCollapsed = ref(true)
 const collapseIcon = computed(() => isCollapsed.value ? Expand : Fold)
+
 
 function toggleCollapse() {
     isCollapsed.value = !isCollapsed.value;
