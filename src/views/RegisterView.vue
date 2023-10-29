@@ -72,6 +72,7 @@ const registerFormRef = ref<FormInstance>()
 
 // 验证表单
 import { type FormInstance, type FormRules } from 'element-plus';
+import { routerPush } from '@/mixin';
 
 const rules = reactive<FormRules<RegisterForm>>({
     name: [
@@ -124,7 +125,7 @@ async function submitForm(formEl: FormInstance | undefined) {
                 console.log(res);
                 if (res.status === 200) {
                     ElMessage.success("注册成功")
-                    router.push({ path: routesMap.login.path })
+                    routerPush(routesMap.login.path)
                 } else {
                     ElMessage.error(res.data.message || "注册失败")
                 }

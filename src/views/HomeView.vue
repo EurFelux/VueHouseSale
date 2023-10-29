@@ -9,11 +9,13 @@
 </template>
     
 <script setup lang="ts">
+import { routerPush } from '@/mixin';
+
 // import { ElMessage } from 'element-plus';
 
 
 function test() {
-  ElMessage.error({message: "test" ,duration: 50000});
+  routerPush('/login')
 }
 
 </script>

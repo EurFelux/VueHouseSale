@@ -42,6 +42,7 @@ const loginFormRef = ref<FormInstance>()
 
 // 验证表单
 import { type FormInstance, type FormRules } from 'element-plus';
+import { defaultAvatar, routerPush } from '@/mixin';
 
 const rules = reactive<FormRules<LoginForm>>({
     phone: [
@@ -66,7 +67,11 @@ async function submitForm(formEl: FormInstance | undefined) {
                 if (res.status == 200) {
                     ElMessage.success("登录成功")
                     userStore.setAuthorization(res.data.data.access_token)
-                    router.push({ path: routesMap.home.path })
+                    userStore.setAvatar(res.data.data.user.avatar ? res.data.data.user.avatar : defaultAvatar)
+                    userStore.setName(res.data.data.user.name)
+                    userStore.setId(res.data.data.user.id)
+                    userStore.setRole(res.data.data.user.role)
+                    routerPush(routesMap.home.path)
                 } else {
                     ElMessage.error(res.data.message || "登录失败")
                 }
@@ -91,7 +96,7 @@ function handleKeydown(e: KeyboardEvent) {
 function fakeLogin() {
     ElMessage.success("登录成功")
     userStore.setAuthorization("42")
-    router.push({ path: routesMap.home.path })
+    routerPush(routesMap.home.path)
 }
 
 </script>

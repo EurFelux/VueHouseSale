@@ -121,7 +121,7 @@ const handleSelect = (key: string, keyPath: string[]) => {
 
 // 颜色模式调整
 import { useDark, useToggle } from '@vueuse/core'
-import { appName } from '@/mixin';
+import { appName, routerPush } from '@/mixin';
 import { useRouter, type RouteRecordRaw } from 'vue-router';
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
@@ -150,9 +150,19 @@ watch(mobileMode, () => {
 
 
 // 用户操作
+import { logout } from '@/api/userApi';
 function exit() {
-    userStore.$reset();
-    router.push(routesMap.login.path);
+    logout(userStore.id).then((res) => {
+        if (res.status == 200) {
+            ElMessage.success("退出成功")
+            userStore.$reset();
+            routerPush(routesMap.home.path)
+        } else {
+            ElMessage.error(res.data.message || "退出失败")
+        }
+    }).catch((err) => {
+        ElMessage.error(err.message || "退出失败")
+    })
 }
 </script>
 

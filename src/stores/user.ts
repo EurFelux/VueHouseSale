@@ -1,12 +1,13 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { defaultAvatar } from '@/mixin';
 
 export const useUserStore = defineStore('user', () => {
     const authorization = ref("");
     const id = ref(0);
     const name = ref("otto");
     const role = ref(0);
-    const avatar = ref("src/assets/otto.jpg");
+    const avatar = ref(defaultAvatar);
 
     const isLogin = computed(() => authorization.value !== "");
 
@@ -35,7 +36,7 @@ export const useUserStore = defineStore('user', () => {
         id.value = 0;
         name.value = "otto";
         role.value = 0;
-        avatar.value = "src/assets/otto.jpg";
+        avatar.value = defaultAvatar;
     }
 
     return { authorization, id, name, role, avatar, isLogin, setAuthorization, setId, setName, setRole, setAvatar, $reset }
