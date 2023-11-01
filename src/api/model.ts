@@ -1,7 +1,5 @@
 interface BasicUser {
     name: string;
-    password: string;
-    phone: string;
     sex: number;
     age: number;
     introduction: string;
@@ -10,11 +8,13 @@ interface BasicUser {
 
 interface User extends BasicUser {
     id: number;
+    password: string;
     avatar: string;
     role: number;
     createTime: string;
     updateTime: string;
     isDelete: number;
+    phone: string;
 }
 
 interface BasicHouseInfo {

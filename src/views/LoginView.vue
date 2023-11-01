@@ -1,22 +1,24 @@
 <template>
-    <div class="placeholder"></div>
-    <div class="login-background">
-        <h1>登录</h1>
-        <el-form :model="loginForm" label-width="auto" :rules="rules" :size="formSize" ref="loginFormRef">
-            <el-form-item label="手机号" prop="phone">
-                <el-input placeholder="请输入手机号" v-model="loginForm.phone" required></el-input>
-            </el-form-item>
-            <el-form-item label="密码" prop="password">
-                <el-input placeholder="请输入密码" v-model="loginForm.password" show-password required
-                    @keydown="handleKeydown"></el-input>
-            </el-form-item>
-        </el-form>
-        <div class="login-button-wrapper">
-            <el-button class="login-button" round @click="submitForm(loginFormRef)">登录</el-button>
-            <el-button class="login-button" round @click="fakeLogin" v-if="publicStore.debugMode">登录（伪）</el-button>
+    <div class="login-view">
+        <div class="placeholder"></div>
+        <div class="login-background">
+            <h1>登录</h1>
+            <el-form :model="loginForm" label-width="auto" :rules="rules" :size="formSize" ref="loginFormRef">
+                <el-form-item label="手机号" prop="phone">
+                    <el-input placeholder="请输入手机号" v-model="loginForm.phone" required></el-input>
+                </el-form-item>
+                <el-form-item label="密码" prop="password">
+                    <el-input placeholder="请输入密码" v-model="loginForm.password" show-password required
+                        @keydown="handleKeydown"></el-input>
+                </el-form-item>
+            </el-form>
+            <div class="login-button-wrapper">
+                <el-button class="login-button" round @click="submitForm(loginFormRef)">登录</el-button>
+                <el-button class="login-button" round @click="fakeLogin" v-if="publicStore.debug">登录（伪）</el-button>
+            </div>
         </div>
+        <div class="placeholder"></div>
     </div>
-    <div class="placeholder"></div>
 </template>
 
 
@@ -42,7 +44,7 @@ const loginFormRef = ref<FormInstance>()
 
 // 验证表单
 import { type FormInstance, type FormRules } from 'element-plus';
-import { defaultAvatar, routerPush } from '@/mixin';
+import { changeActiveIndex, defaultAvatar } from '@/mixin';
 
 const rules = reactive<FormRules<LoginForm>>({
     phone: [
@@ -71,7 +73,9 @@ async function submitForm(formEl: FormInstance | undefined) {
                     userStore.setName(res.data.data.user.name)
                     userStore.setId(res.data.data.user.id)
                     userStore.setRole(res.data.data.user.role)
-                    routerPush(routesMap.home.path)
+                    changeActiveIndex(routesMap.home.path)
+                    router.push(routesMap.home.path)
+                    // routerPush(routesMap.home.path)
                 } else {
                     ElMessage.error(res.data.message || "登录失败")
                 }
@@ -96,13 +100,19 @@ function handleKeydown(e: KeyboardEvent) {
 function fakeLogin() {
     ElMessage.success("登录成功")
     userStore.setAuthorization("42")
-    routerPush(routesMap.home.path)
+    changeActiveIndex(routesMap.home.path)
+    router.push(routesMap.home.path)
 }
 
 </script>
 
 
 <style scoped>
+.login-view {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
 
 .placeholder {
     flex-grow: 1;

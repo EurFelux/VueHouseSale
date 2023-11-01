@@ -4,9 +4,9 @@ import { defaultAvatar } from '@/mixin';
 
 export const useUserStore = defineStore('user', () => {
     const authorization = ref("");
-    const id = ref(0);
+    const id = ref(-1);
     const name = ref("otto");
-    const role = ref(0);
+    const role = ref(-1);
     const avatar = ref(defaultAvatar);
 
     const isLogin = computed(() => authorization.value !== "");
@@ -33,9 +33,9 @@ export const useUserStore = defineStore('user', () => {
 
     function $reset() {
         authorization.value = "";
-        id.value = 0;
+        id.value = -1;
         name.value = "otto";
-        role.value = 0;
+        role.value = -1;
         avatar.value = defaultAvatar;
     }
 

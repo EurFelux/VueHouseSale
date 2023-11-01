@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 export interface RouteType {
   path: string
@@ -43,7 +42,7 @@ const router = createRouter({
     {
       path: routesMap.home.path,
       name: routesMap.home.name,
-      component: HomeView
+      component: () => import('../views/HomeView.vue')
     },
     {
       path: routesMap.about.path,

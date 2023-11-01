@@ -25,7 +25,7 @@
 
         <!-- 切换颜色模式的按钮 -->
         <div class="icon-button-wrapper" v-if="!mobileMode">
-                <el-button :icon="colorModeIcon" circle size="large" @click="toggleDark()" />
+            <el-button :icon="colorModeIcon" circle size="large" @click="toggleDark()" />
         </div>
 
         <!-- 未登录状态显示 -->
@@ -63,7 +63,7 @@
                 <template #title>
                     <span>分组一</span>
                 </template>
-                <el-menu-item index="3-1">选项1</el-menu-item>
+                <el-menu-item :index="`user/${userId}`">个人信息</el-menu-item>
                 <el-menu-item index="3-2">选项2</el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group title="分组2">
@@ -72,7 +72,7 @@
 
         </el-sub-menu>
 
-        
+
         <!-- 移动端下垂直菜单的折叠按钮与切换颜色模式的按钮合并到一起 -->
         <div class="row-wrapper" v-if="mobileMode">
             <div class="icon-button-wrapper">
@@ -93,6 +93,7 @@
 <script setup lang="ts">
 import { usePublicStore } from '@/stores/public';
 import { useUserStore } from '@/stores/user';
+import { useRouter } from 'vue-router';
 
 const publicStore = usePublicStore();
 const userStore = useUserStore();
@@ -127,8 +128,7 @@ const handleSelect = (key: string, keyPath: string[]) => {
 
 // 颜色模式调整
 import { useDark, useToggle } from '@vueuse/core'
-import { appName, routerPush } from '@/mixin';
-import { useRouter, type RouteRecordRaw } from 'vue-router';
+import { appName, httpError, serverError } from '@/mixin';
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 const colorModeIcon = computed(() => (isDark.value ? Moon : Sunny))
@@ -156,20 +156,27 @@ watch(mobileMode, () => {
 
 
 // 用户操作
+// 登出
 import { logout } from '@/api/auth';
+import { changeActiveIndex } from '@/mixin';
 function exit() {
     logout(userStore.id).then((res) => {
-        if (res.status == 200) {
-            ElMessage.success("退出成功")
-            userStore.$reset();
-            routerPush(routesMap.home.path)
-        } else {
-            ElMessage.error(res.data.message || "退出失败")
-        }
+        ElMessage.success("退出成功")
+        userStore.$reset();
+        changeActiveIndex(routesMap.home.path)
+        router.push(routesMap.home.path)
     }).catch((err) => {
-        ElMessage.error(err.message || "退出失败")
+        if (err.response.data) {
+            serverError(err.response)
+            userStore.$reset()
+        } else {
+            httpError(err.response)
+        }
     })
 }
+
+// 个人信息
+const userId = computed(() => userStore.id);
 </script>
 
 
@@ -228,6 +235,8 @@ function exit() {
 .el-avatar {
     margin-right: 1rem;
 }
+
+
 
 @media (max-width: 1024px) {
     .el-menu {

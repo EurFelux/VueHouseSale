@@ -1,6 +1,6 @@
 import { globalConfig, serverUrl } from './api';
-import type {} from '@/api/request';
-import type { NoDataResponse } from '@/api/response';
+import type { UpdateUserForm } from '@/api/request';
+import type { GetUserResponse, AnyDataResponse, UpdateUserResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
@@ -9,14 +9,14 @@ import axios, { type AxiosResponse } from 'axios';
 enum Api {
   DeleteUser = '/user/delete',
   GetAllUser = '/user/allUser',
-  GetUser = '/userDetailed',
+  GetUser = '/user/detail',
   UpdateUser = '/user/updateInfo',
   UpdatePassowrd = '/user/updatePwd',
   UpdateAvatar = '/user/avatar',
 }
 
 // 删除用户
-async function deleteUser(userID: number): Promise<AxiosResponse<NoDataResponse>> {
+async function deleteUser(userID: number): Promise<AxiosResponse<AnyDataResponse>> {
   const config = {
     ...globalConfig,
     params: {
@@ -30,7 +30,7 @@ async function deleteUser(userID: number): Promise<AxiosResponse<NoDataResponse>
 }
 
 // 获取所有用户
-async function getAllUser(): Promise<AxiosResponse<NoDataResponse>> {
+async function getAllUser(): Promise<AxiosResponse<AnyDataResponse>> {
   const config = {
     ...globalConfig,
     headers: {
@@ -41,11 +41,11 @@ async function getAllUser(): Promise<AxiosResponse<NoDataResponse>> {
 }
 
 // 获取用户信息
-async function getUser(userID: number): Promise<AxiosResponse<NoDataResponse>> {
+async function getUser(userID: number): Promise<AxiosResponse<GetUserResponse>> {
   const config = {
     ...globalConfig,
     params: {
-      userId: userID,
+      id: userID,
     },
     headers: {
       Authorization: useUserStore().authorization,
@@ -55,10 +55,18 @@ async function getUser(userID: number): Promise<AxiosResponse<NoDataResponse>> {
 }
 
 // 更新用户信息
-
+async function updateUser(updateUserForm: UpdateUserForm): Promise<AxiosResponse<UpdateUserResponse>> {
+  const config = {
+    ...globalConfig,
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+  return await axios.post(`${serverUrl}${Api.UpdateUser}`, updateUserForm, config);
+}
 // 更新用户密码
 
 // 更新用户头像
 
 // 导出
-export { deleteUser, getAllUser, getUser };
+export { deleteUser, getAllUser, getUser, updateUser };

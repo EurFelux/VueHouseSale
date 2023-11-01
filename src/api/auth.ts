@@ -1,6 +1,6 @@
 import { globalConfig, serverUrl } from './api';
 import type { LoginForm, RegisterForm } from '@/api/request';
-import type { RegisterResponse, LoginResponse, NoDataResponse } from '@/api/response';
+import type { RegisterResponse, LoginResponse, AnyDataResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
@@ -32,7 +32,7 @@ async function login(form: LoginForm): Promise<AxiosResponse<LoginResponse>> {
 }
 
 // 登出
-async function logout(userID: number): Promise<AxiosResponse<NoDataResponse>> {
+async function logout(userID: number): Promise<AxiosResponse<AnyDataResponse>> {
   const config = {
     ...globalConfig,
     params: {

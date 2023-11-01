@@ -6,10 +6,16 @@ interface LoginForm {
 }
 
 interface RegisterForm extends BasicUser {
+    phone: string;
+    password: string;
     confirmPassword: string;
 }
 
-export type { LoginForm, RegisterForm };
+interface UpdateUserForm extends BasicUser{
+    id: number,
+}
+
+export type { LoginForm, RegisterForm, UpdateUserForm };
 
 
 

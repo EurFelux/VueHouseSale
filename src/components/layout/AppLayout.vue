@@ -32,14 +32,6 @@
     height: 100vh;
 }
 
-main {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: vertical;
-    align-items: center;
-    justify-content: center;
-}
-
 .el-header {
     /* background-color: var(--el-menu-bg-color); */
     line-height: 60px;

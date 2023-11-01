@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 export const usePublicStore = defineStore('public', () => {
   const activeIndex = ref("/");
   const accentColor = ref("#cccccc");
-  const debugMode = ref(true);
+  const debug = ref("11/1");
   const colorMode = ref("dark");
   const mobileMode = ref(false);
 
@@ -31,7 +31,7 @@ export const usePublicStore = defineStore('public', () => {
     mobileMode.value = mode;
   }
 
-  return { activeIndex, accentColor, debugMode, colorMode, mobileMode, $reset, setActiveIndex, setAccentColor, setColorMode, setMobileMode }
+  return { activeIndex, accentColor, debug, colorMode, mobileMode, $reset, setActiveIndex, setAccentColor, setColorMode, setMobileMode }
 })
 
 // auth.js

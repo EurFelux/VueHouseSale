@@ -1,6 +1,17 @@
 <template>
-  something
+  <div>
+    <el-button @click="test">test</el-button>
+  </div>
 </template>
+
+<script setup lang="ts">
+import { changeActiveIndex } from '@/mixin'
+
+function test() {
+  ElMessage.info("无事发生")
+}
+
+</script>
 
 <style>
 @media (min-width: 1024px) {

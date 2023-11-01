@@ -9,13 +9,13 @@
 </template>
     
 <script setup lang="ts">
-import { routerPush } from '@/mixin';
+import { changeActiveIndex } from '@/mixin';
 
 // import { ElMessage } from 'element-plus';
 
 
 function test() {
-  routerPush('/login')
+  ElMessage.info('无事发生')
 }
 
 </script>

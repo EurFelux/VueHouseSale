@@ -1,6 +1,6 @@
 import { globalConfig, serverUrl } from './api';
 import type {} from '@/api/request';
-import type { NoDataResponse } from '@/api/response';
+import type { AnyDataResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
@@ -11,7 +11,7 @@ enum Api {
 }
 
 // 添加审核
-async function addAudit(): Promise<AxiosResponse<NoDataResponse>> {
+async function addAudit(): Promise<AxiosResponse<AnyDataResponse>> {
   const config = {
     ...globalConfig,
     headers: {
