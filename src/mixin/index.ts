@@ -1,9 +1,6 @@
 // 应用名
 export const appName: string = "House App";
 
-// 默认头像路径
-export const defaultAvatar: string = "/src/assets/otto.jpg"
-
 // 跳转路由
 import { routesMap } from '@/router';
 import { usePublicStore } from '@/stores/public'
@@ -37,6 +34,10 @@ export function httpError(res: AxiosResponse<any>) {
 
 export function serverError(res: AxiosResponse<AnyDataResponse>) {
   ElMessage.error(`错误：${res.data.message}`)
+}
+
+export function normalError(message: string) {
+  ElMessage.error(message)
 }
 
 // 验证规则
@@ -78,6 +79,8 @@ export const allRules = {
   // 地址
   location: [],
   // 个人简介
-  introduction: [],
-  
+  introduction: [
+    { min: 0, max: 100, message: '个人简介长度应为0-100位', trigger: 'blur' }
+  ],
+
 }

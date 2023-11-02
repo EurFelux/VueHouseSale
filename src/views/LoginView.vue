@@ -44,7 +44,8 @@ const loginFormRef = ref<FormInstance>()
 
 // 验证表单
 import { type FormInstance, type FormRules } from 'element-plus';
-import { changeActiveIndex, defaultAvatar } from '@/mixin';
+import { changeActiveIndex, httpError, serverError } from '@/mixin';
+import { defaultValues } from '@/api/model';
 
 const rules = reactive<FormRules<LoginForm>>({
     phone: [
@@ -66,24 +67,25 @@ async function submitForm(formEl: FormInstance | undefined) {
     await formEl.validate((valid, fileds) => {
         if (valid) {
             login(loginForm).then((res) => {
-                if (res.status == 200) {
+                if (res.data.code == 200) {
                     ElMessage.success("登录成功")
                     userStore.setAuthorization(res.data.data.access_token)
-                    userStore.setAvatar(res.data.data.user.avatar ? res.data.data.user.avatar : defaultAvatar)
+                    userStore.setAvatar(res.data.data.user.avatar || defaultValues.USER_AVATAR)
                     userStore.setName(res.data.data.user.name)
                     userStore.setId(res.data.data.user.id)
                     userStore.setRole(res.data.data.user.role)
+                    userStore.setPhone(res.data.data.user.phone)
                     changeActiveIndex(routesMap.home.path)
                     router.push(routesMap.home.path)
                     // routerPush(routesMap.home.path)
                 } else {
-                    ElMessage.error(res.data.message || "登录失败")
+                    serverError(res)
                 }
-
-                // console.log(res);
             }).catch((err) => {
-                // console.log(err);
-                ElMessage.error(err.message || "登录失败")
+                if (err.response.data.message)
+                    serverError(err.response)
+                else
+                    httpError(err)
             })
         }
     })

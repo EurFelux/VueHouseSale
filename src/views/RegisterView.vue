@@ -182,6 +182,8 @@ h1 {
     color: aliceblue;
 }
 
+
+
 @media (max-width: 1024px) {
 
     .register-background {

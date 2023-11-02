@@ -1,5 +1,5 @@
 import { globalConfig, serverUrl } from './api';
-import type { UpdateUserForm } from '@/api/request';
+import type { UpdatePasswordForm, UpdateUserForm } from '@/api/request';
 import type { GetUserResponse, AnyDataResponse, UpdateUserResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
@@ -65,8 +65,18 @@ async function updateUser(updateUserForm: UpdateUserForm): Promise<AxiosResponse
   return await axios.post(`${serverUrl}${Api.UpdateUser}`, updateUserForm, config);
 }
 // 更新用户密码
+async function updatePassword(UpdatePasswordForm: UpdatePasswordForm): Promise<AxiosResponse<UpdatePasswordForm>> {
+  const config = {
+    ...globalConfig,
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+  return await axios.post(`${serverUrl}${Api.UpdatePassowrd}`, UpdatePasswordForm, config);
+
+}
 
 // 更新用户头像
 
 // 导出
-export { deleteUser, getAllUser, getUser, updateUser };
+export { deleteUser, getAllUser, getUser, updateUser, updatePassword };

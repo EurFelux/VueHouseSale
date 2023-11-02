@@ -45,10 +45,14 @@
         </el-select>
     </div>
 </template>
+
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 import allAreas from '@/assets/pca-code.json'
 
+// 实现v-model
+const props = defineProps(['modelValue'])
+const emit = defineEmits(['update:modelValue'])
 
 //创建一个类型接口
 export interface TypeAreas {
@@ -75,9 +79,6 @@ const selectCityList = ref<TypeAreas[]>([])
 
 //区域下拉框内容所有值
 const selectAreaList = ref<TypeAreas[]>([])
-
-//分发事件给父组件
-const emits = defineEmits('change')
 
 //监听选择省份
 watch(
@@ -138,14 +139,16 @@ watch(
                     val &&
                     selectAreaList.value.find(item => item.code === val)!.name,
             }
-            // console.log(provinceData, cityData, areaData)
-            emits('change', {
-                province: provinceData,
-                city: cityData,
-                area: areaData,
-            })
+            // // console.log(provinceData, cityData, areaData)
+            // emit('change', {
+            //     province: provinceData,
+            //     city: cityData,
+            //     area: areaData,
+            // })
+            emit('update:modelValue', `${provinceData.name}${cityData.name}${areaData.name}`)
         }
     }
 )
 </script>
+
 <style lang="scss" scoped></style>

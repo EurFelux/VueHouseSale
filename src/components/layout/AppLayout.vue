@@ -7,7 +7,9 @@
 
         <!-- Main view -->
         <el-main>
-            <router-view />
+            <el-scrollbar>
+                <router-view />
+            </el-scrollbar>
         </el-main>
     </el-container>
 </template>
@@ -38,6 +40,8 @@
     --el-header-padding: 0;
 }
 
+
+
 @media (max-width: 1024px) {
     .container {
         background-size: auto 120%;
@@ -46,3 +50,10 @@
 }
 </style>
 
+<style>
+/* 应用全局样式 */
+.no-user-select {
+    user-select: none;
+}
+
+</style>

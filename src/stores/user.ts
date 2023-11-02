@@ -1,13 +1,13 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { defaultAvatar } from '@/mixin';
 
 export const useUserStore = defineStore('user', () => {
     const authorization = ref("");
-    const id = ref(-1);
-    const name = ref("otto");
-    const role = ref(-1);
-    const avatar = ref(defaultAvatar);
+    const id = ref(defaultValues.USER_ID);
+    const name = ref(defaultValues.USER_NAME);
+    const role = ref(defaultValues.USER_ROLE);
+    const avatar = ref(defaultValues.USER_AVATAR);
+    const phone = ref(defaultValues.USER_PHONE);
 
     const isLogin = computed(() => authorization.value !== "");
 
@@ -31,19 +31,25 @@ export const useUserStore = defineStore('user', () => {
         avatar.value = _avatar;
     }
 
-    function $reset() {
-        authorization.value = "";
-        id.value = -1;
-        name.value = "otto";
-        role.value = -1;
-        avatar.value = defaultAvatar;
+    function setPhone(_phone: string) {
+        phone.value = _phone;
     }
 
-    return { authorization, id, name, role, avatar, isLogin, setAuthorization, setId, setName, setRole, setAvatar, $reset }
+    function $reset() {
+        authorization.value = "";
+        id.value = defaultValues.USER_ID;
+        name.value = defaultValues.USER_NAME;
+        role.value = defaultValues.USER_ROLE;
+        avatar.value = defaultValues.USER_AVATAR;
+        phone.value = defaultValues.USER_PHONE;
+    }
+
+    return { authorization, id, name, role, avatar, phone, isLogin, setAuthorization, setId, setName, setRole, setAvatar, setPhone, $reset }
 })
 
 // auth.js
 import { acceptHMRUpdate } from 'pinia'
+import { defaultValues } from '@/api/model';
 
 // 确保传递正确的 store 声明，本例中为 `useAuth`
 if (import.meta.hot) {

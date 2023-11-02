@@ -15,7 +15,15 @@ interface UpdateUserForm extends BasicUser{
     id: number,
 }
 
-export type { LoginForm, RegisterForm, UpdateUserForm };
+interface UpdatePasswordForm {
+    id: number;
+    phone: string;
+    oldPassword: string;
+    password: string;
+    confirmPassword: string;
+}
+
+export type { LoginForm, RegisterForm, UpdateUserForm, UpdatePasswordForm };
 
 
 
