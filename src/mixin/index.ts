@@ -1,6 +1,10 @@
 // 应用名
 export const appName: string = "House App";
 
+// DEBUG 版本
+export const debugVersion: string = '11/2'
+
+
 // 跳转路由
 import { routesMap } from '@/router';
 import { usePublicStore } from '@/stores/public'
