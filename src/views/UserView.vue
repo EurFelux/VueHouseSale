@@ -170,6 +170,24 @@
                         <h2>这是什么？</h2>
                         <iframe width="110" height="100" src="https://www.myinstants.com/instant/aughhhhh-aughhhhh-7905/embed/" frameborder="0" scrolling="no"></iframe>
                     </div>
+                    <div>
+                        <h2>塞点垃圾</h2>
+                        <p>
+                            啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！
+                        </p>
+                    </div>
+                    <div>
+                        <h2>塞点垃圾</h2>
+                        <p>
+                            啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！
+                        </p>
+                    </div>
+                    <div>
+                        <h2>塞点垃圾</h2>
+                        <p>
+                            啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！啊啊啊啊啊啊啊啊啊！
+                        </p>
+                    </div>
                 </div>
             </el-col>
 
@@ -518,6 +536,22 @@ watch(accentColorSetting, (newVal) => {
 .settings-wrapper {
     display: flex;
     flex-direction: column;
+}
+
+.el-aside {
+    position: sticky;
+    top: 0;
+}
+
+.el-menu {
+    --el-menu-bg-color: var(--color-bg-glass);
+    margin: 1rem;
+    border-right: 0;
+}
+
+.el-menu-item {
+    // border-right: 3px solid var(--el-menu-border-color);
+    --el-menu-hover-bg-color: var(--color-bg-glass-active);
 }
 
 .settings-item-wrapper {

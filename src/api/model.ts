@@ -28,6 +28,8 @@ export const defaultValues = {
     USER_AGE : 0,
     USER_PHONE : '00000000000',
 
+    ACCENT_COLOR : '#cccccc',
+
 }
 
 export const sexValue = {

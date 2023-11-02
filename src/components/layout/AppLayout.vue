@@ -25,13 +25,16 @@
     background-image: url("@/assets/login-background.jpeg");
     background-size: 120% auto;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     
     display: flex;
     flex: auto;
     flex-direction: column;
     width: 100vw;
     height: 100vh;
+
+    text-shadow: 
+    1px 1px 0 var(--color-text-shadow);   /* 右下 */
 }
 
 .el-header {
@@ -39,8 +42,6 @@
     line-height: 60px;
     --el-header-padding: 0;
 }
-
-
 
 @media (max-width: 1024px) {
     .container {
@@ -50,8 +51,24 @@
 }
 </style>
 
+<!-- 覆盖Element Plus的设置，双颜色模式 -->
 <style>
-/* 应用全局样式 */
+:root {
+  --el-fill-color-blank: #ffffffaf;
+  --color-bg-glass: rgba(255, 255, 255, 0.2);
+  --color-text-on-glass: aliceblue;
+  --color-bg-glass-active: rgba(255, 255, 255, 0.4);
+  --color-text-shadow: rgba(0, 0, 0, 0.5);
+}
+
+html.dark {
+  filter: brightness(0.7);
+  --color-bg-glass: rgba(127, 127, 127, 0.2);
+}
+</style>
+
+<!-- 全局样式 -->
+<style>
 .no-user-select {
     user-select: none;
 }

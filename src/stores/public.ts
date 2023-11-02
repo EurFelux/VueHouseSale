@@ -3,14 +3,14 @@ import { defineStore } from 'pinia'
 
 export const usePublicStore = defineStore('public', () => {
   const activeIndex = ref("/");
-  const accentColor = ref("#cccccc");
+  const accentColor = ref(defaultValues.ACCENT_COLOR);
   const debug = ref(debugVersion);
   const colorMode = ref("dark");
   const mobileMode = ref(false);
 
   function $reset() {
     activeIndex.value = "/";
-    accentColor.value = "#cccccc";
+    accentColor.value = defaultValues.ACCENT_COLOR;
     colorMode.value = "dark";
     mobileMode.value = false;
   }
@@ -37,6 +37,7 @@ export const usePublicStore = defineStore('public', () => {
 // auth.js
 import { acceptHMRUpdate } from 'pinia'
 import { debugVersion } from '@/mixin';
+import { defaultValues } from '@/api/model';
 
 // 确保传递正确的 store 声明，本例中为 `useAuth`
 if (import.meta.hot) {

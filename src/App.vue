@@ -8,17 +8,17 @@ import AppLayout from '@/components/layout/AppLayout.vue';
 import { onBeforeMount } from 'vue';
 import { usePublicStore } from '@/stores/public';
 import { useUserStore } from './stores/user';
+import { defaultValues } from './api/model';
 
 const publicStore = usePublicStore();
 const userStore = useUserStore();
-
-const mobileModeThreshold = 1024
 
 interface UserStore {
   id: number;
   name: string;
   avatar: string;
   authorization: string;
+  phone: string;
 }
 
 // App挂载前行为
@@ -37,6 +37,7 @@ onBeforeMount(() => {
     userStore.setName(user.name);
     userStore.setAvatar(user.avatar);
     userStore.setAuthorization(user.authorization);
+    userStore.setPhone(user.phone)
   }
   if (sessionStorage.getItem('activeIndex')) {
     publicStore.setActiveIndex(sessionStorage.getItem('activeIndex') as string);
@@ -44,55 +45,72 @@ onBeforeMount(() => {
   if (sessionStorage.getItem('colorMode')) {
     publicStore.setColorMode(sessionStorage.getItem('colorMode') as string);
   }
+  if (sessionStorage.getItem('accentColor')) {
+    publicStore.setColorMode(sessionStorage.getItem('accentColor') as string);
+  }
 
-  // 判断是否为移动端
-  publicStore.setMobileMode(window.innerWidth < mobileModeThreshold)
+  // 设置为移动端
+  setMobileMode()
+
+  // 设置主题色
+  setAccentColor(publicStore.accentColor)
 
   // 在页面刷新时将store里的信息保存到sessionStorage里
   // beforeunload事件在页面刷新时先触发
   window.addEventListener('beforeunload', () => {
     sessionStorage.setItem('activeIndex', publicStore.activeIndex);
     sessionStorage.setItem('colorMode', publicStore.colorMode);
+    sessionStorage.setItem('accentColor', publicStore.accentColor);
+
 
     const user: UserStore = {
       id: userStore.id,
       name: userStore.name,
       avatar: userStore.avatar,
       authorization: userStore.authorization,
+      phone: userStore.phone
     }
     sessionStorage.setItem('user', JSON.stringify(user));
 
   })
 })
 
+// 设置移动端状态
+function setMobileMode() {
+  const mobileModeThreshold = 1024
+  publicStore.setMobileMode(window.innerWidth < mobileModeThreshold)
+}
+
+// 设置主题色
+function setAccentColor(newVal: string | null = null) {
+  const el = document.documentElement
+  if (newVal) {
+    el.style.setProperty('--el-color-primary', newVal)
+  } else {
+    el.style.setProperty('--el-color-primary', defaultValues.ACCENT_COLOR)
+  }
+}
+
+
 // 监听窗口大小变化
 onMounted(() => {
   window.addEventListener('resize', () => {
-    publicStore.setMobileMode(window.innerWidth < mobileModeThreshold)
+    setMobileMode()
   })
+})
+
+// 监听主题色变化
+watch(() => publicStore.accentColor, (newVal) => {
+  setAccentColor(newVal)
 })
 
 </script>
 
-<!-- 全局样式，覆盖Element Plus的设置 -->
-<style>
-:root {
-  --el-fill-color-blank: #ffffffaf;
-  --color-bg-glass: rgba(255, 255, 255, 0.2);
-  --color-text-on-glass: aliceblue;
-}
-
-html.dark {
-  filter: brightness(0.7);
-  --color-bg-glass: rgba(127, 127, 127, 0.2);
-}
-</style>
-
 <style scoped>
 .debug-tip {
-    position: absolute;
-    top: 4rem;
-    right: 1rem;
-    color: var(--color-text-on-glass)
+  position: absolute;
+  top: 4rem;
+  right: 1rem;
+  color: var(--color-text-on-glass)
 }
 </style>
