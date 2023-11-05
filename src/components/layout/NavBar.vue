@@ -128,7 +128,7 @@ const handleSelect = (key: string, keyPath: string[]) => {
 
 // 颜色模式调整
 import { useDark, useToggle } from '@vueuse/core'
-import { appName, httpError, serverError } from '@/mixin';
+import { appName, generalError } from '@/mixin';
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 const colorModeIcon = computed(() => (isDark.value ? Moon : Sunny))
@@ -166,11 +166,9 @@ function exit() {
         changeActiveIndex(routesMap.home.path)
         router.push(routesMap.home.path)
     }).catch((err) => {
+        generalError(err)
         if (err.response.data) {
-            serverError(err.response)
             userStore.$reset()
-        } else {
-            httpError(err.response)
         }
     })
 }

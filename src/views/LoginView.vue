@@ -44,19 +44,12 @@ const loginFormRef = ref<FormInstance>()
 
 // 验证表单
 import { type FormInstance, type FormRules } from 'element-plus';
-import { changeActiveIndex, httpError, serverError } from '@/mixin';
+import { allRules, changeActiveIndex, generalError } from '@/mixin';
 import { defaultValues } from '@/api/model';
 
 const rules = reactive<FormRules<LoginForm>>({
-    phone: [
-        { required: true, message: '请输入手机号', trigger: 'blur' },
-        { len: 11, message: '手机号长度应为11位', trigger: 'blur' },
-        { pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' },
-    ],
-    password: [
-        { required: true, message: '请输入密码', trigger: 'change' },
-        { min: 6, max: 20, message: '密码长度应为6-20位', trigger: 'change' }
-    ],
+    phone: allRules.phone,
+    password: allRules.password,
 })
 
 // 提交表单
@@ -67,25 +60,18 @@ async function submitForm(formEl: FormInstance | undefined) {
     await formEl.validate((valid, fileds) => {
         if (valid) {
             login(loginForm).then((res) => {
-                if (res.data.code == 200) {
-                    ElMessage.success("登录成功")
-                    userStore.setAuthorization(res.data.data.access_token)
-                    userStore.setAvatar(res.data.data.user.avatar || defaultValues.USER_AVATAR)
-                    userStore.setName(res.data.data.user.name)
-                    userStore.setId(res.data.data.user.id)
-                    userStore.setRole(res.data.data.user.role)
-                    userStore.setPhone(res.data.data.user.phone)
-                    changeActiveIndex(routesMap.home.path)
-                    router.push(routesMap.home.path)
-                    // routerPush(routesMap.home.path)
-                } else {
-                    serverError(res)
-                }
+                ElMessage.success("登录成功")
+                userStore.setAuthorization(res.data.data.access_token)
+                userStore.setAvatar(res.data.data.user.avatar || defaultValues.USER_AVATAR)
+                userStore.setName(res.data.data.user.name)
+                userStore.setId(res.data.data.user.id)
+                userStore.setRole(res.data.data.user.role)
+                userStore.setPhone(res.data.data.user.phone)
+                changeActiveIndex(routesMap.home.path)
+                router.push(routesMap.home.path)
+                // routerPush(routesMap.home.path)
             }).catch((err) => {
-                if (err.response.data.message)
-                    serverError(err.response)
-                else
-                    httpError(err)
+                generalError(err)
             })
         }
     })
@@ -126,10 +112,10 @@ function fakeLogin() {
 
     text-align: center;
     color: aliceblue;
-    
+
     background-color: rgba(128, 128, 128, 0.1);
     backdrop-filter: blur(10px);
-    
+
     display: flex;
     flex-grow: 1;
     flex-direction: column;

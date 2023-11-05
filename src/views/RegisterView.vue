@@ -75,7 +75,7 @@ const registerFormRef = ref<FormInstance>()
 
 // 验证表单
 import { type FormInstance, type FormRules } from 'element-plus';
-import { changeActiveIndex, httpError } from '@/mixin';
+import { changeActiveIndex, generalError } from '@/mixin';
 
 const rules = reactive<FormRules<RegisterForm>>({
     name: allRules.name,
@@ -109,7 +109,7 @@ async function submitForm(formEl: FormInstance | undefined) {
                 changeActiveIndex(routesMap.login.path)
                 router.push(routesMap.login.path)
             }).catch((err) => {
-                httpError(err.response)
+                generalError(err)
             })
         }
     })

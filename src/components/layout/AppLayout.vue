@@ -6,10 +6,9 @@
         </el-header>
 
         <!-- Main view -->
+
         <el-main>
-            <el-scrollbar>
-                <router-view />
-            </el-scrollbar>
+            <router-view />
         </el-main>
     </el-container>
 </template>
@@ -26,15 +25,16 @@
     background-size: 120% auto;
     background-position: center;
     background-repeat: repeat;
-    
+
     display: flex;
     flex: auto;
     flex-direction: column;
     width: 100vw;
     height: 100vh;
 
-    text-shadow: 
-    1px 1px 0 var(--color-text-shadow);   /* 右下 */
+    text-shadow:
+        1px 1px 0 var(--color-text-shadow);
+    /* 右下 */
 }
 
 .el-header {
@@ -54,16 +54,16 @@
 <!-- 覆盖Element Plus的设置，双颜色模式 -->
 <style>
 :root {
-  --el-fill-color-blank: #ffffffaf;
-  --color-bg-glass: rgba(255, 255, 255, 0.2);
-  --color-text-on-glass: aliceblue;
-  --color-bg-glass-active: rgba(255, 255, 255, 0.4);
-  --color-text-shadow: rgba(0, 0, 0, 0.5);
+    --el-fill-color-blank: #ffffffaf;
+    --color-bg-glass: rgba(255, 255, 255, 0.2);
+    --color-text-on-glass: rgba(255, 255, 255, 0.8);
+    --color-bg-glass-active: rgba(255, 255, 255, 0.4);
+    --color-text-shadow: rgba(0, 0, 0, 0.5);
 }
 
 html.dark {
-  filter: brightness(0.7);
-  --color-bg-glass: rgba(127, 127, 127, 0.2);
+    filter: brightness(0.7);
+    --color-bg-glass: rgba(127, 127, 127, 0.2);
 }
 </style>
 
@@ -72,5 +72,4 @@ html.dark {
 .no-user-select {
     user-select: none;
 }
-
 </style>

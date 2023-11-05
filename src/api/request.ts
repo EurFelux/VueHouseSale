@@ -1,21 +1,37 @@
-import type { BasicUser } from '@/api/model';
+import type { BasicUser, House } from '@/api/model';
 
-interface LoginForm {
+
+// --------------------------- Auth ---------------------------
+
+export interface LoginForm {
     phone: string;
     password: string;
 }
 
-interface RegisterForm extends BasicUser {
+export interface RegisterForm extends BasicUser {
     phone: string;
     password: string;
     confirmPassword: string;
 }
 
-interface UpdateUserForm extends BasicUser{
+// -----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+// --------------------------- User ---------------------------
+
+export interface UpdateUserForm extends BasicUser{
     id: number,
 }
 
-interface UpdatePasswordForm {
+export interface UpdatePasswordForm {
     id: number;
     phone: string;
     oldPassword: string;
@@ -23,7 +39,34 @@ interface UpdatePasswordForm {
     confirmPassword: string;
 }
 
-export type { LoginForm, RegisterForm, UpdateUserForm, UpdatePasswordForm };
+// -----------------------------------------------------------
 
 
+
+
+
+
+
+
+
+
+// --------------------------- Sell ---------------------------
+
+/* something should be here */
+
+// -----------------------------------------------------------
+
+
+
+
+
+
+// --------------------------- Audit ---------------------------
+
+export interface AuditForm {
+    userId: number,
+    identification: string,
+    realName: string,
+	house: House,
+}
 

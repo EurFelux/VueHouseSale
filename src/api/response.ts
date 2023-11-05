@@ -1,4 +1,4 @@
-import { type User } from "./model";
+import { type Audit, type Sell, type User } from "./model";
 
 export enum ResponseCode {
     SUCCESS = 200,
@@ -29,6 +29,8 @@ export interface AnyDataResponse extends BasicResponse {
     data: any;
 }
 
+// --------------------- auth ---------------------
+
 export type RegisterResponse = AnyDataResponse;
 
 export interface LoginResponse extends BasicResponse {
@@ -40,10 +42,50 @@ export interface LoginResponse extends BasicResponse {
     }
 }
 
+// ------------------------------------------------
+
+
+
+
+
+
+
+// --------------------- user ---------------------
+
 export interface GetUserResponse extends BasicResponse {
     data: User;
 }
 
 export interface UpdateUserResponse extends BasicResponse {
     data: User;
+}
+
+// ------------------------------------------------
+
+
+
+
+
+
+
+// --------------------- sell ---------------------
+export interface GetSellInfoByIdResponse extends BasicResponse {
+    data: Sell;
+}
+
+export interface GetAllSellInfoResponse extends BasicResponse {
+    data: Array<Sell>;
+}
+
+export interface GetAllSellInfoByUserIdResponse extends BasicResponse {
+    data: Array<Sell>;
+}
+
+
+// ------------------------------------------------
+
+// --------------------- audit ---------------------
+
+export interface GetAuditsByUserResponse extends BasicResponse {
+    data: Array<Audit>;
 }

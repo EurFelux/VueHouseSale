@@ -46,7 +46,7 @@ onBeforeMount(() => {
     publicStore.setColorMode(sessionStorage.getItem('colorMode') as string);
   }
   if (sessionStorage.getItem('accentColor')) {
-    publicStore.setColorMode(sessionStorage.getItem('accentColor') as string);
+    publicStore.setAccentColor(sessionStorage.getItem('accentColor') as string);
   }
 
   // 设置为移动端
