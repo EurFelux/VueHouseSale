@@ -111,6 +111,6 @@ watch(() => publicStore.accentColor, (newVal) => {
   position: absolute;
   top: 4rem;
   right: 1rem;
-  color: var(--color-text-on-glass)
+  /* color: var(--color-text-on-glass) */
 }
 </style>

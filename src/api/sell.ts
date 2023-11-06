@@ -1,18 +1,33 @@
 import { globalConfig, serverUrl } from './api';
-import type {  } from '@/api/request';
-import type { GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetSellInfoByIdResponse } from '@/api/response';
+import type { SellForm } from '@/api/request';
+import type { AddSellResponse, GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetSellInfoByIdResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
 import axios, { type AxiosResponse } from 'axios';
 
 enum Api {
+  AddSell = '/sell/info/add',
   GetSellInfoById = '/sell/info/byId',
   GetAllSellInfo = '/sell/info/all',
   GetAllSellInfoByUserId = '/sell/info/allById',
-  
+
 }
 
+/**
+ * 添加出售信息
+ * @param form 出售信息表单
+ */
+export function addSell(form: SellForm): Promise<AxiosResponse<AddSellResponse>> {
+  const config = {
+    ...globalConfig,
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+
+  return axios.post(`${serverUrl}${Api.AddSell}`, form, config);
+}
 /**
  * 获取指定id的出售信息
  * @param sellID 出售信息id
@@ -53,7 +68,7 @@ export function getAllSellInfoByUserId(userID: number): Promise<AxiosResponse<Ge
   const config = {
     ...globalConfig,
     params: {
-      userId: userID,
+      id: userID,
     },
     headers: {
       Authorization: useUserStore().authorization,

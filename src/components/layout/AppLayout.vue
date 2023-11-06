@@ -8,7 +8,9 @@
         <!-- Main view -->
 
         <el-main>
-            <router-view />
+            <el-scrollbar>
+                <router-view />
+            </el-scrollbar>
         </el-main>
     </el-container>
 </template>
@@ -21,7 +23,7 @@
 
 <style scoped>
 .container {
-    background-image: url("@/assets/login-background.jpeg");
+    background-image: var(--bg-img);
     background-size: 120% auto;
     background-position: center;
     background-repeat: repeat;
@@ -54,16 +56,22 @@
 <!-- 覆盖Element Plus的设置，双颜色模式 -->
 <style>
 :root {
+    --bg-img: url("@/assets/light-background.jpg");
     --el-fill-color-blank: #ffffffaf;
     --color-bg-glass: rgba(255, 255, 255, 0.2);
     --color-text-on-glass: rgba(255, 255, 255, 0.8);
     --color-bg-glass-active: rgba(255, 255, 255, 0.4);
-    --color-text-shadow: rgba(0, 0, 0, 0.5);
+    --color-text-shadow: rgba(255, 255, 255, 0.5);
 }
 
 html.dark {
     filter: brightness(0.7);
+    --bg-img: url("@/assets/dark-background.jpeg");
     --color-bg-glass: rgba(127, 127, 127, 0.2);
+    --color-text-on-glass: rgba(122, 122, 122, 0.8);
+    --color-text-shadow: rgba(0, 0, 0, 0.5);
+
+
 }
 </style>
 

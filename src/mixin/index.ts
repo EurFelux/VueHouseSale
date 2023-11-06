@@ -2,7 +2,7 @@
 export const appName: string = "House App";
 
 // DEBUG 版本
-export const debugVersion: string = '11/5'
+export const debugVersion: string = '11/7'
 
 
 // 跳转路由
@@ -84,8 +84,6 @@ export const allRules = {
       validator: (rule: any, value: number, callback: any) => {
         if (value === -1) {
           callback(new Error('请选择性别'));
-        } else if (value !== 0 && value !== 1 && value !== 2) {
-          callback(new Error('性别只能为女、男或保密'));
         } else {
           callback();
         }
@@ -135,8 +133,6 @@ export const allRules = {
       validator: (rule: any, value: number, callback: any) => {
         if (value === -1) {
           callback(new Error('请选择装修情况'));
-        } else if (value !== Decoration.Fine && value !== Decoration.Simple) {
-          callback(new Error('装修情况只能为简装或精装'));
         } else {
           callback();
         }
@@ -162,7 +158,7 @@ export const allRules = {
   ],
   // 楼层
   floor: [
-    {required: true, message: '请输入楼层', trigger: 'blur'},
+    { required: true, message: '请输入楼层', trigger: 'blur' },
     { min: 1, max: 10, message: '长度应为1-10个字符之间', trigger: 'blur' },
   ],
   // 有无电梯
@@ -185,6 +181,7 @@ export const allRules = {
   ],
   // 价格
   price: [
+    { required: true, message: '请输入价格', trigger: 'blur' },
     { pattern: /^\d+(\.\d+)?$/, message: '价格只能为数字', trigger: 'blur' },
   ],
   // 房屋地址
@@ -196,7 +193,44 @@ export const allRules = {
   houseId: [
     { required: true, message: '请输入房产证编号', trigger: 'blur' },
     { len: 9, message: '房产证编号长度应为9位', trigger: 'blur' },
+    { pattern: /^\d{9}$/, message: '房产证编号只能为数字', trigger: 'blur' },
   ],
+  // 房屋简介/发布信息描述
+  description: [
+    { min: 0, max: 100, message: '长度应为0-100个字符之间', trigger: 'blur' },
+  ],
+  // 租房类型
+  rentType: [
+    { required: true, message: '请选择租房类型', trigger: 'blur' },
+    {
+      validator: (rule: any, value: number, callback: any) => {
+        if (value === -1) {
+          callback(new Error('请选择租房类型'));
+        } else {
+          callback();
+        }
+      }
+    }
+  ],
+  // 最短租期
+  minPeriod: [
+    { required: true, message: '请输入最短租期', trigger: 'blur' },
+    { pattern: /^\d+(\.\d+)?$/, message: '非法数据', trigger: 'blur' },
+  ],
+  // 房屋图片
+  pic: [
+    { required: true, message: '请上传房屋图片', trigger: 'blur' },
+  ],
+  // 家具家电
+  furniture: [
+    { min: 0, max: 100, message: '长度应为0-100个字符之间', trigger: 'blur' },
+  ],
+  // 预算
+  budget: [
+    { required: true, message: '请输入预算', trigger: 'blur' },
+    { pattern: /^\d+(\.\d+)?$/, message: '非法数据', trigger: 'blur' },
+  ],
+
 
 
 

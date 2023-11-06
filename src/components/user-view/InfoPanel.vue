@@ -1,7 +1,7 @@
 <template>
-    <div class="info-panel">
+    <div class="info-panel" v-loading.fullscreen.lock="loading" element-loading-background="transparent">
         <!-- 上传头像窗口 -->
-        <el-dialog v-model="avatarDialogVisible" title="上传头像" width="50%" :before-close="handleClose">
+        <el-dialog v-model="avatarDialogVisible" title="上传头像" width="50%" :before-close="handleClose" append-to-body="true">
             <template #tip>
                 请选择图片上传：大小180 * 180像素支持JPG、PNG等格式，图片需小于2M
             </template>
@@ -92,12 +92,123 @@
         <div v-show="!editMode">
             <el-row>
                 <el-col :span="24">
-                    这里应该展示一些东西
+                    <!-- 展示用户的所有出售信息 -->
+                    <h2>出售信息</h2>
+                    <div class="sell-info">
+                        <el-scrollbar>
+                            <div class="cards-wrapper">
+                                <el-popover v-for="sell in sells" :key="sell.id" :width="700">
+                                    <template #reference>
+                                        <base-card v-for="sell in sells" :title="sell.house.location" :description="sell.description"
+                                                :image="sell.pic"></base-card>
+                                    </template>
+                                    <el-descriptions border="true" size="large" title="房屋信息">
+                                        <el-descriptions-item label="户型">{{ sell.house.layout }}</el-descriptions-item>
+                                        <el-descriptions-item label="面积">{{ sell.house.area }}平方米</el-descriptions-item>
+                                        <el-descriptions-item label="朝向">{{ OrientationMap[sell.house.orientation] }}</el-descriptions-item>
+                                        <el-descriptions-item label="电梯">{{ ElevatorMap[sell.house.elevator] }}</el-descriptions-item>
+                                        <el-descriptions-item label="装修">{{ DecorationMap[sell.house.decoration] }}</el-descriptions-item>
+                                        <el-descriptions-item label="楼层">{{ sell.house.floor }}</el-descriptions-item>
+                                        <el-descriptions-item label="联系方式">{{ sell.contact }}</el-descriptions-item>
+                                    </el-descriptions>
+                                </el-popover>
+                            </div>
+                        </el-scrollbar>
+                    </div>
+                    <el-scrollbar>
+                        <div class="cards-wrapper">
+                        </div>
+                    </el-scrollbar>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="24">
-                    但是之后再说吧
+                    <!-- 出租信息 -->
+                    <h2>出租信息</h2>
+                    <div class="rent-info">
+                        <el-scrollbar>
+                            <div class="cards-wrapper">
+                                <el-popover v-for="rent in rents" :key="rent.id" :width="700">
+                                    <template #reference>
+                                        <base-card :title="rent.house.location" :description="rent.description"
+                                            :image="rent.pic"></base-card>
+                                    </template>
+                                    <el-descriptions border="true" size="large" title="房屋要求">
+                                        <el-descriptions-item label="户型">{{ rent.house.layout }}</el-descriptions-item>
+                                        <el-descriptions-item label="面积">{{ rent.house.area }}平方米</el-descriptions-item>
+                                        <el-descriptions-item label="朝向">{{ OrientationMap[rent.house.orientation] }}</el-descriptions-item>
+                                        <el-descriptions-item label="电梯">{{ ElevatorMap[rent.house.elevator] }}</el-descriptions-item>
+                                        <el-descriptions-item label="装修">{{ DecorationMap[rent.house.decoration] }}</el-descriptions-item>
+                                        <el-descriptions-item label="楼层">{{ rent.house.floor }}</el-descriptions-item>
+                                        <el-descriptions-item label="家具家电情况">{{ rent.furniture }}</el-descriptions-item>
+                                        <el-descriptions-item label="租房方式">{{ RentTypeMap[rent.type] }}</el-descriptions-item>
+                                        <el-descriptions-item label="最小租期">{{ rent.minPeriod }}个月</el-descriptions-item>
+                                        <el-descriptions-item label="租金/月">{{ rent.price }}元</el-descriptions-item>
+                                        <el-descriptions-item label="出租要求">{{ rent.requirement }}元</el-descriptions-item>
+                                        <el-descriptions-item label="联系方式">{{ rent.contact }}</el-descriptions-item>
+                                    </el-descriptions>
+                                </el-popover>
+                            </div>
+                        </el-scrollbar>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="24">
+                    <!-- 求购信息 -->
+                    <h2>求购信息</h2>
+                    <div class="buy-info">
+                        <el-scrollbar>
+                            <div class="cards-wrapper">
+                                <el-popover v-for="buy in buys" :key="buy.id" :width="600">
+                                    <template #reference>
+                                        <base-card  :title="buy.location" :description="buy.description"></base-card>
+                                    </template>
+                                    <el-descriptions border="true" size="large" title="房屋要求">
+                                        <el-descriptions-item label="户型">{{ buy.layout }}</el-descriptions-item>
+                                        <el-descriptions-item label="面积">{{ buy.area }}平方米</el-descriptions-item>
+                                        <el-descriptions-item label="预算">{{ buy.budget }}元</el-descriptions-item>
+                                        <el-descriptions-item label="朝向">{{ OrientationMap[buy.orientation] }}</el-descriptions-item>
+                                        <el-descriptions-item label="电梯">{{ ElevatorMap[buy.elevator] }}</el-descriptions-item>
+                                        <el-descriptions-item label="装修">{{ DecorationMap[buy.decoration] }}</el-descriptions-item>
+                                        <el-descriptions-item label="楼层">{{ buy.floor }}</el-descriptions-item>
+                                        <el-descriptions-item label="联系方式">{{ buy.contact }}</el-descriptions-item>
+                                    </el-descriptions>
+                                </el-popover>
+                            </div>
+                        </el-scrollbar>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="24">
+                    <!-- 求租信息 -->
+                    <h2>求租信息</h2>
+                    <div class="seek-info">
+                        <el-scrollbar>
+                            <div class="cards-wrapper">
+                                <el-popover v-for="seek in seeks" :key="seek.id" :width="700">
+                                    <template #reference>
+                                        <base-card :title="seek.location"
+                                            :description="seek.description"></base-card>
+                                    </template>
+                                    <el-descriptions border="true" size="large" title="房屋要求">
+                                        <el-descriptions-item label="户型">{{ seek.layout }}</el-descriptions-item>
+                                        <el-descriptions-item label="面积">{{ seek.area }}平方米</el-descriptions-item>
+                                        <el-descriptions-item label="装修">{{ DecorationMap[seek.decoration] }}</el-descriptions-item>
+                                        <el-descriptions-item label="朝向">{{ OrientationMap[seek.orientation] }}</el-descriptions-item>
+                                        <el-descriptions-item label="电梯">{{ ElevatorMap[seek.elevator] }}</el-descriptions-item>
+                                        <el-descriptions-item label="楼层">{{ seek.floor }}</el-descriptions-item>
+                                        <el-descriptions-item label="租房方式">{{ RentTypeMap[seek.type] }}</el-descriptions-item>
+                                        <el-descriptions-item label="预算">{{ seek.budget }}元</el-descriptions-item>
+                                        <el-descriptions-item label="租期">{{ seek.period }}个月</el-descriptions-item>
+                                        <el-descriptions-item label="要求">{{ seek.requirement }}</el-descriptions-item>
+                                        <el-descriptions-item label="联系方式">{{ seek.contact }}</el-descriptions-item>
+                                    </el-descriptions>
+                                </el-popover>
+                            </div>
+                        </el-scrollbar>
+                    </div>
                 </el-col>
             </el-row>
         </div>
@@ -106,20 +217,25 @@
 
 
 <script setup lang="ts">
-import { type BasicUser, defaultValues, sexName, sexValue } from '@/api/model';
+import { getAuditsByUser } from '@/api/audit';
+import { getAllBuyInfoByUserId } from '@/api/buy';
+import { type BasicUser, defaultValues, sexName, sexValue, OrientationMap, ElevatorMap, DecorationMap, RentTypeMap } from '@/api/model';
+import { getAllRentInfoByUserId } from '@/api/rent';
 import type { UpdateUserForm } from '@/api/request';
-import { ResponseCode } from '@/api/response';
+import { ResponseCode, type BuyResponse, type RentResponse, type SeekResponse, type SellResponse } from '@/api/response';
+import { getAllSeekInfoByUserId } from '@/api/seek';
+import { getAllSellInfoByUserId } from '@/api/sell';
 import { getUser, updateUser } from '@/api/user';
 import { generalError, allRules } from '@/mixin';
 import { routesMap } from '@/router';
 import { useUserStore } from '@/stores/user';
 import type { FormInstance, FormRules } from 'element-plus';
 import { useRoute, useRouter } from 'vue-router';
-
+import BaseCard from '../BaseCard.vue';
 
 const router = useRouter()
 const userStore = useUserStore();
-
+const loading = ref(true)
 
 // 获取个人信息
 const avatar = computed(() => userStore.avatar)
@@ -163,8 +279,10 @@ const userInfoForm: UpdateUserForm = reactive({
 
 async function refreshUser() {
     try {
+        loading.value = true;
         await getUser(userId.value).then((res) => {
             if (res.data.code === ResponseCode.SUCCESS) {
+                loading.value = false;
                 if (res.data.data.id === userStore.id) {
                     userStore.setName(res.data.data.name || defaultValues.USER_NAME)
                     userStore.setRole(res.data.data.role || defaultValues.USER_ROLE)
@@ -200,10 +318,6 @@ async function refreshUser() {
         return
     }
 }
-
-onBeforeMount(async () => {
-    await refreshUser()
-})
 
 // 修改信息
 const editMode = ref(false)
@@ -247,8 +361,58 @@ function handleClose() {
 const route = useRoute()
 
 watch(() => route.params.id, async () => {
-    console.log('enter!')
-    await refreshUser()
+    if (route.params.id)
+        await refreshUser()
+})
+
+// 获取用户发布的所有信息
+const sells = ref<Array<SellResponse>>([])
+const rents = ref<Array<RentResponse>>([])
+const buys = ref<Array<BuyResponse>>([])
+const seeks = ref<Array<SeekResponse>>([])
+
+function getSells() {
+    getAllSellInfoByUserId(userId.value).then((res) => {
+        sells.value = res.data.data
+    }).catch((err) => {
+        generalError(err)
+    })
+}
+
+function getRents() {
+    getAllRentInfoByUserId(userId.value).then((res) => {
+        rents.value = res.data.data
+    }).catch((err) => {
+        generalError(err)
+    })
+}
+
+function getBuys() {
+    getAllBuyInfoByUserId(userId.value).then((res) => {
+        buys.value = res.data.data
+    }).catch((err) => {
+        generalError(err)
+    })
+}
+
+function getSeeks() {
+    getAllSeekInfoByUserId(userId.value).then((res) => {
+        seeks.value = res.data.data
+    }).catch((err) => {
+        generalError(err)
+    })
+}
+
+// 在对话框显示的信息
+
+
+// 生命周期钩子
+onBeforeMount(() => {
+    refreshUser()
+    getSells()
+    getRents()
+    getBuys()
+    getSeeks()
 })
 </script>
 
@@ -326,5 +490,17 @@ watch(() => route.params.id, async () => {
     height: 100%;
 }
 
+.cards-wrapper {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+}
 
+.el-scrollbar {
+    --el-scrollbar-bg-color: var(--el-color-primary);
+    --el-scrollbar-hover-bg-color: var(--el-color-primary);
+    --el-scrollbar-opacity: 0.6;
+    --el-scrollbar-hover-opacity: 0.9;
+
+}
 </style>

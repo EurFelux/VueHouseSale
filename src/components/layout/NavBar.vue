@@ -64,7 +64,7 @@
                     <span>分组一</span>
                 </template>
                 <el-menu-item @click="goUserView">个人信息</el-menu-item>
-                <el-menu-item index="3-2">选项2</el-menu-item>
+                <el-menu-item @click="goManageView" v-if="userStore.role == 1">管理员界面</el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group title="分组2">
                 <el-menu-item @click="exit">退出登录</el-menu-item>
@@ -120,7 +120,14 @@ function getIcon(item: RouteType) {
 }
 
 // 菜单激活项
+const route = useRouter()
 const activeIndex = computed(() => publicStore.activeIndex)
+
+watch(() => route.currentRoute.value.path, (path) => {
+    publicStore.setActiveIndex(path)
+    // console.log(path)
+})
+
 const handleSelect = (key: string, keyPath: string[]) => {
     publicStore.setActiveIndex(key)
     // console.log(key, keyPath)
@@ -177,6 +184,11 @@ function exit() {
 const userId = computed(() => userStore.id);
 function goUserView() {
     router.push(`/user/${userId.value}`)
+}
+
+// 管理界面
+function goManageView() {
+    router.push(`/manage`)
 }
 </script>
 

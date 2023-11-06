@@ -20,7 +20,16 @@
                                     <el-icon class="material-symbols-outlined" style="font-size: 2rem">
                                         upload_file
                                     </el-icon>
-                                    <span>房产审核</span>
+                                    <span>房产资质审核申请</span>
+                                </template>
+                            </el-menu-item>
+
+                            <el-menu-item index="publish">
+                                <template #title>
+                                    <el-icon class="material-symbols-outlined" style="font-size: 2rem">
+                                        publish
+                                    </el-icon>
+                                    <span>发布信息</span>
                                 </template>
                             </el-menu-item>
 
@@ -54,12 +63,18 @@ import { useRoute } from 'vue-router';
 import InfoPanel from '@/components/user-view/InfoPanel.vue';
 import SettingsPanel from '@/components/user-view/SettingsPanel.vue';
 import RequestPanel from '@/components/user-view/RequestPanel.vue';
+import PublishPanel from '@/components/user-view/PublishPanel.vue';
 
 const route = useRoute()
-
 const userStore = useUserStore()
 
+// 当前页面的用户id
 const userId = computed(() => Number(route.params.id))
+
+// 侧边栏
+const asideIndex = ref('home')
+
+// 动态加载面板
 
 const activePanel = computed(() => {
     switch (asideIndex.value) {
@@ -69,17 +84,14 @@ const activePanel = computed(() => {
             return SettingsPanel
         case 'request':
             return RequestPanel
+        case 'publish':
+            return PublishPanel
         default:
             return InfoPanel
     }
 })
 
-// 侧边栏
-const asideIndex = ref('home')
-const panels = [
-    InfoPanel,
-    SettingsPanel
-]
+
 
 </script>
 
@@ -100,6 +112,7 @@ const panels = [
 }
 
 .el-aside {
+    width: 100%;
     position: sticky;
     top: 0;
 }
@@ -154,14 +167,5 @@ const panels = [
     margin: 1rem;
     --el-button-border-color: var(--el-color-primary);
 
-}
-
-.el-form-item__label,
-.el-radio__label {
-    color: var(--color-text-on-glass)
-}
-
-* {
-    --color-text: var(--color-text-on-glass)
 }
 </style>

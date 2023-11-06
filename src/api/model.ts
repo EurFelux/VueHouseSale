@@ -101,6 +101,18 @@ export enum Elevator {
     Any = 2,    // 任意
 }
 
+export enum ElevatorText {
+    No = '无电梯',
+    Yes = '有电梯',
+    Any = '任意',
+}
+
+export const ElevatorMap = {
+    [Elevator.No]: ElevatorText.No,
+    [Elevator.Yes]: ElevatorText.Yes,
+    [Elevator.Any]: ElevatorText.Any,
+}
+
 /**
  * 朝向
  */
@@ -116,6 +128,37 @@ export enum Orientation {
     EastWest = 8,
     SouthNorth = 9,
     Any = 10,
+    Unknown = 11,
+}
+
+export enum OrientationText {
+    East = '东',
+    South = '南',
+    West = '西',
+    North = '北',
+    EastSouth = '东南',
+    EastNorth = '东北',
+    WestSouth = '西南',
+    WestNorth = '西北',
+    EastWest = '东西',
+    SouthNorth = '南北',
+    Any = '任意',
+    Unknown = '未知',
+}
+
+export const OrientationMap = {
+    [Orientation.East]: OrientationText.East,
+    [Orientation.South]: OrientationText.South,
+    [Orientation.West]: OrientationText.West,
+    [Orientation.North]: OrientationText.North,
+    [Orientation.EastSouth]: OrientationText.EastSouth,
+    [Orientation.EastNorth]: OrientationText.EastNorth,
+    [Orientation.WestSouth]: OrientationText.WestSouth,
+    [Orientation.WestNorth]: OrientationText.WestNorth,
+    [Orientation.EastWest]: OrientationText.EastWest,
+    [Orientation.SouthNorth]: OrientationText.SouthNorth,
+    [Orientation.Any]: OrientationText.Any,
+    [Orientation.Unknown]: OrientationText.Unknown,
 }
 
 /**
@@ -126,6 +169,16 @@ export enum OwnershipType {
     Private = 1,    // 私产
 }
 
+export enum OwnershipTypeText {
+    Public = '公产',
+    Private = '私产',
+}
+
+export const OwnershipTypeMap = {
+    [OwnershipType.Public]: OwnershipTypeText.Public,
+    [OwnershipType.Private]: OwnershipTypeText.Private,
+}
+
 /**
  * 装修情况
  */
@@ -133,6 +186,18 @@ export enum Decoration {
     Simple = 0, // 简装
     Fine = 1,   // 精装
     Any = 2,    // 任意
+}
+
+export enum DecorationText {
+    Simple = '简装',
+    Fine = '精装',
+    Any = '任意',
+}
+
+export const DecorationMap = {
+    [Decoration.Simple]: DecorationText.Simple,
+    [Decoration.Fine]: DecorationText.Fine,
+    [Decoration.Any]: DecorationText.Any,
 }
 
 /**
@@ -152,7 +217,7 @@ export interface BasicHouse {
  * 房产信息
  */
 export interface House extends BasicHouse {
-    houseId: number;               // 房产id
+    houseId: string;               // 房产id
     ownershipType: OwnershipType;  // 产权类型
 }
 
@@ -184,6 +249,18 @@ export enum RentType {
     Any = 2,    // 任意
 }
 
+export enum RentTypeText {
+    Entire = '整租',
+    Joint = '合租',
+    Any = '任意',
+}
+
+export const RentTypeMap = {
+    [RentType.Entire]: RentTypeText.Entire,
+    [RentType.Joint]: RentTypeText.Joint,
+    [RentType.Any]: RentTypeText.Any,
+}
+
 /**
  * 出租信息
  */
@@ -208,20 +285,25 @@ export interface Buy extends BasicInfo, BasicHouse {
  * 求租信息
  */
 export interface Seek extends BasicInfo, BasicHouse {
+    type: RentType;             // 求租类型
     budget: number;             // 预算/月
     period: number;             // 租期/月
+    requirement: string;        // 求租要求：其他要求
 }
 
-// --------------
-//     审核
-// --------------
 
+/**
+ * 审核状态
+ */
 export enum AuditStatus {
     pending = 0,
     approved = 1,
     rejected = 2
 }
 
+/**
+ * 审核信息
+ */
 export interface Audit {
     id: number;                 // 审核id
     userId: number;            // 用户id

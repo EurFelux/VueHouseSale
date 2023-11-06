@@ -30,6 +30,10 @@ export const routesMap: Record<string, RouteType> = {
     path: '/user/:id',
     name: 'user',
   },
+  manage: {
+    path: '/manage',
+    name: 'manage',
+  },
   notFound: {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
@@ -63,6 +67,11 @@ const router = createRouter({
       path: routesMap.user.path,
       name: routesMap.user.name,
       component: () => import('../views/UserView.vue')
+    },
+    {
+      path: routesMap.manage.path,
+      name: routesMap.manage.name,
+      component: () => import('../views/ManageView.vue')
     },
     {
       path: routesMap.notFound.path,

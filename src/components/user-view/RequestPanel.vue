@@ -19,8 +19,8 @@
                                 <el-form-item label="真实姓名" prop="realName">
                                     <el-input placeholder="请输入真实姓名" v-model="auditForm.realName" required></el-input>
                                 </el-form-item>
-                                <el-form-item label="房屋编号" prop="house.houseId">
-                                    <el-input placeholder="请输入房屋编号" v-model="auditForm.house.houseId" required></el-input>
+                                <el-form-item label="房产证编号" prop="house.houseId">
+                                    <el-input placeholder="请输入房产证编号" v-model="auditForm.house.houseId" required></el-input>
                                 </el-form-item>
                                 <el-form-item label="房屋产权" prop="house.ownershipType">
                                     <el-radio-group v-model="auditForm.house.ownershipType">
@@ -28,11 +28,24 @@
                                         <el-radio :label="OwnershipType.Private">私产</el-radio>
                                     </el-radio-group>
                                 </el-form-item>
-                                <el-form-item label="房屋位置" prop="house.location">
-                                    <el-input placeholder="请输入房屋位置" v-model="auditForm.house.location" required></el-input>
+                                <el-form-item label="房屋地址" prop="house.location">
+                                    <el-input placeholder="请输入房屋地址" v-model="auditForm.house.location" required></el-input>
+                                </el-form-item>
+                                <el-form-item label="户型" prop="house.layout">
+                                    <el-input placeholder="请输入户型" v-model="auditForm.house.layout" required></el-input>
+                                </el-form-item>
+                                <el-form-item label="朝向" prop="house.orientation">
+                                    <el-select v-model="auditForm.house.orientation" placeholder="请选择朝向" required>
+                                        <el-option
+                                            v-for="item in orientationItems"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value"
+                                        ></el-option>
+                                    </el-select>
                                 </el-form-item>
                                 <el-form-item label="房屋面积" prop="house.area">
-                                    <el-input placeholder="请输入房屋面积" v-model.number="auditForm.house.area" required></el-input>
+                                    <el-input placeholder="请输入房屋面积（平方米）" v-model.number="auditForm.house.area" required></el-input>
                                 </el-form-item>
                                 <el-form-item label="装修情况" prop="house.decoration">
                                     <el-radio-group v-model="auditForm.house.decoration">
@@ -121,6 +134,20 @@ onMounted(() => {
 
 // 提交新审核
 const drawer = ref(false)
+const orientationItems = [
+    { value: Orientation.East, label: '东' },
+    { value: Orientation.South, label: '南' },
+    { value: Orientation.West, label: '西' },
+    { value: Orientation.North, label: '北' },
+    { value: Orientation.EastSouth, label: '东南' },
+    { value: Orientation.EastNorth, label: '东北' },
+    { value: Orientation.WestSouth, label: '西南' },
+    { value: Orientation.WestNorth, label: '西北' },
+    { value: Orientation.EastWest, label: '东西' },
+    { value: Orientation.SouthNorth, label: '南北' },
+    { value: Orientation.Unknown, label: '未知' },
+]
+
 const auditFormRef = ref<FormInstance>()
 
 const auditForm = reactive<AuditForm>({
@@ -128,15 +155,15 @@ const auditForm = reactive<AuditForm>({
     identification: '',
     realName: '',
     house: {
-        houseId: 0,
+        houseId: '000000000',
         ownershipType: OwnershipType.Public,
         location: '',
         area: 0,
         decoration: Decoration.Any,
-        floor: '0',
+        floor: '1F',
         elevator: Elevator.Any,
-        orientation: Orientation.Any,
-        layout: '',
+        orientation: Orientation.East,
+        layout: '一室一厅',
     },
 })
 
@@ -154,6 +181,20 @@ const rules = reactive<FormRules<AuditForm>>({
     'house.houseId': allRules.houseId,
 })
 
+function resetAuditForm() {
+    // auditForm.identification = ''
+    // auditForm.realName = ''
+    auditForm.house.houseId = '000000000'
+    auditForm.house.ownershipType = OwnershipType.Public
+    auditForm.house.location = ''
+    auditForm.house.area = 0
+    auditForm.house.decoration = Decoration.Any
+    auditForm.house.floor = '1F'
+    auditForm.house.elevator = Elevator.Any
+    auditForm.house.orientation = Orientation.East
+    auditForm.house.layout = ''
+}
+
 async function submitAudit(formEl: FormInstance | undefined) {
 
     if (!formEl) return;
@@ -162,14 +203,14 @@ async function submitAudit(formEl: FormInstance | undefined) {
     await formEl.validate((valid, fileds) => {
         if (valid) {
             addAudit(auditForm).then((res) => {
+                ElMessage.success('提交成功')
+                resetAuditForm()
                 getAudits()
             }).catch((err) => {
                 generalError(err)
             })
         }
     })
-
-
 }
 
 
@@ -178,7 +219,7 @@ async function submitAudit(formEl: FormInstance | undefined) {
 
 <style scoped lang="scss">
 .heading-wrapper {
-    color: var(--color-text-on-glass);
+    // color: var(--color-text-on-glass);
     
     font-size: 1rem;
     text-shadow: 1px 1px 0 var(--color-text-shadow);

@@ -1,4 +1,4 @@
-import { type Audit, type Sell, type User } from "./model";
+import { type Audit, type Buy, type Rent, type Seek, type Sell, type User } from "./model";
 
 export enum ResponseCode {
     SUCCESS = 200,
@@ -69,23 +69,94 @@ export interface UpdateUserResponse extends BasicResponse {
 
 
 // --------------------- sell ---------------------
+export interface SellResponse extends Sell {
+    createTime: string;
+    updateTime: string;
+    isDelete: number;
+}
+
+export interface AddSellResponse extends BasicResponse {
+    data: null;
+}
+
 export interface GetSellInfoByIdResponse extends BasicResponse {
-    data: Sell;
+    data: SellResponse;
 }
 
 export interface GetAllSellInfoResponse extends BasicResponse {
-    data: Array<Sell>;
+    data: Array<SellResponse>;
 }
 
 export interface GetAllSellInfoByUserIdResponse extends BasicResponse {
-    data: Array<Sell>;
+    data: Array<SellResponse>;
 }
 
 
 // ------------------------------------------------
 
+// --------------------- rent ---------------------
+
+export interface RentResponse extends Rent {
+    createTime: string;
+    updateTime: string;
+    isDelete: number;
+}
+
+export interface AddRentResponse extends BasicResponse {
+    data: null;
+}
+
+export interface GetAllRentInfoByUserIdResponse extends BasicResponse {
+    data: Array<RentResponse>;
+}
+
+// ------------------------------------------------
+
+
+
+// --------------------- buy ---------------------
+
+export interface BuyResponse extends Buy {
+    createTime: string;
+    updateTime: string;
+    isDelete: number;
+}
+
+export interface AddBuyResponse extends BasicResponse {
+    data: null;
+}
+
+export interface GetAllBuyInfoByUserIdResponse extends BasicResponse {
+    data: Array<BuyResponse>;
+}
+
+// ------------------------------------------------
+
+// --------------------- seek ---------------------
+
+export interface SeekResponse extends Seek {
+    createTime: string;
+    updateTime: string;
+    isDelete: number;
+}
+
+export interface AddSeekResponse extends BasicResponse {
+    data: null;
+}
+
+export interface GetAllSeekInfoByUserIdResponse extends BasicResponse {
+    data: Array<SeekResponse>;
+}
+
+// ------------------------------------------------
+
+
 // --------------------- audit ---------------------
 
 export interface GetAuditsByUserResponse extends BasicResponse {
+    data: Array<Audit>;
+}
+
+export interface GetAuditedAuditsByUserResponse extends BasicResponse {
     data: Array<Audit>;
 }
