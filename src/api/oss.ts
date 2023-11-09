@@ -1,8 +1,8 @@
 const bucketHost = 'krypton-picbed.oss-cn-chengdu.aliyuncs.com'
 const bucketName = 'krypton-picbed'
 const region = 'oss-cn-chengdu'
-const accessKeyId = 'LTAI5t76X4YpVn3JMKZC28Zg'
-const accessKeySecret = 'aiq0TzuKx80VVLfgmlhorLxMeaDL5n'
+const accessKeyId = ''
+const accessKeySecret = ''
 const dir = 'img/house/'
 
 import OSS from 'ali-oss'

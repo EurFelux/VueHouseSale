@@ -37,16 +37,20 @@
                 <template #default="scope">
                     <!-- <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button> -->
                     <el-button size="small" type="danger"
-                        @click="handleDeleteSell(scope.$index, scope.row)">Delete</el-button>
+                        @click="handleDeleteRent(scope.$index, scope.row)">Delete</el-button>
                 </template>
             </el-table-column>
         </el-table>
+
+        <h2>求购信息管理</h2>
+        
     </div>
 </template>
 
 
 <script setup lang="ts">
 import { RentTypeMap } from '@/api/model';
+import { getAllRentInfo } from '@/api/rent';
 import type { BuyResponse, RentResponse, SeekResponse, SellResponse } from '@/api/response';
 import { deleteSellInfoById, getAllSellInfo, getAllSellInfoByUserId } from '@/api/sell';
 import { generalError } from '@/mixin';
@@ -72,9 +76,6 @@ function handleDeleteSell(index: number, row: SellResponse) {
     })
 }
 
-
-
-
 function getSells() {
     getAllSellInfo().then((res) => {
         sells.value = res.data.data
@@ -83,8 +84,22 @@ function getSells() {
     })
 }
 
+function getRents() {
+    getAllRentInfo().then((res) => {
+        rents.value = res.data.data
+    }).catch((err) => {
+        generalError(err)
+    })
+}
+
+function getBuys() {
+    
+}
+
 onMounted(() => {
     getSells()
+    getRents()
+
 })
 
 </script>

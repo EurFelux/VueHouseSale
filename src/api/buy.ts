@@ -9,6 +9,7 @@ import axios, { type AxiosResponse } from 'axios';
 enum Api {
   AddBuy = '/sell/req/add',
   GetAllBuyInfoByUserId = '/sell/req/allById',
+  GetAllBUyInfo = '/sell/req/all',
 
 
 

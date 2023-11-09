@@ -125,6 +125,10 @@ export interface GetAllRentInfoByUserIdResponse extends BasicResponse {
     data: Array<RentResponse>;
 }
 
+export interface GetAllRentInfoResponse extends BasicResponse {
+    data: Array<RentResponse>;
+}
+
 // ------------------------------------------------
 
 

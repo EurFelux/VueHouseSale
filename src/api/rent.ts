@@ -1,6 +1,6 @@
 import { globalConfig, serverUrl } from './api';
 import type { RentForm, SellForm } from '@/api/request';
-import type { AddRentResponse, AddSellResponse, GetAllRentInfoByUserIdResponse, GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetSellInfoByIdResponse } from '@/api/response';
+import type { AddRentResponse, AddSellResponse, GetAllRentInfoByUserIdResponse, GetAllRentInfoResponse, GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetSellInfoByIdResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
@@ -9,6 +9,7 @@ import axios, { type AxiosResponse } from 'axios';
 enum Api {
   AddRent = '/rent/info/add',
   GetAllRentInfoByUserId = '/rent/info/allById',
+  GetAllRentInfo = '/rent/info/all',
   
 
 }
@@ -45,3 +46,18 @@ export function getAllRentInfoByUserId(userId: number): Promise<AxiosResponse<Ge
 
   return axios.get(`${serverUrl}${Api.GetAllRentInfoByUserId}`, config);
 }
+
+/**
+ * 获取所有出租信息
+ */
+export function getAllRentInfo(): Promise<AxiosResponse<GetAllRentInfoResponse>> {
+  const config = {
+    ...globalConfig,
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+
+  return axios.get(`${serverUrl}${Api.GetAllRentInfo}`, config);
+}
+
