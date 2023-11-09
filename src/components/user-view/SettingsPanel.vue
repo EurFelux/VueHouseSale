@@ -58,15 +58,18 @@
 
 
 <script setup lang="ts">
+import { logout } from '@/api/auth';
 import type { UpdatePasswordForm } from '@/api/request';
 import { updatePassword } from '@/api/user';
 import { allRules, generalError } from '@/mixin';
+import { routesMap } from '@/router';
 import { usePublicStore } from '@/stores/public';
 import { useUserStore } from '@/stores/user';
 import type { FormInstance, FormRules } from 'element-plus';
+import { useRouter } from 'vue-router';
 
 const userStore = useUserStore();
-
+const router = useRouter()
 
 //修改密码
 const passwordFormRef = ref<FormInstance>()
@@ -115,7 +118,14 @@ async function handlePasswordSubmit(formEl: FormInstance | undefined) {
     await formEl.validate((valid, fileds) => {
         if (valid) {
             updatePassword(passwordForm).then((res) => {
-                ElMessage.success("修改成功")
+                ElMessage.success("修改成功，请重新登录")
+                logout(userStore.id).then(() => {
+                    userStore.$reset()
+                    router.push(routesMap.login.path)
+                }).catch((err) => {
+                    userStore.$reset()
+                    generalError(err)
+                })
             }).catch((err) => {
                 generalError(err)
             })

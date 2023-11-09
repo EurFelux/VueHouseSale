@@ -49,12 +49,13 @@
 
 
 <script setup lang="ts">
+import { getAllBuyInfo } from '@/api/buy';
 import { RentTypeMap } from '@/api/model';
-import { getAllRentInfo } from '@/api/rent';
+import { deleteRentInfoById, getAllRentInfo } from '@/api/rent';
 import type { BuyResponse, RentResponse, SeekResponse, SellResponse } from '@/api/response';
+import { getAllSeekInfo } from '@/api/seek';
 import { deleteSellInfoById, getAllSellInfo, getAllSellInfoByUserId } from '@/api/sell';
 import { generalError } from '@/mixin';
-import type { el } from 'element-plus/lib/locale/index.js';
 import { useRouter } from 'vue-router';
 
 const router = useRouter()
@@ -71,6 +72,15 @@ function handleDeleteSell(index: number, row: SellResponse) {
     deleteSellInfoById(row.id).then((res) => {
         ElMessage.success('删除成功')
         getSells()
+    }).catch((err) => {
+        generalError(err)
+    })
+}
+
+function handleDeleteRent(index: number, row: RentResponse) {
+    deleteRentInfoById(row.id).then((res) => {
+        ElMessage.success('删除成功')
+        getRents()
     }).catch((err) => {
         generalError(err)
     })
@@ -93,13 +103,26 @@ function getRents() {
 }
 
 function getBuys() {
-    
+    getAllBuyInfo().then((res) => {
+        buys.value = res.data.data
+    }).catch((err) => {
+        generalError(err)
+    })
+}
+
+function getSeeks() {
+    getAllSeekInfo().then((res) => {
+        seeks.value = res.data.data
+    }).catch((err) => {
+        generalError(err)
+    })
 }
 
 onMounted(() => {
     getSells()
     getRents()
-
+    getBuys()
+    getSeeks()
 })
 
 </script>

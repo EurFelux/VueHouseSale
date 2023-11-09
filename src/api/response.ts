@@ -129,6 +129,10 @@ export interface GetAllRentInfoResponse extends BasicResponse {
     data: Array<RentResponse>;
 }
 
+export interface DeleteRentInfoByIdResponse extends BasicResponse {
+    data: null;
+}
+
 // ------------------------------------------------
 
 
@@ -157,6 +161,14 @@ export interface GetAllBuyInfoByUserIdResponse extends BasicResponse {
     data: Array<BuyResponse>;
 }
 
+export interface GetAllBuyInfoResponse extends BasicResponse {
+    data: Array<BuyResponse>;
+}
+
+export interface DeleteBuyInfoByIdResponse extends BasicResponse {
+    data: null;
+}
+
 // ------------------------------------------------
 
 
@@ -182,6 +194,14 @@ export interface AddSeekResponse extends BasicResponse {
 
 export interface GetAllSeekInfoByUserIdResponse extends BasicResponse {
     data: Array<SeekResponse>;
+}
+
+export interface GetAllSeekInfoResponse extends BasicResponse {
+    data: Array<SeekResponse>;
+}
+
+export interface DeleteSeekInfoByIdResponse extends BasicResponse {
+    data: null;
 }
 
 // ------------------------------------------------

@@ -1,6 +1,6 @@
 import { globalConfig, serverUrl } from './api';
-import type { BuyForm, SellForm } from '@/api/request';
-import type { AddBuyResponse, AddSellResponse, GetAllBuyInfoByUserIdResponse, GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetSellInfoByIdResponse } from '@/api/response';
+import type { BuyForm } from '@/api/request';
+import type { AddBuyResponse, GetAllBuyInfoByUserIdResponse, GetAllBuyInfoResponse, GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetSellInfoByIdResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
@@ -9,7 +9,7 @@ import axios, { type AxiosResponse } from 'axios';
 enum Api {
   AddBuy = '/sell/req/add',
   GetAllBuyInfoByUserId = '/sell/req/allById',
-  GetAllBUyInfo = '/sell/req/all',
+  GetAllBuyInfo = '/sell/req/all',
 
 
 
@@ -46,4 +46,18 @@ export function getAllBuyInfoByUserId(userId: number): Promise<AxiosResponse<Get
   }
 
   return axios.get(`${serverUrl}${Api.GetAllBuyInfoByUserId}`, config);
+}
+
+/**
+ * 获取所有求购信息
+ */
+export function getAllBuyInfo(): Promise<AxiosResponse<GetAllBuyInfoResponse>> {
+  const config = {
+    ...globalConfig,
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+
+  return axios.get(`${serverUrl}${Api.GetAllBuyInfo}`, config);
 }

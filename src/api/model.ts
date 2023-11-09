@@ -95,18 +95,18 @@ export const SexMap: MapType = {
 }
 
 export enum Role {
-    Admin = 0,
-    User = 1,
+    User = 0,
+    Admin = 1,
 }
 
 export enum RoleText {
-    Admin = '管理员',
     User = '用户',
+    Admin = '管理员',
 }
 
 export const RoleMap: MapType = {
-    [Role.Admin]: RoleText.Admin,
     [Role.User]: RoleText.User,
+    [Role.Admin]: RoleText.Admin,
 }
 
 // --------------

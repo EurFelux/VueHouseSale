@@ -1,6 +1,6 @@
 import { globalConfig, serverUrl } from './api';
 import type { RentForm, SellForm } from '@/api/request';
-import type { AddRentResponse, AddSellResponse, GetAllRentInfoByUserIdResponse, GetAllRentInfoResponse, GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetSellInfoByIdResponse } from '@/api/response';
+import type { AddRentResponse, AddSellResponse, DeleteRentInfoByIdResponse, GetAllRentInfoByUserIdResponse, GetAllRentInfoResponse, GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetSellInfoByIdResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
@@ -10,7 +10,7 @@ enum Api {
   AddRent = '/rent/info/add',
   GetAllRentInfoByUserId = '/rent/info/allById',
   GetAllRentInfo = '/rent/info/all',
-  
+  DeleteRentInfoById = '/rent/info/delete',
 
 }
 
@@ -61,3 +61,20 @@ export function getAllRentInfo(): Promise<AxiosResponse<GetAllRentInfoResponse>>
   return axios.get(`${serverUrl}${Api.GetAllRentInfo}`, config);
 }
 
+/**
+ * 删除指定id的出租信息
+ * @param rentId 出租信息id
+ */
+export function deleteRentInfoById(rentId: number): Promise<AxiosResponse<DeleteRentInfoByIdResponse>> {
+  const config = {
+    ...globalConfig,
+    params: {
+      id: rentId,
+    },
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+
+  return axios.delete(`${serverUrl}${Api.DeleteRentInfoById}`, config);
+}

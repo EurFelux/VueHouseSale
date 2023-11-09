@@ -9,7 +9,7 @@ import axios, { type AxiosResponse } from 'axios';
 enum Api {
   AddSeek = '/rent/req/add',
   GetAllSeekInfoByUserId = '/rent/req/allById',
-
+  GetAllSeekInfo = '/rent/req/all',
 }
 
 /**
@@ -43,4 +43,18 @@ export function getAllSeekInfoByUserId(userId: number): Promise<AxiosResponse<Ge
   }
 
   return axios.get(`${serverUrl}${Api.GetAllSeekInfoByUserId}`, config);
+}
+
+/**
+ * 获取所有求租信息
+ */
+export function getAllSeekInfo(): Promise<AxiosResponse<GetAllSeekInfoByUserIdResponse>> {
+  const config = {
+    ...globalConfig,
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+
+  return axios.get(`${serverUrl}${Api.GetAllSeekInfo}`, config);
 }
