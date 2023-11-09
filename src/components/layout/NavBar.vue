@@ -64,7 +64,13 @@
                     <span>分组一</span>
                 </template>
                 <el-menu-item @click="goUserView">个人信息</el-menu-item>
-                <el-menu-item @click="goManageView" v-if="userStore.role == 1">管理员界面</el-menu-item>
+                <el-menu-item @click="goManageView" v-if="role == 1">管理员界面</el-menu-item>
+                <el-menu-item @click="goBackendDashboard" v-if="role == 1">
+                    <el-icon class="material-symbols-outlined">
+                        link
+                    </el-icon>
+                        后端监控
+                </el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group title="分组2">
                 <el-menu-item @click="exit">退出登录</el-menu-item>
@@ -146,6 +152,7 @@ const accentColor = computed(() => publicStore.accentColor)
 // 用户状态
 const isLogin = computed(() => userStore.isLogin)
 const avatar = computed(() => userStore.avatar)
+const role = computed(() => userStore.role)
 
 // 适应移动端，设置垂直导航栏
 const mobileMode = computed(() => publicStore.mobileMode)
@@ -190,6 +197,11 @@ function goUserView() {
 function goManageView() {
     router.push(`/manage`)
 }
+
+function goBackendDashboard() {
+    window.open('http://1.94.35.98:3000/d/PaSwOabVk/chou-mai-fang-de?orgId=1&from=now-15m&to=now&var-application=auditservice&var-instance=auditservice&var-jvm_memory_pool_heap=All&var-jvm_memory_pool_nonheap=All', '_blank')
+}
+
 </script>
 
 

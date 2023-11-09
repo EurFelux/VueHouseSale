@@ -109,7 +109,7 @@
 
 <script setup lang="ts">
 import { type Audit, OwnershipType, Decoration, Elevator, Orientation, AuditStatus } from '@/api/model';
-import type { AuditForm } from '@/api/request';
+import type { AuditRequestForm } from '@/api/request';
 import { addAudit, getAuditsByUser } from '@/api/audit';
 import { useUserStore } from '@/stores/user';
 import { allRules, generalError } from '@/mixin';
@@ -150,7 +150,7 @@ const orientationItems = [
 
 const auditFormRef = ref<FormInstance>()
 
-const auditForm = reactive<AuditForm>({
+const auditForm = reactive<AuditRequestForm>({
     userId: 0,
     identification: '',
     realName: '',
@@ -167,7 +167,7 @@ const auditForm = reactive<AuditForm>({
     },
 })
 
-const rules = reactive<FormRules<AuditForm>>({
+const rules = reactive<FormRules<AuditRequestForm>>({
     identification: allRules.identification,
     realName: allRules.realName,
     'house.ownershipType': allRules.ownershipType,

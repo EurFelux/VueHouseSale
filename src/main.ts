@@ -1,5 +1,4 @@
 import 'element-plus/theme-chalk/dark/css-vars.css'
-import '@/assets/coverDark.css'
 import './assets/main.scss'
 
 import { createApp } from 'vue'

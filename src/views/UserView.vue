@@ -119,7 +119,7 @@ const activePanel = computed(() => {
 
 .el-menu {
     --el-menu-bg-color: var(--color-bg-glass);
-    margin: 1rem;
+    margin: 0 1rem 1rem 1rem;
     border-right: 0;
 }
 

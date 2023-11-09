@@ -19,6 +19,7 @@ interface UserStore {
   avatar: string;
   authorization: string;
   phone: string;
+  role: number;
 }
 
 // App挂载前行为
@@ -38,6 +39,7 @@ onBeforeMount(() => {
     userStore.setAvatar(user.avatar);
     userStore.setAuthorization(user.authorization);
     userStore.setPhone(user.phone)
+    userStore.setRole(user.role)
   }
   if (sessionStorage.getItem('activeIndex')) {
     publicStore.setActiveIndex(sessionStorage.getItem('activeIndex') as string);
@@ -68,7 +70,8 @@ onBeforeMount(() => {
       name: userStore.name,
       avatar: userStore.avatar,
       authorization: userStore.authorization,
-      phone: userStore.phone
+      phone: userStore.phone,
+      role: userStore.role
     }
     sessionStorage.setItem('user', JSON.stringify(user));
 

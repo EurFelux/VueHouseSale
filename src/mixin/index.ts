@@ -230,8 +230,26 @@ export const allRules = {
     { required: true, message: '请输入预算', trigger: 'blur' },
     { pattern: /^\d+(\.\d+)?$/, message: '非法数据', trigger: 'blur' },
   ],
+  // 审核状态
+  auditStatus: [
+    { required: true, message: '请选择审核状态', trigger: 'blur' },
+    {
+      validator: (rule: any, value: number, callback: any) => {
+        if (value === -1) {
+          callback(new Error('请选择审核状态'));
+        } else {
+          callback();
+        }
+      }
+    }
+  ],
+  // 审核意见
+  auditComment: [
+    { min: 0, max: 100, message: '长度应为0-100个字符之间', trigger: 'blur' },
+  ],
+}
 
-
-
-
+// 转换时间字符串
+export function DatetimeStringToFormatedString(datetime: string) {
+  return datetime.replace('T', ' ')
 }

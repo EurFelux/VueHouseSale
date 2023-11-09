@@ -60,6 +60,10 @@ export interface UpdateUserResponse extends BasicResponse {
     data: User;
 }
 
+export interface GetAllUsersResponse extends BasicResponse {
+    data: Array<User>;
+}
+
 // ------------------------------------------------
 
 
@@ -91,8 +95,19 @@ export interface GetAllSellInfoByUserIdResponse extends BasicResponse {
     data: Array<SellResponse>;
 }
 
+export interface DeleteSellInfoByIdResponse extends BasicResponse {
+    data: null;
+}
+
 
 // ------------------------------------------------
+
+
+
+
+
+
+
 
 // --------------------- rent ---------------------
 
@@ -114,6 +129,14 @@ export interface GetAllRentInfoByUserIdResponse extends BasicResponse {
 
 
 
+
+
+
+
+
+
+
+
 // --------------------- buy ---------------------
 
 export interface BuyResponse extends Buy {
@@ -131,6 +154,15 @@ export interface GetAllBuyInfoByUserIdResponse extends BasicResponse {
 }
 
 // ------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 // --------------------- seek ---------------------
 
@@ -151,6 +183,14 @@ export interface GetAllSeekInfoByUserIdResponse extends BasicResponse {
 // ------------------------------------------------
 
 
+
+
+
+
+
+
+
+
 // --------------------- audit ---------------------
 
 export interface GetAuditsByUserResponse extends BasicResponse {
@@ -159,4 +199,12 @@ export interface GetAuditsByUserResponse extends BasicResponse {
 
 export interface GetAuditedAuditsByUserResponse extends BasicResponse {
     data: Array<Audit>;
+}
+
+export interface GetAllNotAuditedAuditsResponse extends BasicResponse {
+    data: Array<Audit>;
+}
+
+export interface AuditResponse extends BasicResponse {
+    data: null;
 }

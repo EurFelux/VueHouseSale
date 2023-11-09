@@ -1,6 +1,6 @@
 import { globalConfig, serverUrl } from './api';
 import type { SellForm } from '@/api/request';
-import type { AddSellResponse, GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetSellInfoByIdResponse } from '@/api/response';
+import type { AddSellResponse, DeleteSellInfoByIdResponse, GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetSellInfoByIdResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
@@ -11,7 +11,7 @@ enum Api {
   GetSellInfoById = '/sell/info/byId',
   GetAllSellInfo = '/sell/info/all',
   GetAllSellInfoByUserId = '/sell/info/allById',
-
+  DeleteSellInfoById = '/sell/info/delete',
 }
 
 /**
@@ -76,4 +76,22 @@ export function getAllSellInfoByUserId(userID: number): Promise<AxiosResponse<Ge
   }
 
   return axios.get(`${serverUrl}${Api.GetAllSellInfoByUserId}`, config);
+}
+
+/**
+ * 删除指定id的出售信息
+ * @param sellID 出售信息id
+ */
+export function deleteSellInfoById(sellID: number): Promise<AxiosResponse<DeleteSellInfoByIdResponse>> {
+  const config = {
+    ...globalConfig,
+    params: {
+      id: sellID,
+    },
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+
+  return axios.delete(`${serverUrl}${Api.DeleteSellInfoById}`, config);
 }

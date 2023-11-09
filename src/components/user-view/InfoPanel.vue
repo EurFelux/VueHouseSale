@@ -62,9 +62,9 @@
 
             <el-form-item label="性别" prop="sex">
                 <el-radio-group v-model="userInfoForm.sex">
-                    <el-radio :label="sexValue.female">{{ sexName.female }}</el-radio>
-                    <el-radio :label="sexValue.male">{{ sexName.male }}</el-radio>
-                    <el-radio :label="sexValue.secret">{{ sexName.secret }}</el-radio>
+                    <el-radio :label="Sex.Female">{{ SexText.Female }}</el-radio>
+                    <el-radio :label="Sex.Male">{{ SexText.Male }}</el-radio>
+                    <el-radio :label="Sex.Secret">{{ SexText.Secret }}</el-radio>
                 </el-radio-group>
             </el-form-item>
 
@@ -115,10 +115,7 @@
                             </div>
                         </el-scrollbar>
                     </div>
-                    <el-scrollbar>
-                        <div class="cards-wrapper">
-                        </div>
-                    </el-scrollbar>
+                    
                 </el-col>
             </el-row>
             <el-row>
@@ -217,9 +214,8 @@
 
 
 <script setup lang="ts">
-import { getAuditsByUser } from '@/api/audit';
 import { getAllBuyInfoByUserId } from '@/api/buy';
-import { type BasicUser, defaultValues, sexName, sexValue, OrientationMap, ElevatorMap, DecorationMap, RentTypeMap } from '@/api/model';
+import { type BasicUser, defaultValues, Sex, SexText, OrientationMap, ElevatorMap, DecorationMap, RentTypeMap } from '@/api/model';
 import { getAllRentInfoByUserId } from '@/api/rent';
 import type { UpdateUserForm } from '@/api/request';
 import { ResponseCode, type BuyResponse, type RentResponse, type SeekResponse, type SellResponse } from '@/api/response';
@@ -502,5 +498,9 @@ onBeforeMount(() => {
     --el-scrollbar-opacity: 0.6;
     --el-scrollbar-hover-opacity: 0.9;
 
+}
+
+h2 {
+    margin: 1rem 0;
 }
 </style>

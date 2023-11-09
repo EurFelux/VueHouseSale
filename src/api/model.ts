@@ -72,22 +72,41 @@ export interface User extends BasicUser {
     phone: string;
 }
 
-
-export const sexValue = {
-    female: 0,
-    male: 1,
-    secret: 2,
+export enum Sex {
+    Female = 0,
+    Male = 1,
+    Secret = 2,
 }
 
-export const sexName = {
-    female: '女',
-    male: '男',
-    secret: '保密',
+export enum SexText {
+    Female =  '女',
+    Male = '男',
+    Secret = '保密',
 }
 
-export const roleName = {
-    admin: '管理员',
-    user: '用户'
+interface MapType {
+    [key: number]: string;
+}
+
+export const SexMap: MapType = {
+    [Sex.Female]: SexText.Female,
+    [Sex.Male]: SexText.Male,
+    [Sex.Secret]: SexText.Secret,
+}
+
+export enum Role {
+    Admin = 0,
+    User = 1,
+}
+
+export enum RoleText {
+    Admin = '管理员',
+    User = '用户',
+}
+
+export const RoleMap: MapType = {
+    [Role.Admin]: RoleText.Admin,
+    [Role.User]: RoleText.User,
 }
 
 // --------------
@@ -107,7 +126,7 @@ export enum ElevatorText {
     Any = '任意',
 }
 
-export const ElevatorMap = {
+export const ElevatorMap: MapType = {
     [Elevator.No]: ElevatorText.No,
     [Elevator.Yes]: ElevatorText.Yes,
     [Elevator.Any]: ElevatorText.Any,
@@ -146,7 +165,7 @@ export enum OrientationText {
     Unknown = '未知',
 }
 
-export const OrientationMap = {
+export const OrientationMap: MapType = {
     [Orientation.East]: OrientationText.East,
     [Orientation.South]: OrientationText.South,
     [Orientation.West]: OrientationText.West,
@@ -174,7 +193,7 @@ export enum OwnershipTypeText {
     Private = '私产',
 }
 
-export const OwnershipTypeMap = {
+export const OwnershipTypeMap: MapType = {
     [OwnershipType.Public]: OwnershipTypeText.Public,
     [OwnershipType.Private]: OwnershipTypeText.Private,
 }
@@ -194,7 +213,7 @@ export enum DecorationText {
     Any = '任意',
 }
 
-export const DecorationMap = {
+export const DecorationMap: MapType = {
     [Decoration.Simple]: DecorationText.Simple,
     [Decoration.Fine]: DecorationText.Fine,
     [Decoration.Any]: DecorationText.Any,
@@ -255,7 +274,7 @@ export enum RentTypeText {
     Any = '任意',
 }
 
-export const RentTypeMap = {
+export const RentTypeMap: MapType = {
     [RentType.Entire]: RentTypeText.Entire,
     [RentType.Joint]: RentTypeText.Joint,
     [RentType.Any]: RentTypeText.Any,
@@ -299,6 +318,18 @@ export enum AuditStatus {
     pending = 0,
     approved = 1,
     rejected = 2
+}
+
+export enum AuditStatusText {
+    pending = '待审核',
+    approved = '已通过',
+    rejected = '已驳回'
+}
+
+export const AuditStatusMap: MapType = {
+    [AuditStatus.pending]: AuditStatusText.pending,
+    [AuditStatus.approved]: AuditStatusText.approved,
+    [AuditStatus.rejected]: AuditStatusText.rejected,
 }
 
 /**

@@ -1,4 +1,4 @@
-import type { BasicHouse, BasicUser, Elevator, House, Orientation } from '@/api/model';
+import type { AuditStatus, BasicHouse, BasicUser, Elevator, House, Orientation } from '@/api/model';
 
 
 // --------------------------- Auth ---------------------------
@@ -111,10 +111,16 @@ export interface SeekForm extends BasicHouse {
 
 // --------------------------- Audit ---------------------------
 
-export interface AuditForm {
+export interface AuditRequestForm {
     userId: number,
     identification: string,
     realName: string,
 	house: House,
 }
 
+export interface AuditForm {
+    id: number,
+    status: AuditStatus,
+    adminId: number,
+    comment: string,
+}

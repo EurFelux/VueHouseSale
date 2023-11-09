@@ -71,7 +71,6 @@ html.dark {
     --color-text-on-glass: rgba(122, 122, 122, 0.8);
     --color-text-shadow: rgba(0, 0, 0, 0.5);
 
-
 }
 </style>
 

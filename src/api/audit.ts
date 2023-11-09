@@ -1,6 +1,6 @@
 import { globalConfig, serverUrl } from './api';
-import type { AuditForm } from '@/api/request';
-import type { AnyDataResponse, GetAuditedAuditsByUserResponse, GetAuditsByUserResponse } from '@/api/response';
+import type { AuditForm, AuditRequestForm } from '@/api/request';
+import type { AnyDataResponse, AuditResponse, GetAllNotAuditedAuditsResponse, GetAuditedAuditsByUserResponse, GetAuditsByUserResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
@@ -10,10 +10,12 @@ enum Api {
   AddAudit = '/audit/add',
   GetAuditsByUser = '/audit/list',
   GetAuditedAuditsByUser = '/audit/auditedList',
+  SetAudit = '/audit/set',
+  GetAllNotAuditedAudits = '/audit/notAudit',
 }
 
 // 添加审核
-export async function addAudit(form: AuditForm): Promise<AxiosResponse<AnyDataResponse>> {
+export async function addAudit(form: AuditRequestForm): Promise<AxiosResponse<AnyDataResponse>> {
   const config = {
     ...globalConfig,
     headers: {
@@ -50,3 +52,26 @@ export async function getAuditedAuditsByUser(userID: number): Promise<AxiosRespo
   }
   return await axios.get(`${serverUrl}${Api.GetAuditedAuditsByUser}`, config);
 }
+
+// 获取所有未通过审核
+export async function getAllNotAuditedAudits(): Promise<AxiosResponse<GetAllNotAuditedAuditsResponse>> {
+  const config = {
+    ...globalConfig,
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+  return await axios.get(`${serverUrl}${Api.GetAllNotAuditedAudits}`, config);
+}
+
+// 审核
+export async function setAudit(auditForm: AuditForm): Promise<AxiosResponse<AuditResponse>> {
+  const config = {
+    ...globalConfig,
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+  return await axios.post(`${serverUrl}${Api.SetAudit}`, auditForm, config);
+}
+
