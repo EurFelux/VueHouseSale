@@ -184,6 +184,8 @@ function exit() {
         if (err.response.data) {
             userStore.$reset()
         }
+        changeActiveIndex(routesMap.home.path)
+        router.push(routesMap.home.path)
     })
 }
 

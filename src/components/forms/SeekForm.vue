@@ -126,7 +126,7 @@ const seekForm = reactive<SeekForm>({
     userId: userStore.id,
     description: '',
     budget: 0,
-    contact: '',
+    contact: userStore.phone,
     type: RentType.Any,
     period: 0,
     requirement: '',

@@ -62,6 +62,11 @@
                 <el-form-item label="描述" prop="description">
                     <el-input type="textarea" v-model="buyForm.description" placeholder="请输入描述"></el-input>
                 </el-form-item>
+                
+                <!-- 预算 -->
+                <el-form-item label="预算" prop="budget">
+                    <el-input type="number" v-model.number="buyForm.budget" placeholder="请输入预算"></el-input>
+                </el-form-item>
 
                 <!-- 联系方式 -->
                 <el-form-item label="联系方式" prop="contact">

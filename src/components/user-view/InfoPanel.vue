@@ -58,7 +58,7 @@
             <el-col :span="4">
                 <div class="edit-button-wrapper">
                     <el-button v-if="userId == userStore.id" @click="editMode = !editMode">
-                        修改信息
+                        {{editMode ? "取消修改" : "修改信息"}}
                     </el-button>
                 </div>
             </el-col>
