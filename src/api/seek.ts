@@ -1,15 +1,16 @@
 import { globalConfig, serverUrl } from './api';
 import type { BuyForm, SeekForm, SellForm } from '@/api/request';
-import type { AddSeekResponse, GetAllSeekInfoByUserIdResponse } from '@/api/response';
+import type { AddSeekResponse, DeleteSeekInfoByIdResponse, GetAllSeekInfoByUserIdResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
-import axios, { type AxiosResponse } from 'axios';
+import axios, { Axios, type AxiosResponse } from 'axios';
 
 enum Api {
   AddSeek = '/rent/req/add',
   GetAllSeekInfoByUserId = '/rent/req/allById',
   GetAllSeekInfo = '/rent/req/all',
+  deleteSeekInfoById = '/rent/req/delete',
 }
 
 /**
@@ -57,4 +58,22 @@ export function getAllSeekInfo(): Promise<AxiosResponse<GetAllSeekInfoByUserIdRe
   }
 
   return axios.get(`${serverUrl}${Api.GetAllSeekInfo}`, config);
+}
+
+/**
+ * 删除指定id的求租信息
+ * @param id 求租信息id
+ */
+export function deleteSeekInfoById(id: number): Promise<AxiosResponse<DeleteSeekInfoByIdResponse>> {
+  const config = {
+    ...globalConfig,
+    params: {
+      id: id,
+    },
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+
+  return axios.delete(`${serverUrl}${Api.deleteSeekInfoById}`, config);
 }

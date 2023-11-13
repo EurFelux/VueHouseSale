@@ -1,6 +1,6 @@
 import { globalConfig, serverUrl } from './api';
-import type { UpdatePasswordForm, UpdateUserForm } from '@/api/request';
-import type { GetUserResponse, AnyDataResponse, UpdateUserResponse, GetAllUsersResponse } from '@/api/response';
+import type { UpdateAvatarForm, UpdatePasswordForm, UpdateUserForm } from '@/api/request';
+import type { GetUserResponse, AnyDataResponse, UpdateUserResponse, GetAllUsersResponse, UpdateAvatarResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
@@ -78,3 +78,12 @@ export async function updatePassword(UpdatePasswordForm: UpdatePasswordForm): Pr
 }
 
 // 更新用户头像
+export async function updateAvatar(avatarForm: UpdateAvatarForm): Promise<AxiosResponse<UpdateAvatarResponse>> {
+  const config = {
+    ...globalConfig,
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+  return await axios.post(`${serverUrl}${Api.UpdateAvatar}`, avatarForm, config);
+}

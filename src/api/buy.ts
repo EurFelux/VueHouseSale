@@ -10,7 +10,7 @@ enum Api {
   AddBuy = '/sell/req/add',
   GetAllBuyInfoByUserId = '/sell/req/allById',
   GetAllBuyInfo = '/sell/req/all',
-
+  DeleteBuyInfoById = '/sell/req/delete',
 
 
 }
@@ -60,4 +60,22 @@ export function getAllBuyInfo(): Promise<AxiosResponse<GetAllBuyInfoResponse>> {
   }
 
   return axios.get(`${serverUrl}${Api.GetAllBuyInfo}`, config);
+}
+
+/**
+ * 删除指定id的求购信息
+ * @param buyId 求购信息id
+ */
+export function deleteBuyInfoById(buyId: number): Promise<AxiosResponse<GetSellInfoByIdResponse>> {
+  const config = {
+    ...globalConfig,
+    params: {
+      sellId: buyId,
+    },
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+
+  return axios.delete(`${serverUrl}${Api.DeleteBuyInfoById}`, config);
 }

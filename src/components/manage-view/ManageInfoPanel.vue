@@ -8,7 +8,7 @@
             <el-table-column label="价格" prop="price"></el-table-column>
             <el-table-column label="联系方式" prop="contact"></el-table-column>
             <el-table-column label="描述" prop="description"></el-table-column>
-            <el-table-column align="right">
+            <el-table-column fixed="right" width="100px">
                 <template #default="scope">
                     <!-- <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button> -->
                     <el-button size="small" type="danger"
@@ -33,7 +33,7 @@
             <el-table-column label="家具家电情况" prop="furniture"></el-table-column>
             <el-table-column label="联系方式" prop="contact"></el-table-column>
             <el-table-column label="描述" prop="description"></el-table-column>
-            <el-table-column align="right">
+            <el-table-column fixed="right" width="100px">
                 <template #default="scope">
                     <!-- <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button> -->
                     <el-button size="small" type="danger"
@@ -43,17 +43,94 @@
         </el-table>
 
         <h2>求购信息管理</h2>
+        <el-table :data="buys" style="width: 100%">
+            <el-table-column label="ID" prop="id"></el-table-column>
+            <el-table-column label="发布用户ID" prop="userId"></el-table-column>
+            <el-table-column label="位置" prop="location"></el-table-column>
+            <el-table-column label="装修">
+                <template #default="scope">
+                    {{ DecorationMap[scope.row.decoration] }}
+                </template>
+            </el-table-column>
+            <el-table-column label="户型" prop="layout"></el-table-column>
+            <el-table-column label="朝向">
+                <template #default="scope">
+                    {{ OrientationMap[scope.row.orientation] }}
+                </template>
+            </el-table-column>
+            <el-table-column label="楼层" prop="floor"></el-table-column>
+            <el-table-column label="电梯">
+                <template #default="scope">
+                    {{ ElevatorMap[scope.row.elevator] }}
+                </template>
+            </el-table-column>
+            <el-table-column label="面积" prop="area"></el-table-column>
+            <el-table-column label="预算" prop="budget"></el-table-column>
+            <el-table-column label="联系方式" prop="contact"></el-table-column>
+            <el-table-column label="描述" prop="description"></el-table-column>
+            <el-table-column fixed="right" width="100px">
+                <template #default="scope">
+                    <!-- <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button> -->
+                    <el-button size="small" type="danger"
+                        @click="handleDeleteBuy(scope.$index, scope.row)">Delete</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+
+        <h2>求租信息管理</h2>
+        <el-table :data="seeks" style="width: 100%">
+            <el-table-column label="ID" prop="id"></el-table-column>
+            <el-table-column label="发布用户ID" prop="userId"></el-table-column>
+
+            <el-table-column label="位置" prop="location"></el-table-column>
+            <el-table-column label="装修">
+                <template #default="scope">
+                    {{ DecorationMap[scope.row.decoration] }}
+                </template>
+            </el-table-column>
+            <el-table-column label="户型" prop="layout"></el-table-column>
+            <el-table-column label="朝向">
+                <template #default="scope">
+                    {{ OrientationMap[scope.row.orientation] }}
+                </template>
+            </el-table-column>
+            <el-table-column label="楼层" prop="floor"></el-table-column>
+            <el-table-column label="电梯">
+                <template #default="scope">
+                    {{ ElevatorMap[scope.row.elevator] }}
+                </template>
+            </el-table-column>
+            <el-table-column label="面积" prop="area"></el-table-column>
+
+            <el-table-column label="租房类型">
+                <template #default="scope">
+                    {{ RentTypeMap[scope.row.type] }}
+                </template>
+            </el-table-column>
+            <el-table-column label="预算" prop="budget"></el-table-column>
+            <el-table-column label="租期/月" prop="period"></el-table-column>
+            <el-table-column label="要求" prop="requirement"></el-table-column>
+            <el-table-column label="联系方式" prop="contact"></el-table-column>
+            <el-table-column label="描述" prop="description"></el-table-column>
+            <el-table-column fixed="right" width="100px">
+                <template #default="scope">
+                    <!-- <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button> -->
+                    <el-button size="small" type="danger"
+                        @click="handleDeleteSeek(scope.$index, scope.row)">Delete</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
         
     </div>
 </template>
 
 
 <script setup lang="ts">
-import { getAllBuyInfo } from '@/api/buy';
-import { RentTypeMap } from '@/api/model';
+import { deleteBuyInfoById, getAllBuyInfo } from '@/api/buy';
+import { RentTypeMap, DecorationMap, OrientationMap, ElevatorMap } from '@/api/model';
 import { deleteRentInfoById, getAllRentInfo } from '@/api/rent';
 import type { BuyResponse, RentResponse, SeekResponse, SellResponse } from '@/api/response';
-import { getAllSeekInfo } from '@/api/seek';
+import { deleteSeekInfoById, getAllSeekInfo } from '@/api/seek';
 import { deleteSellInfoById, getAllSellInfo, getAllSellInfoByUserId } from '@/api/sell';
 import { generalError } from '@/mixin';
 import { useRouter } from 'vue-router';
@@ -81,6 +158,24 @@ function handleDeleteRent(index: number, row: RentResponse) {
     deleteRentInfoById(row.id).then((res) => {
         ElMessage.success('删除成功')
         getRents()
+    }).catch((err) => {
+        generalError(err)
+    })
+}
+
+function handleDeleteBuy(index: number, row: BuyResponse) {
+    deleteBuyInfoById(row.id).then((res) => {
+        ElMessage.success('删除成功')
+        getBuys()
+    }).catch((err) => {
+        generalError(err)
+    })
+}
+
+function handleDeleteSeek(index: number, row: SeekResponse) {
+    deleteSeekInfoById(row.id).then((res) => {
+        ElMessage.success('删除成功')
+        getSeeks()
     }).catch((err) => {
         generalError(err)
     })
@@ -128,4 +223,9 @@ onMounted(() => {
 </script>
 
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.el-table {
+    margin-bottom: 1rem;
+}
+
+</style>

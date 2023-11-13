@@ -64,6 +64,10 @@ export interface GetAllUsersResponse extends BasicResponse {
     data: Array<User>;
 }
 
+export interface UpdateAvatarResponse extends BasicResponse {
+    data: null;
+}
+
 // ------------------------------------------------
 
 

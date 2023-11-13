@@ -14,9 +14,12 @@
     :http-request="uploadImage"
     :on-preview="handlePictureCardPreview"
     :on-remove="handleRemove"
+    multiple
   >
     <el-icon><Plus /></el-icon>
   </el-upload>
+
+  <img :src="downloadedFileUrl" />
 
   <el-dialog v-model="dialogVisible">
     <img w-full :src="dialogImageUrl" alt="Preview Image" />
@@ -26,7 +29,7 @@
 </template>
     
 <script setup lang="ts">
-import { uploadFile } from '@/api/oss'
+import { getFileUrl, uploadFile } from '@/api/oss'
 
 function test_1() {
   const file = ref<File>(new File([], ''))
@@ -49,6 +52,8 @@ const fileList = ref<UploadUserFile[]>([
   },
 ])
 
+const downloadedFileUrl = ref('')
+
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
 
@@ -65,11 +70,11 @@ const uploadImage = async (options: UploadRequestOptions) => {
   console.log(options)
   uploadFile(options.file).then((res: any) => {
     console.log(res)
+    downloadedFileUrl.value = getFileUrl(res.name)
   }).catch((err: any) => {
     console.log(err)
   })
   // const res = await uploadFile(formData)
-  
 }
 
 </script>

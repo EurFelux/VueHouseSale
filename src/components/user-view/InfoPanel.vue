@@ -1,13 +1,22 @@
 <template>
     <div class="info-panel" v-loading.fullscreen.lock="loading" element-loading-background="transparent">
         <!-- 上传头像窗口 -->
-        <el-dialog v-model="avatarDialogVisible" title="上传头像" width="50%" :before-close="handleClose" append-to-body="true">
+        <el-dialog v-model="avatarDialogVisible" title="上传头像" width="50%" 
+            :before-close="handleClose" append-to-body="true">
             <template #tip>
                 请选择图片上传：大小180 * 180像素支持JPG、PNG等格式，图片需小于2M
             </template>
             <template #footer>
-                <el-upload>
-                    <el-button>选择图片</el-button>
+                
+                <el-upload :http-request="uploadAvatar" :limit="1" 
+                    :on-exceed="handleExceed" 
+                    :show-file-list="false" 
+                    :on-success="handleAvatarSuccess" 
+                    :before-upload="beforeAvatarUpload"
+                    ref="upload"
+                >
+                <el-button>选择图片</el-button>
+                
                 </el-upload>
             </template>
         </el-dialog>
@@ -15,9 +24,11 @@
         <el-row>
             <!-- 头像 -->
             <el-col :span="8" class="avatar-wrapper">
-                <el-tooltip content="修改头像" placement="top">
-                    <el-avatar shape="square" :src="avatar" @click="avatarDialogVisible = true"></el-avatar>
+                <el-tooltip content="修改头像" placement="top" v-if="userId == userStore.id">
+                    <el-avatar shape="square" :src="avatar" @click="avatarDialogVisible = true" 
+                        @error="userStore.setAvatar(defaultValues.USER_AVATAR)"></el-avatar>
                 </el-tooltip>
+                <el-avatar shape="square" :src="avatar" v-else></el-avatar>
                 <span class="user-id-text">ID: {{ displayedUserInfo.id }}</span>
             </el-col>
             <!-- 用户信息 -->
@@ -99,15 +110,18 @@
                             <div class="cards-wrapper">
                                 <el-popover v-for="sell in sells" :key="sell.id" :width="700">
                                     <template #reference>
-                                        <base-card v-for="sell in sells" :title="sell.house.location" :description="sell.description"
-                                                :image="sell.pic"></base-card>
+                                        <base-card v-for="sell in sells" :title="sell.house.location"
+                                            :description="sell.description" :image="sell.pic"></base-card>
                                     </template>
                                     <el-descriptions border="true" size="large" title="房屋信息">
                                         <el-descriptions-item label="户型">{{ sell.house.layout }}</el-descriptions-item>
                                         <el-descriptions-item label="面积">{{ sell.house.area }}平方米</el-descriptions-item>
-                                        <el-descriptions-item label="朝向">{{ OrientationMap[sell.house.orientation] }}</el-descriptions-item>
-                                        <el-descriptions-item label="电梯">{{ ElevatorMap[sell.house.elevator] }}</el-descriptions-item>
-                                        <el-descriptions-item label="装修">{{ DecorationMap[sell.house.decoration] }}</el-descriptions-item>
+                                        <el-descriptions-item label="朝向">{{ OrientationMap[sell.house.orientation]
+                                        }}</el-descriptions-item>
+                                        <el-descriptions-item label="电梯">{{ ElevatorMap[sell.house.elevator]
+                                        }}</el-descriptions-item>
+                                        <el-descriptions-item label="装修">{{ DecorationMap[sell.house.decoration]
+                                        }}</el-descriptions-item>
                                         <el-descriptions-item label="楼层">{{ sell.house.floor }}</el-descriptions-item>
                                         <el-descriptions-item label="联系方式">{{ sell.contact }}</el-descriptions-item>
                                     </el-descriptions>
@@ -115,7 +129,7 @@
                             </div>
                         </el-scrollbar>
                     </div>
-                    
+
                 </el-col>
             </el-row>
             <el-row>
@@ -133,12 +147,16 @@
                                     <el-descriptions border="true" size="large" title="房屋要求">
                                         <el-descriptions-item label="户型">{{ rent.house.layout }}</el-descriptions-item>
                                         <el-descriptions-item label="面积">{{ rent.house.area }}平方米</el-descriptions-item>
-                                        <el-descriptions-item label="朝向">{{ OrientationMap[rent.house.orientation] }}</el-descriptions-item>
-                                        <el-descriptions-item label="电梯">{{ ElevatorMap[rent.house.elevator] }}</el-descriptions-item>
-                                        <el-descriptions-item label="装修">{{ DecorationMap[rent.house.decoration] }}</el-descriptions-item>
+                                        <el-descriptions-item label="朝向">{{ OrientationMap[rent.house.orientation]
+                                        }}</el-descriptions-item>
+                                        <el-descriptions-item label="电梯">{{ ElevatorMap[rent.house.elevator]
+                                        }}</el-descriptions-item>
+                                        <el-descriptions-item label="装修">{{ DecorationMap[rent.house.decoration]
+                                        }}</el-descriptions-item>
                                         <el-descriptions-item label="楼层">{{ rent.house.floor }}</el-descriptions-item>
                                         <el-descriptions-item label="家具家电情况">{{ rent.furniture }}</el-descriptions-item>
-                                        <el-descriptions-item label="租房方式">{{ RentTypeMap[rent.type] }}</el-descriptions-item>
+                                        <el-descriptions-item label="租房方式">{{ RentTypeMap[rent.type]
+                                        }}</el-descriptions-item>
                                         <el-descriptions-item label="最小租期">{{ rent.minPeriod }}个月</el-descriptions-item>
                                         <el-descriptions-item label="租金/月">{{ rent.price }}元</el-descriptions-item>
                                         <el-descriptions-item label="出租要求">{{ rent.requirement }}元</el-descriptions-item>
@@ -159,15 +177,18 @@
                             <div class="cards-wrapper">
                                 <el-popover v-for="buy in buys" :key="buy.id" :width="600">
                                     <template #reference>
-                                        <base-card  :title="buy.location" :description="buy.description"></base-card>
+                                        <base-card :title="buy.location" :description="buy.description"></base-card>
                                     </template>
                                     <el-descriptions border="true" size="large" title="房屋要求">
                                         <el-descriptions-item label="户型">{{ buy.layout }}</el-descriptions-item>
                                         <el-descriptions-item label="面积">{{ buy.area }}平方米</el-descriptions-item>
                                         <el-descriptions-item label="预算">{{ buy.budget }}元</el-descriptions-item>
-                                        <el-descriptions-item label="朝向">{{ OrientationMap[buy.orientation] }}</el-descriptions-item>
-                                        <el-descriptions-item label="电梯">{{ ElevatorMap[buy.elevator] }}</el-descriptions-item>
-                                        <el-descriptions-item label="装修">{{ DecorationMap[buy.decoration] }}</el-descriptions-item>
+                                        <el-descriptions-item label="朝向">{{ OrientationMap[buy.orientation]
+                                        }}</el-descriptions-item>
+                                        <el-descriptions-item label="电梯">{{ ElevatorMap[buy.elevator]
+                                        }}</el-descriptions-item>
+                                        <el-descriptions-item label="装修">{{ DecorationMap[buy.decoration]
+                                        }}</el-descriptions-item>
                                         <el-descriptions-item label="楼层">{{ buy.floor }}</el-descriptions-item>
                                         <el-descriptions-item label="联系方式">{{ buy.contact }}</el-descriptions-item>
                                     </el-descriptions>
@@ -186,17 +207,20 @@
                             <div class="cards-wrapper">
                                 <el-popover v-for="seek in seeks" :key="seek.id" :width="700">
                                     <template #reference>
-                                        <base-card :title="seek.location"
-                                            :description="seek.description"></base-card>
+                                        <base-card :title="seek.location" :description="seek.description"></base-card>
                                     </template>
                                     <el-descriptions border="true" size="large" title="房屋要求">
                                         <el-descriptions-item label="户型">{{ seek.layout }}</el-descriptions-item>
                                         <el-descriptions-item label="面积">{{ seek.area }}平方米</el-descriptions-item>
-                                        <el-descriptions-item label="装修">{{ DecorationMap[seek.decoration] }}</el-descriptions-item>
-                                        <el-descriptions-item label="朝向">{{ OrientationMap[seek.orientation] }}</el-descriptions-item>
-                                        <el-descriptions-item label="电梯">{{ ElevatorMap[seek.elevator] }}</el-descriptions-item>
+                                        <el-descriptions-item label="装修">{{ DecorationMap[seek.decoration]
+                                        }}</el-descriptions-item>
+                                        <el-descriptions-item label="朝向">{{ OrientationMap[seek.orientation]
+                                        }}</el-descriptions-item>
+                                        <el-descriptions-item label="电梯">{{ ElevatorMap[seek.elevator]
+                                        }}</el-descriptions-item>
                                         <el-descriptions-item label="楼层">{{ seek.floor }}</el-descriptions-item>
-                                        <el-descriptions-item label="租房方式">{{ RentTypeMap[seek.type] }}</el-descriptions-item>
+                                        <el-descriptions-item label="租房方式">{{ RentTypeMap[seek.type]
+                                        }}</el-descriptions-item>
                                         <el-descriptions-item label="预算">{{ seek.budget }}元</el-descriptions-item>
                                         <el-descriptions-item label="租期">{{ seek.period }}个月</el-descriptions-item>
                                         <el-descriptions-item label="要求">{{ seek.requirement }}</el-descriptions-item>
@@ -221,13 +245,14 @@ import type { UpdateUserForm } from '@/api/request';
 import { ResponseCode, type BuyResponse, type RentResponse, type SeekResponse, type SellResponse } from '@/api/response';
 import { getAllSeekInfoByUserId } from '@/api/seek';
 import { getAllSellInfoByUserId } from '@/api/sell';
-import { getUser, updateUser } from '@/api/user';
+import { getUser, updateAvatar, updateUser } from '@/api/user';
 import { generalError, allRules } from '@/mixin';
 import { routesMap } from '@/router';
 import { useUserStore } from '@/stores/user';
-import type { FormInstance, FormRules } from 'element-plus';
+import { genFileId, type FormInstance, type FormRules, type UploadInstance, type UploadProps, type UploadRequestOptions, type UploadRawFile } from 'element-plus';
 import { useRoute, useRouter } from 'vue-router';
 import BaseCard from '../BaseCard.vue';
+import { getFileUrl, uploadFile } from '@/api/oss';
 
 const router = useRouter()
 const userStore = useUserStore();
@@ -347,11 +372,56 @@ async function handleSubmit(formEl: FormInstance | undefined) {
 
 // 修改头像
 const avatarDialogVisible = ref(false)
+const upload = ref<UploadInstance>()
 
 function handleClose() {
     avatarDialogVisible.value = false
 }
 
+const handleAvatarSuccess: UploadProps['onSuccess'] = (
+    response,
+    uploadFile
+) => {
+    ElMessage.success('上传成功')
+    userStore.setAvatar(URL.createObjectURL(uploadFile.raw!))
+    avatarDialogVisible.value = false
+
+}
+
+const handleExceed: UploadProps['onExceed'] = (files) => {
+  upload.value!.clearFiles()
+  const file = files[0] as UploadRawFile
+  file.uid = genFileId()
+  upload.value!.handleStart(file)
+}
+
+const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+    if (rawFile.type !== 'image/jpeg' && rawFile.type !== 'image/png') {
+        ElMessage.error('Avatar picture must be JPG or PNG format!')
+        return false
+    } else if (rawFile.size / 1024 / 1024 > 2) {
+        ElMessage.error('Avatar picture size can not exceed 2MB!')
+        return false
+    }
+    return true
+}
+
+const uploadAvatar = async (options: UploadRequestOptions) => {
+  uploadFile(options.file).then((res: any) => {
+    updateAvatar({
+        id: userStore.id,
+        url: getFileUrl(res.name)
+    }).then((res_) => {
+      ElMessage.success('上传成功')
+      userStore.setAvatar(getFileUrl(res.name))
+    }).catch((err) => {
+      generalError(err)
+    })
+  }).catch((err: any) => {
+    generalError(err)
+  })
+  // const res = await uploadFile(formData)
+}
 
 // 监听路由，刷新数据
 const route = useRoute()
@@ -399,9 +469,6 @@ function getSeeks() {
     })
 }
 
-// 在对话框显示的信息
-
-
 // 生命周期钩子
 onBeforeMount(() => {
     refreshUser()
@@ -410,6 +477,8 @@ onBeforeMount(() => {
     getBuys()
     getSeeks()
 })
+
+
 </script>
 
 
@@ -503,4 +572,6 @@ onBeforeMount(() => {
 h2 {
     margin: 1rem 0;
 }
+
+
 </style>

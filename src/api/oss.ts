@@ -18,3 +18,8 @@ export function uploadFile(file: File): Promise<OSS.PutObjectResult> {
     
     return client.put(`${dir}${file.name}`, file)
 }
+
+export function getFileUrl(file: string): string {
+    return client.signatureUrl(file)
+}
+

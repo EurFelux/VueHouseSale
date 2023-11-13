@@ -39,6 +39,11 @@ export interface UpdatePasswordForm {
     confirmPassword: string;
 }
 
+export interface UpdateAvatarForm {
+    id: number;     // 用户id
+    url: string; // 头像的url
+}
+
 // -----------------------------------------------------------
 
 

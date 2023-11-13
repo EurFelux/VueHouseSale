@@ -5,41 +5,38 @@
                 <!-- 选择房产 -->
                 <el-form-item label="选择房产" prop="house.houseId">
                     <el-select v-model="sellForm.house" placeholder="请选择房产">
-                        <el-option
-                            v-for="house in houses"
-                            :key="house.houseId"
-                            :label="house.location"
-                            :value="house"
-                        ></el-option>
+                        <el-option v-for="house in houses" :key="house.houseId" :label="house.location"
+                            :value="house"></el-option>
                     </el-select>
                 </el-form-item>
                 <!-- 房屋图片 -->
                 <el-form-item label="房屋图片" prop="pic">
-                    haha还没做呢
+                    <el-upload v-model:file-list="fileList"
+                        :on-change="handleChange"
+                        :http-request="uploadImage"
+                        >
+                        <el-button type="primary">上传图片</el-button>
+                        <template #tip>
+                            <div class="el-upload__tip">
+                                <p>
+                                    jpg/png files with a size less than 3MB
+                                </p>
+                                <p>最多上传3张图片</p>
+                            </div>
+                        </template>
+                    </el-upload>
                 </el-form-item>
                 <!-- 描述 -->
                 <el-form-item label="描述" prop="description">
-                    <el-input
-                        type="textarea"
-                        v-model="sellForm.description"
-                        placeholder="请输入描述"
-                    ></el-input>
+                    <el-input type="textarea" v-model="sellForm.description" placeholder="请输入描述"></el-input>
                 </el-form-item>
                 <!-- 价格 -->
                 <el-form-item label="价格" prop="price">
-                    <el-input
-                        type="number"
-                        v-model.number="sellForm.price"
-                        placeholder="请输入价格"
-                    ></el-input>
+                    <el-input type="number" v-model.number="sellForm.price" placeholder="请输入价格"></el-input>
                 </el-form-item>
                 <!-- 联系方式 -->
                 <el-form-item label="联系方式" prop="contact">
-                    <el-input
-                        type="text"
-                        v-model="sellForm.contact"
-                        placeholder="请输入联系方式"
-                    ></el-input>
+                    <el-input type="text" v-model="sellForm.contact" placeholder="请输入联系方式"></el-input>
                 </el-form-item>
             </el-form>
             <div class="button-wrapper">
@@ -58,7 +55,7 @@ import type { SellForm } from '@/api/request';
 import { addSell } from '@/api/sell';
 import { allRules, generalError } from '@/mixin';
 import { useUserStore } from '@/stores/user';
-import type { FormInstance, FormRules } from 'element-plus';
+import type { FormInstance, FormRules, UploadProps, UploadRequestOptions, UploadUserFile } from 'element-plus';
 
 
 const userStore = useUserStore()
@@ -80,6 +77,24 @@ function getHouses() {
 onMounted(() => {
     getHouses()
 })
+
+// 上传图片
+import { uploadFile } from '@/api/oss';
+const fileList = ref<UploadUserFile[]>([])
+
+const uploadImage = async (options: UploadRequestOptions) => {
+    
+    uploadFile(options.file).then((res: any) => {
+        
+        ElMessage.success('上传成功')
+    })
+    
+  // const res = await uploadFile(formData)
+}
+
+const handleChange: UploadProps['onChange'] = (uploadFile, uploadFiles) => {
+//   fileList.value = fileList.value.slice(-3)
+}
 
 
 // 提交表单
@@ -108,7 +123,7 @@ const rules = reactive<FormRules<SellForm>>({
     description: allRules.description,
     price: allRules.price,
     contact: allRules.phone,
-    
+
 })
 
 function resetSellForm() {
