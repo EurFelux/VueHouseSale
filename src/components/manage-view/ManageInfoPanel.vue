@@ -228,4 +228,12 @@ onMounted(() => {
     margin-bottom: 1rem;
 }
 
+h2 {
+    padding: 1rem 0;
+}
+
+h2:first-child {
+    padding-top: 0;
+}
+
 </style>

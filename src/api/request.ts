@@ -66,6 +66,14 @@ export interface SellForm {
     house: House;
 }
 
+export interface UpdateSellForm {
+    id: number;
+    price: number;
+    pic: string;
+    description: string;
+    contact: string;
+
+}
 
 // -----------------------------------------------------------
 
@@ -82,7 +90,19 @@ export interface RentForm {
     pic: string;
     description: string;
     contact: string;
-    house: House;
+    house: House | null;
+}
+
+export interface UpdateRentForm {
+    id: number;
+    type: number;
+    price: number;
+    minPeriod: number;
+    requirement: string;
+    furniture: string;
+    pic: string;
+    description: string;
+    contact: string;
 }
 
 // -----------------------------------------------------------
@@ -91,6 +111,13 @@ export interface RentForm {
 
 export interface BuyForm extends BasicHouse {
     userId: number;
+    description: string;
+    budget: number;
+    contact: string;
+}
+
+export interface UpdateBuyForm extends BasicHouse {
+    id: number;
     description: string;
     budget: number;
     contact: string;
@@ -110,6 +137,15 @@ export interface SeekForm extends BasicHouse {
     contact: string,
 }
 
+export interface UpdateSeekForm extends BasicHouse {
+    id: number,
+    type: number,
+    budget: number,
+    period: number,
+    requirement: string,
+    description: string,
+    contact: string,
+}
 // -----------------------------------------------------------
 
 

@@ -154,7 +154,7 @@ watch(accentColorSetting, (newVal) => {
 }
 
 h2 {
-    border-bottom: 1px solid var(--color-text);
+    border-bottom: 2px solid var(--el-color-primary);
     margin-bottom: 1rem;
 }
 </style>

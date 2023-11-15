@@ -1,6 +1,6 @@
 import { globalConfig, serverUrl } from './api';
-import type { BuyForm, SeekForm, SellForm } from '@/api/request';
-import type { AddSeekResponse, DeleteSeekInfoByIdResponse, GetAllSeekInfoByUserIdResponse } from '@/api/response';
+import type { BuyForm, SeekForm, SellForm, UpdateSeekForm } from '@/api/request';
+import type { AddSeekResponse, DeleteSeekInfoByIdResponse, GetAllSeekInfoByUserIdResponse, GetSeekInfoByIdResponse, UpdateSeekInfoResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
@@ -8,9 +8,11 @@ import axios, { Axios, type AxiosResponse } from 'axios';
 
 enum Api {
   AddSeek = '/rent/req/add',
+  GetSeekInfoById = '/rent/req/byId',
   GetAllSeekInfoByUserId = '/rent/req/allById',
   GetAllSeekInfo = '/rent/req/all',
-  deleteSeekInfoById = '/rent/req/delete',
+  DeleteSeekInfoById = '/rent/req/delete',
+  UpdateSeekInfo = '/rent/req/update',
 }
 
 /**
@@ -26,6 +28,24 @@ export function addSeek(form: SeekForm): Promise<AxiosResponse<AddSeekResponse>>
   }
 
   return axios.post(`${serverUrl}${Api.AddSeek}`, form, config);
+}
+
+/**
+ * 获取指定id的求租信息
+ * @param seekId 求租信息id
+ */
+export function getSeekInfoById(seekId: number): Promise<AxiosResponse<GetSeekInfoByIdResponse>> {
+  const config = {
+    ...globalConfig,
+    params: {
+      id: seekId,
+    },
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+
+  return axios.get(`${serverUrl}${Api.GetSeekInfoById}`, config);
 }
 
 /**
@@ -75,5 +95,20 @@ export function deleteSeekInfoById(id: number): Promise<AxiosResponse<DeleteSeek
     }
   }
 
-  return axios.delete(`${serverUrl}${Api.deleteSeekInfoById}`, config);
+  return axios.delete(`${serverUrl}${Api.DeleteSeekInfoById}`, config);
+}
+
+/**
+ * 更新指定id的求租信息
+ * @param form 求租信息表单
+ */
+export function updateSeekInfo(form: UpdateSeekForm): Promise<AxiosResponse<UpdateSeekInfoResponse>> {
+  const config = {
+    ...globalConfig,
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+
+  return axios.post(`${serverUrl}${Api.UpdateSeekInfo}`, form, config);
 }

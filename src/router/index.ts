@@ -30,6 +30,22 @@ export const routesMap: Record<string, RouteType> = {
     path: '/user/:id',
     name: 'user',
   },
+  sell: {
+    path: '/sell/:id',
+    name: 'sell',
+  },
+  buy: {
+    path: '/buy/:id',
+    name: 'buy',
+  },
+  rent: {
+    path: '/rent/:id',
+    name: 'rent',
+  },
+  seek: {
+    path: '/seek/:id',
+    name: 'seek',
+  },
   manage: {
     path: '/manage',
     name: 'manage',
@@ -67,6 +83,26 @@ const router = createRouter({
       path: routesMap.user.path,
       name: routesMap.user.name,
       component: () => import('../views/UserView.vue')
+    },
+    {
+      path: routesMap.sell.path,
+      name: routesMap.sell.name,
+      component: () => import('../views/InfoView.vue')
+    },
+    {
+      path: routesMap.buy.path,
+      name: routesMap.buy.name,
+      component: () => import('../views/InfoView.vue')
+    },
+    {
+      path: routesMap.rent.path,
+      name: routesMap.rent.name,
+      component: () => import('../views/InfoView.vue')
+    },
+    {
+      path: routesMap.seek.path,
+      name: routesMap.seek.name,
+      component: () => import('../views/InfoView.vue')
     },
     {
       path: routesMap.manage.path,

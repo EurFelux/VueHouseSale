@@ -46,6 +46,7 @@ const loginFormRef = ref<FormInstance>()
 import { type FormInstance, type FormRules } from 'element-plus';
 import { allRules, changeActiveIndex, generalError } from '@/mixin';
 import { defaultValues } from '@/api/model';
+import { getFileUrl } from '@/api/oss';
 
 const rules = reactive<FormRules<LoginForm>>({
     phone: allRules.phone,

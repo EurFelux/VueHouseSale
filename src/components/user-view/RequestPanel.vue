@@ -85,21 +85,27 @@
                 <div v-if="drawer">
                     <el-empty description="没有已提交的申请"></el-empty>
                 </div>
-                <el-descriptions :title="audit.house.location" v-for="audit in audits">
-                    <el-descriptions-item label="房产证编号">
-                        {{ audit.house.houseId }}
-                    </el-descriptions-item>
-                    
-                    <el-descriptions-item label="房屋地址">
-                        {{ audit.house.location }}
-                    </el-descriptions-item>
-                    
-                    <el-descriptions-item label="审核状态">
-                        <el-tag type="info" v-if="audit.status == AuditStatus.pending">待审核</el-tag>
-                        <el-tag type="success" v-if="audit.status == AuditStatus.approved">已通过</el-tag>
-                        <el-tag type="danger" v-if="audit.status == AuditStatus.rejected">已拒绝</el-tag>
-                    </el-descriptions-item>
-                </el-descriptions>
+                <div class="request-wrapper" v-for="audit in audits" :key="audit.id">
+                    <el-descriptions :title="audit.house.location" :column="1" :border="true">
+                        <el-descriptions-item label="房产证编号" label-class-name="label">
+                            {{ audit.house.houseId }}
+                        </el-descriptions-item>
+                        
+                        <el-descriptions-item label="房屋地址" label-class-name="label">
+                            {{ audit.house.location }}
+                        </el-descriptions-item>
+                        
+                        <el-descriptions-item label="审核状态" label-class-name="label">
+                            <el-tag type="info" v-if="audit.status == AuditStatus.pending">待审核</el-tag>
+                            <el-tag type="success" v-if="audit.status == AuditStatus.approved">已通过</el-tag>
+                            <el-tag type="danger" v-if="audit.status == AuditStatus.rejected">已拒绝</el-tag>
+                        </el-descriptions-item>
+
+                        <el-descriptions-item label="审核意见" label-class-name="label">
+                            {{ audit.comment }}
+                        </el-descriptions-item>
+                    </el-descriptions>
+                </div>
 
             </el-col>
         </el-row>
@@ -120,16 +126,16 @@ const userStore = useUserStore();
 // 获取数据
 const audits = ref<Audit[]>([])
 
-function getAudits() {
-    getAuditsByUser(userStore.id).then((res) => {
+async function getAudits() {
+    await getAuditsByUser(userStore.id).then((res) => {
         audits.value = res.data.data
     }).catch((err) => {
         generalError(err)
     })
 }
 
-onMounted(() => {
-    getAudits()
+onMounted(async () => {
+    await getAudits()
 })
 
 // 提交新审核
@@ -225,7 +231,8 @@ async function submitAudit(formEl: FormInstance | undefined) {
     text-shadow: 1px 1px 0 var(--color-text-shadow);
 
     h2 {
-     border-bottom: 1px solid var(--color-text-on-glass);;   
+        border-bottom: 1px solid var(--color-text);
+        margin-bottom: 1rem;
     }
 }
 
@@ -236,7 +243,7 @@ async function submitAudit(formEl: FormInstance | undefined) {
 .el-collapse {
     
     --el-collapse-header-bg-color: transparent;
-    --el-collapse-content-bg-color: var(--color-bg-glass);
+    --el-collapse-content-bg-color: var(--color-bg);
     border-top: 0;
     background-color: transparent;
     margin-bottom: 1rem;
@@ -251,5 +258,13 @@ async function submitAudit(formEl: FormInstance | undefined) {
 
 button > .heading-wrapper > h2 {
     border-bottom: 0;
+}
+
+.request-wrapper {
+    margin-bottom: 2rem;
+}
+
+:deep(.label) {
+    width: 8rem;
 }
 </style>

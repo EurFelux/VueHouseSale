@@ -46,6 +46,7 @@ declare module 'vue' {
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElMenuItemGroup: typeof import('element-plus/es')['ElMenuItemGroup']
     ElOption: typeof import('element-plus/es')['ElOption']
+    ElPopconfirm: typeof import('element-plus/es')['ElPopconfirm']
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElRadio: typeof import('element-plus/es')['ElRadio']
     ElRadioButton: typeof import('element-plus/es')['ElRadioButton']
@@ -92,6 +93,10 @@ declare module 'vue' {
     SellInfo: typeof import('./src/components/SellInfo.vue')['default']
     SettingsPanel: typeof import('./src/components/user-view/SettingsPanel.vue')['default']
     TestComp: typeof import('./src/components/TestComp.vue')['default']
+    UpdateBuyForm: typeof import('./src/components/forms/UpdateBuyForm.vue')['default']
+    UpdateRentForm: typeof import('./src/components/forms/UpdateRentForm.vue')['default']
+    UpdateSeekForm: typeof import('./src/components/forms/UpdateSeekForm.vue')['default']
+    UpdateSellForm: typeof import('./src/components/forms/UpdateSellForm.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

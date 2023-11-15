@@ -10,7 +10,7 @@ export const defaultValues = {
     USER_AGE: 0,
     USER_PHONE: '00000000000',
 
-    ACCENT_COLOR: '#cccccc',
+    ACCENT_COLOR: '#94811e',
     ANY_PIC: '/src/assets/otto.jpg',
 
     HOUSE_ID: -1,
@@ -118,18 +118,21 @@ export enum Elevator {
     No = 0,     // 无电梯
     Yes = 1,    // 有电梯
     Any = 2,    // 任意
+    Unknown = 3, // 未知
 }
 
 export enum ElevatorText {
     No = '无电梯',
     Yes = '有电梯',
     Any = '任意',
+    Unknown = '未知',
 }
 
 export const ElevatorMap: MapType = {
     [Elevator.No]: ElevatorText.No,
     [Elevator.Yes]: ElevatorText.Yes,
     [Elevator.Any]: ElevatorText.Any,
+    [Elevator.Unknown]: ElevatorText.Unknown,
 }
 
 /**
@@ -186,16 +189,19 @@ export const OrientationMap: MapType = {
 export enum OwnershipType {
     Public = 0,     // 公产
     Private = 1,    // 私产
+    Unknown = 2,    // 未知
 }
 
 export enum OwnershipTypeText {
     Public = '公产',
     Private = '私产',
+    Unknown = '未知',
 }
 
 export const OwnershipTypeMap: MapType = {
     [OwnershipType.Public]: OwnershipTypeText.Public,
     [OwnershipType.Private]: OwnershipTypeText.Private,
+    [OwnershipType.Unknown]: OwnershipTypeText.Unknown,
 }
 
 /**
@@ -205,18 +211,21 @@ export enum Decoration {
     Simple = 0, // 简装
     Fine = 1,   // 精装
     Any = 2,    // 任意
+    Unknown = 3, // 未知
 }
 
 export enum DecorationText {
     Simple = '简装',
     Fine = '精装',
     Any = '任意',
+    Unknown = '未知',
 }
 
 export const DecorationMap: MapType = {
     [Decoration.Simple]: DecorationText.Simple,
     [Decoration.Fine]: DecorationText.Fine,
     [Decoration.Any]: DecorationText.Any,
+    [Decoration.Unknown]: DecorationText.Unknown,
 }
 
 /**
@@ -255,7 +264,7 @@ export interface BasicInfo {
  */
 export interface Sell extends BasicInfo {
     price: number;      // 价格
-    pic: string;        // 房屋图片
+    pic: Array<string>;        // 房屋图片
     house: House;       // 房产信息
 }
 
@@ -266,18 +275,21 @@ export enum RentType {
     Entire = 0, // 整租
     Joint = 1,  // 合租
     Any = 2,    // 任意
+    Unknown = 3, // 未知
 }
 
 export enum RentTypeText {
     Entire = '整租',
     Joint = '合租',
     Any = '任意',
+    Unknown = '未知',
 }
 
 export const RentTypeMap: MapType = {
     [RentType.Entire]: RentTypeText.Entire,
     [RentType.Joint]: RentTypeText.Joint,
     [RentType.Any]: RentTypeText.Any,
+    [RentType.Unknown]: RentTypeText.Unknown,
 }
 
 /**
@@ -286,7 +298,7 @@ export const RentTypeMap: MapType = {
 export interface Rent extends BasicInfo {
     type: RentType;         // 出租类型
     price: number;          // 租金/月
-    pic: string;            // 房屋图片
+    pic: Array<string>;            // 房屋图片
     minPeriod: number;     // 最短租期/月
     requirement: string;    // 出租要求：对租房人员的要求
     furniture: string;      // 家具家电情况

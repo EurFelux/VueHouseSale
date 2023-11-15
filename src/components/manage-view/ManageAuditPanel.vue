@@ -46,6 +46,9 @@
                     </el-form>
                 </div>
             </el-collapse-item>
+            <div v-if="audits.length == 0">
+                <el-text type="info">暂无待审核的房产资质</el-text>
+            </div>
 
         </el-collapse>
 

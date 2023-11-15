@@ -1,6 +1,6 @@
 import { globalConfig, serverUrl } from './api';
-import type { BuyForm } from '@/api/request';
-import type { AddBuyResponse, GetAllBuyInfoByUserIdResponse, GetAllBuyInfoResponse, GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetSellInfoByIdResponse } from '@/api/response';
+import type { BuyForm, UpdateBuyForm } from '@/api/request';
+import type { AddBuyResponse, GetAllBuyInfoByUserIdResponse, GetAllBuyInfoResponse, GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetBuyInfoByIdResponse, GetSellInfoByIdResponse, UpdateBuyInfoResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
@@ -8,9 +8,11 @@ import axios, { type AxiosResponse } from 'axios';
 
 enum Api {
   AddBuy = '/sell/req/add',
+  GetBuyInfoById = '/sell/req/byId',
   GetAllBuyInfoByUserId = '/sell/req/allById',
   GetAllBuyInfo = '/sell/req/all',
   DeleteBuyInfoById = '/sell/req/delete',
+  UpdateBuyInfoById = '/sell/req/update',
 
 
 }
@@ -28,6 +30,25 @@ export function addBuy(form: BuyForm): Promise<AxiosResponse<AddBuyResponse>> {
   }
 
   return axios.post(`${serverUrl}${Api.AddBuy}`, form, config);
+}
+
+
+/**
+ * 获取指定id的求购信息
+ * @param buyId 求购信息id
+ */
+export function getBuyInfoById(buyId: number): Promise<AxiosResponse<GetBuyInfoByIdResponse>> {
+  const config = {
+    ...globalConfig,
+    params: {
+      id: buyId,
+    },
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+
+  return axios.get(`${serverUrl}${Api.GetBuyInfoById}`, config);
 }
 
 /**
@@ -70,7 +91,7 @@ export function deleteBuyInfoById(buyId: number): Promise<AxiosResponse<GetSellI
   const config = {
     ...globalConfig,
     params: {
-      sellId: buyId,
+      id: buyId,
     },
     headers: {
       Authorization: useUserStore().authorization,
@@ -78,4 +99,19 @@ export function deleteBuyInfoById(buyId: number): Promise<AxiosResponse<GetSellI
   }
 
   return axios.delete(`${serverUrl}${Api.DeleteBuyInfoById}`, config);
+}
+
+/**
+ * 更新指定id的求购信息
+ * @param form 求购信息表单
+ */
+export function updateBuyInfoById(form: UpdateBuyForm): Promise<AxiosResponse<UpdateBuyInfoResponse>> {
+  const config = {
+    ...globalConfig,
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+
+  return axios.post(`${serverUrl}${Api.UpdateBuyInfoById}`, form, config);
 }

@@ -2,7 +2,7 @@
     <div class="info-panel" v-loading.fullscreen.lock="loading" element-loading-background="transparent">
         <!-- 上传头像窗口 -->
         <el-dialog v-model="avatarDialogVisible" title="上传头像" width="50%" 
-            :before-close="handleClose" append-to-body="true">
+            :before-close="handleClose" :append-to-body="true">
             <template #tip>
                 请选择图片上传：大小180 * 180像素支持JPG、PNG等格式，图片需小于2M
             </template>
@@ -25,10 +25,10 @@
             <!-- 头像 -->
             <el-col :span="8" class="avatar-wrapper">
                 <el-tooltip content="修改头像" placement="top" v-if="userId == userStore.id">
-                    <el-avatar shape="square" :src="avatar" @click="avatarDialogVisible = true" 
+                    <el-avatar shape="square" :src="displayedUserInfo.avatar" @click="avatarDialogVisible = true" 
                         @error="userStore.setAvatar(defaultValues.USER_AVATAR)"></el-avatar>
                 </el-tooltip>
-                <el-avatar shape="square" :src="avatar" v-else></el-avatar>
+                <el-avatar shape="square" :src="displayedUserInfo.avatar" v-else></el-avatar>
                 <span class="user-id-text">ID: {{ displayedUserInfo.id }}</span>
             </el-col>
             <!-- 用户信息 -->
@@ -111,9 +111,9 @@
                                 <el-popover v-for="sell in sells" :key="sell.id" :width="700">
                                     <template #reference>
                                         <base-card v-for="sell in sells" :title="sell.house.location"
-                                            :description="sell.description" :image="sell.pic"></base-card>
+                                            :description="sell.description" :image="getFileUrl(sell.pic[0])" @click="$router.push(`/sell/${sell.id}`)"></base-card>
                                     </template>
-                                    <el-descriptions border="true" size="large" title="房屋信息">
+                                    <el-descriptions :border=true size="large" title="房屋信息">
                                         <el-descriptions-item label="户型">{{ sell.house.layout }}</el-descriptions-item>
                                         <el-descriptions-item label="面积">{{ sell.house.area }}平方米</el-descriptions-item>
                                         <el-descriptions-item label="朝向">{{ OrientationMap[sell.house.orientation]
@@ -141,10 +141,10 @@
                             <div class="cards-wrapper">
                                 <el-popover v-for="rent in rents" :key="rent.id" :width="700">
                                     <template #reference>
-                                        <base-card :title="rent.house.location" :description="rent.description"
-                                            :image="rent.pic"></base-card>
+                                        <base-card :title="rent.house.location" :description="rent.description" @click="$router.push(`/rent/${rent.id}`)"
+                                            :image="getFileUrl(rent.pic[0])"></base-card>
                                     </template>
-                                    <el-descriptions border="true" size="large" title="房屋要求">
+                                    <el-descriptions :border=true size="large" title="房屋要求">
                                         <el-descriptions-item label="户型">{{ rent.house.layout }}</el-descriptions-item>
                                         <el-descriptions-item label="面积">{{ rent.house.area }}平方米</el-descriptions-item>
                                         <el-descriptions-item label="朝向">{{ OrientationMap[rent.house.orientation]
@@ -177,9 +177,9 @@
                             <div class="cards-wrapper">
                                 <el-popover v-for="buy in buys" :key="buy.id" :width="600">
                                     <template #reference>
-                                        <base-card :title="buy.location" :description="buy.description"></base-card>
+                                        <base-card :title="buy.location" :description="buy.description" @click="$router.push(`/buy/${buy.id}`)"></base-card>
                                     </template>
-                                    <el-descriptions border="true" size="large" title="房屋要求">
+                                    <el-descriptions :border=true size="large" title="房屋要求">
                                         <el-descriptions-item label="户型">{{ buy.layout }}</el-descriptions-item>
                                         <el-descriptions-item label="面积">{{ buy.area }}平方米</el-descriptions-item>
                                         <el-descriptions-item label="预算">{{ buy.budget }}元</el-descriptions-item>
@@ -207,9 +207,9 @@
                             <div class="cards-wrapper">
                                 <el-popover v-for="seek in seeks" :key="seek.id" :width="700">
                                     <template #reference>
-                                        <base-card :title="seek.location" :description="seek.description"></base-card>
+                                        <base-card :title="seek.location" :description="seek.description" @click="$router.push(`/seek/${seek.id}`)"></base-card>
                                     </template>
-                                    <el-descriptions border="true" size="large" title="房屋要求">
+                                    <el-descriptions :border=true size="large" title="房屋要求">
                                         <el-descriptions-item label="户型">{{ seek.layout }}</el-descriptions-item>
                                         <el-descriptions-item label="面积">{{ seek.area }}平方米</el-descriptions-item>
                                         <el-descriptions-item label="装修">{{ DecorationMap[seek.decoration]
@@ -245,7 +245,7 @@ import type { UpdateUserForm } from '@/api/request';
 import { ResponseCode, type BuyResponse, type RentResponse, type SeekResponse, type SellResponse } from '@/api/response';
 import { getAllSeekInfoByUserId } from '@/api/seek';
 import { getAllSellInfoByUserId } from '@/api/sell';
-import { getUser, updateAvatar, updateUser } from '@/api/user';
+import { getUserById, updateAvatar, updateUser } from '@/api/user';
 import { generalError, allRules } from '@/mixin';
 import { routesMap } from '@/router';
 import { useUserStore } from '@/stores/user';
@@ -301,7 +301,7 @@ const userInfoForm: UpdateUserForm = reactive({
 async function refreshUser() {
     try {
         loading.value = true;
-        await getUser(userId.value).then((res) => {
+        await getUserById(userId.value).then((res) => {
             if (res.data.code === ResponseCode.SUCCESS) {
                 loading.value = false;
                 if (res.data.data.id === userStore.id) {
@@ -320,7 +320,7 @@ async function refreshUser() {
 
                 displayedUserInfo.id = res.data.data.id
                 displayedUserInfo.name = res.data.data.name
-                displayedUserInfo.avatar = res.data.data.avatar || defaultValues.USER_AVATAR
+                displayedUserInfo.avatar = getFileUrl(res.data.data.avatar) || defaultValues.USER_AVATAR
                 displayedUserInfo.sex = res.data.data.sex
                 displayedUserInfo.age = res.data.data.age
                 displayedUserInfo.introduction = res.data.data.introduction || defaultValues.USER_INTRODUCTION
@@ -382,10 +382,7 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
     response,
     uploadFile
 ) => {
-    ElMessage.success('上传成功')
-    userStore.setAvatar(URL.createObjectURL(uploadFile.raw!))
     avatarDialogVisible.value = false
-
 }
 
 const handleExceed: UploadProps['onExceed'] = (files) => {
@@ -407,13 +404,13 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 }
 
 const uploadAvatar = async (options: UploadRequestOptions) => {
-  uploadFile(options.file).then((res: any) => {
-    updateAvatar({
+  await uploadFile(options.file).then(async (res: any) => {
+    await updateAvatar({
         id: userStore.id,
-        url: getFileUrl(res.name)
+        url: res.name
     }).then((res_) => {
       ElMessage.success('上传成功')
-      userStore.setAvatar(getFileUrl(res.name))
+      userStore.setAvatar(res.name)
     }).catch((err) => {
       generalError(err)
     })
@@ -427,7 +424,7 @@ const uploadAvatar = async (options: UploadRequestOptions) => {
 const route = useRoute()
 
 watch(() => route.params.id, async () => {
-    if (route.params.id)
+    if (route.params.id && route.name == 'user')
         await refreshUser()
 })
 
@@ -437,32 +434,32 @@ const rents = ref<Array<RentResponse>>([])
 const buys = ref<Array<BuyResponse>>([])
 const seeks = ref<Array<SeekResponse>>([])
 
-function getSells() {
-    getAllSellInfoByUserId(userId.value).then((res) => {
+async function getSells() {
+    await getAllSellInfoByUserId(userId.value).then((res) => {
         sells.value = res.data.data
     }).catch((err) => {
         generalError(err)
     })
 }
 
-function getRents() {
-    getAllRentInfoByUserId(userId.value).then((res) => {
+async function getRents() {
+    await getAllRentInfoByUserId(userId.value).then((res) => {
         rents.value = res.data.data
     }).catch((err) => {
         generalError(err)
     })
 }
 
-function getBuys() {
-    getAllBuyInfoByUserId(userId.value).then((res) => {
+async function getBuys() {
+    await getAllBuyInfoByUserId(userId.value).then((res) => {
         buys.value = res.data.data
     }).catch((err) => {
         generalError(err)
     })
 }
 
-function getSeeks() {
-    getAllSeekInfoByUserId(userId.value).then((res) => {
+async function getSeeks() {
+    await getAllSeekInfoByUserId(userId.value).then((res) => {
         seeks.value = res.data.data
     }).catch((err) => {
         generalError(err)
@@ -470,12 +467,12 @@ function getSeeks() {
 }
 
 // 生命周期钩子
-onBeforeMount(() => {
-    refreshUser()
-    getSells()
-    getRents()
-    getBuys()
-    getSeeks()
+onMounted(async () => {
+    await refreshUser()
+    await getSells()
+    await getRents()
+    await getBuys()
+    await getSeeks()
 })
 
 
@@ -495,9 +492,9 @@ onBeforeMount(() => {
 }
 
 .el-avatar {
-    width: auto;
-    height: auto;
-    max-width: 10rem;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
 
 }
 
@@ -571,6 +568,11 @@ onBeforeMount(() => {
 
 h2 {
     margin: 1rem 0;
+    border-bottom: 2px solid var(--el-color-primary);
+}
+
+.base-card {
+    cursor: pointer;
 }
 
 

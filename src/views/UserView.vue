@@ -107,8 +107,11 @@ const activePanel = computed(() => {
 
 .panel {
     padding: 2rem;
-    background: var(--color-bg-glass);
-    backdrop-filter: blur(6px);
+    // background: var(--color-bg-glass);
+    // background-color: var(--color-bg);
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .el-aside {

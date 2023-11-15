@@ -2,7 +2,7 @@
 export const appName: string = "House App";
 
 // DEBUG 版本
-export const debugVersion: string = '11/13.alpha1'
+export const debugVersion: string = '11/16'
 
 
 // 跳转路由

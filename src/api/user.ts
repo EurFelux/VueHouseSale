@@ -1,6 +1,6 @@
 import { globalConfig, serverUrl } from './api';
 import type { UpdateAvatarForm, UpdatePasswordForm, UpdateUserForm } from '@/api/request';
-import type { GetUserResponse, AnyDataResponse, UpdateUserResponse, GetAllUsersResponse, UpdateAvatarResponse } from '@/api/response';
+import type { GetUserByIdResponse, AnyDataResponse, UpdateUserResponse, GetAllUsersResponse, UpdateAvatarResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
@@ -41,7 +41,7 @@ export async function getAllUsers(): Promise<AxiosResponse<GetAllUsersResponse>>
 }
 
 // 获取用户信息
-export async function getUser(userID: number): Promise<AxiosResponse<GetUserResponse>> {
+export async function getUserById(userID: number): Promise<AxiosResponse<GetUserByIdResponse>> {
   const config = {
     ...globalConfig,
     params: {

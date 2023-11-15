@@ -67,31 +67,41 @@ const extra_span = computed(() => {
     width: 200px;
 
     background-color: var(--color-bg-glass);
+    border-radius: 1rem;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
 
     margin-right: 1rem;
+    transition: all 0.3s;
+}
+
+.base-card:hover {
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 
 .image-wrapper {
-    width: 100%;
+    height: 100px;
+    // width: 100%;
     // flex-grow: 1;
     // padding: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+
+    border-radius: 1rem 1rem 0 0;
 }
 
 .image {
     max-width: 100%;
-    max-height: 100%;
+    // max-height: 100%;
 }
 
 .contents {
+    background-color: var(--color-bg-6);
     padding: 1rem;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    border-radius: 0 0 1rem 1rem;
 }
 </style>

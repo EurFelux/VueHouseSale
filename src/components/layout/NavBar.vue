@@ -52,7 +52,7 @@
             <!-- o头像 -->
             <template #title>
                 <el-icon class="avatar-icon" v-if="mobileMode">
-                    <el-avatar :src="avatar"></el-avatar>
+                    <el-avatar :src="avatar" @error="userStore.setAvatar(defaultValues.USER_AVATAR)"></el-avatar>
                 </el-icon>
                 <el-avatar :src="avatar" v-if="!mobileMode"></el-avatar>
 
@@ -63,13 +63,13 @@
                 <template #title>
                     <span>分组一</span>
                 </template>
-                <el-menu-item @click="goUserView">个人信息</el-menu-item>
+                <el-menu-item @click="goUserView">管理面板</el-menu-item>
                 <el-menu-item @click="goManageView" v-if="role == 1">管理员界面</el-menu-item>
                 <el-menu-item @click="goBackendDashboard" v-if="role == 1">
                     <el-icon class="material-symbols-outlined">
                         link
                     </el-icon>
-                        后端监控
+                    后端监控
                 </el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group title="分组2">
@@ -100,6 +100,7 @@
 import { usePublicStore } from '@/stores/public';
 import { useUserStore } from '@/stores/user';
 import { useRouter } from 'vue-router';
+import { defaultValues } from '@/api/model'
 
 const publicStore = usePublicStore();
 const userStore = useUserStore();
@@ -151,7 +152,7 @@ const accentColor = computed(() => publicStore.accentColor)
 
 // 用户状态
 const isLogin = computed(() => userStore.isLogin)
-const avatar = computed(() => userStore.avatar)
+const avatar = computed(() => getFileUrl(userStore.avatar))
 const role = computed(() => userStore.role)
 
 // 适应移动端，设置垂直导航栏
@@ -173,6 +174,7 @@ watch(mobileMode, () => {
 // 登出
 import { logout } from '@/api/auth';
 import { changeActiveIndex } from '@/mixin';
+import { getFileUrl } from '@/api/oss';
 function exit() {
     logout(userStore.id).then((res) => {
         ElMessage.success("退出成功")
@@ -209,10 +211,10 @@ function goBackendDashboard() {
 
 <style scoped lang="scss">
 .el-menu {
-    color: var(--el-menu-text-color);
-    --el-menu-bg-color: rgba(128, 128, 128, 0.5);
-    --el-menu-hover-bg-color: rgba(192, 192, 192, 0.5);
-    backdrop-filter: blur(14px);
+    // color: var(--el-menu-text-color);
+    // --el-menu-bg-color: transparent;
+    // --el-menu-hover-bg-color: #ffffff55;
+    // backdrop-filter: blur(1rem);
     overflow-x: auto;
     overflow-y: hidden;
     z-index: 100;

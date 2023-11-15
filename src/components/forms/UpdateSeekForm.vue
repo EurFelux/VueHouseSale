@@ -84,8 +84,6 @@
                     </el-radio-group>
                 </el-form-item>
 
-                
-
                 <!-- 描述 -->
                 <el-form-item label="描述" prop="description">
                     <el-input type="textarea" v-model="seekForm.description" placeholder="请输入描述"></el-input>
@@ -108,9 +106,9 @@
 <script setup lang="ts">
 
 
-import { Decoration, Elevator, Orientation, RentType, Role } from '@/api/model';
-import type { SeekForm } from '@/api/request';
-import { addSeek } from '@/api/seek';
+import { Decoration, Elevator, Orientation, RentType } from '@/api/model';
+import type { SeekForm, UpdateSeekForm } from '@/api/request';
+import { addSeek, updateSeekInfo } from '@/api/seek';
 import { allRules, generalError } from '@/mixin';
 import { usePublicStore } from '@/stores/public';
 import { useUserStore } from '@/stores/user';
@@ -119,31 +117,36 @@ import type { FormInstance, FormRules } from 'element-plus';
 
 const userStore = useUserStore()
 const publicStore = usePublicStore()
-
+const props = defineProps({
+    origin: {
+        type: Object,
+    }
+})
+const emit = defineEmits(['success'])
 
 // 提交表单
 const seekFormRef = ref<FormInstance>()
 
-const seekForm = reactive<SeekForm>({
-    userId: userStore.id,
-    description: '',
-    budget: 0,
-    contact: userStore.phone,
-    type: RentType.Any,
-    period: 0,
-    requirement: '',
+const seekForm = reactive<UpdateSeekForm>({
+    id: props.origin?.id ?? -1,
+    description: props.origin?.description ?? '',
+    budget: props.origin?.budget ?? 0,
+    contact: props.origin?.contact ?? userStore.phone,
+    type: props.origin?.type ?? RentType.Any,
+    period: props.origin?.period ?? 0,
+    requirement: props.origin?.requirement ?? '',
 
     // BasicHouse
-    location: '',
-    area: 0,
-    floor: '1F',
-    decoration: Decoration.Any,
-    layout: '',
-    orientation: Orientation.Any,
-    elevator: Elevator.Any
+    location: props.origin?.location ?? '',
+    area: props.origin?.area ?? 0,
+    floor: props.origin?.floor ?? '1F',
+    decoration: props.origin?.decoration ?? Decoration.Any,
+    layout: props.origin?.layout ?? '',
+    orientation: props.origin?.orientation ?? Orientation.Any,
+    elevator: props.origin?.elevator ?? Elevator.Any,
 })
 
-const rules = reactive<FormRules<SeekForm>>({
+const rules = reactive<FormRules<UpdateSeekForm>>({
     description: allRules.description,
     budget: allRules.budget,
     type: allRules.rentType,
@@ -179,12 +182,12 @@ async function submitSeek(formEl: FormInstance | undefined) {
 
     if (!formEl) return;
 
-    seekForm.userId = userStore.id
     await formEl.validate(async (valid, fileds) => {
         if (valid) {
-            await addSeek(seekForm).then((res) => {
+            await updateSeekInfo(seekForm).then((res) => {
                 ElMessage.success('发布成功')
                 resetSeekForm()
+                emit('success')
             }).catch((err) => {
                 generalError(err)
             })

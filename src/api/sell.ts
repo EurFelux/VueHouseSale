@@ -1,24 +1,25 @@
 import { globalConfig, serverUrl } from './api';
-import type { SellForm } from '@/api/request';
-import type { AddSellResponse, DeleteSellInfoByIdResponse, GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetSellInfoByIdResponse } from '@/api/response';
+import type { SellForm, UpdateSeekForm, UpdateSellForm } from '@/api/request';
+import type { AddSellResponse, DeleteSellInfoByIdResponse, GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetSellInfoByIdResponse, UpdateSellInfoResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
 import axios, { type AxiosResponse } from 'axios';
 
 enum Api {
-  AddSell = '/sell/info/add',
+  AddSellInfo = '/sell/info/add',
   GetSellInfoById = '/sell/info/byId',
   GetAllSellInfo = '/sell/info/all',
   GetAllSellInfoByUserId = '/sell/info/allById',
   DeleteSellInfoById = '/sell/info/delete',
+  UpdateSellInfo = '/sell/info/update',
 }
 
 /**
  * 添加出售信息
  * @param form 出售信息表单
  */
-export function addSell(form: SellForm): Promise<AxiosResponse<AddSellResponse>> {
+export function addSellInfo(form: SellForm): Promise<AxiosResponse<AddSellResponse>> {
   const config = {
     ...globalConfig,
     headers: {
@@ -26,7 +27,7 @@ export function addSell(form: SellForm): Promise<AxiosResponse<AddSellResponse>>
     }
   }
 
-  return axios.post(`${serverUrl}${Api.AddSell}`, form, config);
+  return axios.post(`${serverUrl}${Api.AddSellInfo}`, form, config);
 }
 /**
  * 获取指定id的出售信息
@@ -36,7 +37,7 @@ export function getSellInfoById(sellID: number): Promise<AxiosResponse<GetSellIn
   const config = {
     ...globalConfig,
     params: {
-      sellId: sellID,
+      id: sellID,
     },
     headers: {
       Authorization: useUserStore().authorization,
@@ -94,4 +95,19 @@ export function deleteSellInfoById(sellID: number): Promise<AxiosResponse<Delete
   }
 
   return axios.delete(`${serverUrl}${Api.DeleteSellInfoById}`, config);
+}
+
+/**
+ * 更新指定id的出售信息
+ * @param form 出售信息表单
+ */
+export function updateSellInfo(form: UpdateSellForm): Promise<AxiosResponse<UpdateSellInfoResponse>> {
+  const config = {
+    ...globalConfig,
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+
+  return axios.post(`${serverUrl}${Api.UpdateSellInfo}`, form, config);
 }

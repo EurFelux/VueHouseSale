@@ -1,6 +1,6 @@
 import { globalConfig, serverUrl } from './api';
-import type { RentForm, SellForm } from '@/api/request';
-import type { AddRentResponse, AddSellResponse, DeleteRentInfoByIdResponse, GetAllRentInfoByUserIdResponse, GetAllRentInfoResponse, GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetSellInfoByIdResponse } from '@/api/response';
+import type { RentForm, SellForm, UpdateRentForm } from '@/api/request';
+import type { AddRentResponse, AddSellResponse, DeleteRentInfoByIdResponse, GetAllRentInfoByUserIdResponse, GetAllRentInfoResponse, GetAllSellInfoByUserIdResponse, GetAllSellInfoResponse, GetRentInfoByIdResponse, GetSellInfoByIdResponse, UpdateRentInfoResponse } from '@/api/response';
 
 import { useUserStore } from '@/stores/user';
 
@@ -8,10 +8,11 @@ import axios, { type AxiosResponse } from 'axios';
 
 enum Api {
   AddRent = '/rent/info/add',
+  GetRentInfoById = '/rent/info/byId',
   GetAllRentInfoByUserId = '/rent/info/allById',
   GetAllRentInfo = '/rent/info/all',
   DeleteRentInfoById = '/rent/info/delete',
-
+  UpdateRentInfoById = '/rent/info/update',
 }
 
 /**
@@ -27,6 +28,24 @@ export function addRent(form: RentForm): Promise<AxiosResponse<AddRentResponse>>
   }
 
   return axios.post(`${serverUrl}${Api.AddRent}`, form, config);
+}
+
+/**
+ * 获取指定id的出租信息
+ * @param rentId 出租信息id
+ */
+export function getRentInfoById(rentId: number): Promise<AxiosResponse<GetRentInfoByIdResponse>> {
+  const config = {
+    ...globalConfig,
+    params: {
+      id: rentId,
+    },
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+
+  return axios.get(`${serverUrl}${Api.GetRentInfoById}`, config);
 }
 
 /**
@@ -77,4 +96,19 @@ export function deleteRentInfoById(rentId: number): Promise<AxiosResponse<Delete
   }
 
   return axios.delete(`${serverUrl}${Api.DeleteRentInfoById}`, config);
+}
+
+/**
+ * 更新指定id的出租信息
+ * @param form 出租信息表单
+ */
+export function updateRentInfoById(form: UpdateRentForm): Promise<AxiosResponse<UpdateRentInfoResponse>> {
+  const config = {
+    ...globalConfig,
+    headers: {
+      Authorization: useUserStore().authorization,
+    }
+  }
+
+  return axios.post(`${serverUrl}${Api.UpdateRentInfoById}`, form, config);
 }

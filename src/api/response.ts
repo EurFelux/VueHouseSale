@@ -52,7 +52,7 @@ export interface LoginResponse extends BasicResponse {
 
 // --------------------- user ---------------------
 
-export interface GetUserResponse extends BasicResponse {
+export interface GetUserByIdResponse extends BasicResponse {
     data: User;
 }
 
@@ -103,7 +103,9 @@ export interface DeleteSellInfoByIdResponse extends BasicResponse {
     data: null;
 }
 
-
+export interface UpdateSellInfoResponse extends BasicResponse {
+    data: null;
+}
 // ------------------------------------------------
 
 
@@ -125,6 +127,10 @@ export interface AddRentResponse extends BasicResponse {
     data: null;
 }
 
+export interface GetRentInfoByIdResponse extends BasicResponse {
+    data: RentResponse;
+}
+
 export interface GetAllRentInfoByUserIdResponse extends BasicResponse {
     data: Array<RentResponse>;
 }
@@ -134,6 +140,10 @@ export interface GetAllRentInfoResponse extends BasicResponse {
 }
 
 export interface DeleteRentInfoByIdResponse extends BasicResponse {
+    data: null;
+}
+
+export interface UpdateRentInfoResponse extends BasicResponse {
     data: null;
 }
 
@@ -161,6 +171,10 @@ export interface AddBuyResponse extends BasicResponse {
     data: null;
 }
 
+export interface GetBuyInfoByIdResponse extends BasicResponse {
+    data: BuyResponse;
+}
+
 export interface GetAllBuyInfoByUserIdResponse extends BasicResponse {
     data: Array<BuyResponse>;
 }
@@ -170,6 +184,10 @@ export interface GetAllBuyInfoResponse extends BasicResponse {
 }
 
 export interface DeleteBuyInfoByIdResponse extends BasicResponse {
+    data: null;
+}
+
+export interface UpdateBuyInfoResponse extends BasicResponse {
     data: null;
 }
 
@@ -196,6 +214,10 @@ export interface AddSeekResponse extends BasicResponse {
     data: null;
 }
 
+export interface GetSeekInfoByIdResponse extends BasicResponse {
+    data: SeekResponse;
+}
+
 export interface GetAllSeekInfoByUserIdResponse extends BasicResponse {
     data: Array<SeekResponse>;
 }
@@ -205,6 +227,10 @@ export interface GetAllSeekInfoResponse extends BasicResponse {
 }
 
 export interface DeleteSeekInfoByIdResponse extends BasicResponse {
+    data: null;
+}
+
+export interface UpdateSeekInfoResponse extends BasicResponse {
     data: null;
 }
 
