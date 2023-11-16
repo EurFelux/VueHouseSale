@@ -75,7 +75,7 @@
             </el-form>
             <div class="button-wrapper">
                 <el-button class="submit-button" round @click="submitBuy(buyFormRef)">提交</el-button>
-                <el-button @click="console.log(buyForm)">show form</el-button>
+                <el-button @click="console.log(buyForm)" v-if="publicStore.debug">show form</el-button>
             </div>
         </div>
     </el-form>
@@ -89,10 +89,11 @@ import { type House, RentType, type Buy, Decoration, Orientation, Elevator } fro
 import { addRent } from '@/api/rent';
 import type { BuyForm, RentForm, SellForm } from '@/api/request';
 import { allRules, generalError } from '@/mixin';
+import { usePublicStore } from '@/stores/public';
 import { useUserStore } from '@/stores/user';
 import type { FormInstance, FormRules } from 'element-plus';
 
-
+const publicStore = usePublicStore()
 const userStore = useUserStore()
 
 

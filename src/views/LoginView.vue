@@ -16,6 +16,7 @@
                 <el-button class="login-button" round @click="submitForm(loginFormRef)">登录</el-button>
                 <el-button class="login-button" round @click="fakeLogin" v-if="publicStore.debug">登录（伪）</el-button>
             </div>
+            
         </div>
         <div class="placeholder"></div>
     </div>
@@ -112,9 +113,9 @@ function fakeLogin() {
     height: 100%;
 
     text-align: center;
-    color: aliceblue;
+    /* color: aliceblue; */
 
-    background-color: rgba(128, 128, 128, 0.1);
+    background-color: var(--color-bg-4);
     backdrop-filter: blur(10px);
 
     display: flex;
@@ -130,6 +131,7 @@ function fakeLogin() {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 8rem;
 }
 
 .el-form {
@@ -140,13 +142,13 @@ function fakeLogin() {
 
 h1 {
     font-size: 3rem;
-    margin-top: 4rem;
+    margin-top: 8rem;
     margin-bottom: 3rem;
     user-select: none;
 }
 
 .login-button {
-    margin-top: 2rem;
+    margin-top: 4rem;
     width: 80%;
     max-width: 20rem;
     height: 3rem;
@@ -172,7 +174,7 @@ h1 {
 
 <style>
 .el-form-item__label {
-    color: aliceblue;
+    /* color: aliceblue; */
     user-select: none;
 }
 </style>

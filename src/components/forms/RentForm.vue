@@ -67,7 +67,7 @@
             </el-form>
             <div class="button-wrapper">
                 <el-button class="submit-button" round @click="submitRent(rentFormRef)">提交</el-button>
-                <el-button @click="console.log(rentForm)">show form</el-button>
+                <el-button @click="console.log(rentForm)" v-if="publicStore.debug">show form</el-button>
             </div>
         </div>
     </el-form>
@@ -83,7 +83,7 @@ import { allRules, generalError } from '@/mixin';
 import { useUserStore } from '@/stores/user';
 import type { FormInstance, FormRules, UploadProps, UploadRequestOptions, UploadUserFile } from 'element-plus';
 
-
+const publicStore = usePublicStore()
 const userStore = useUserStore()
 
 // 获取数据
@@ -107,6 +107,7 @@ onMounted(() => {
 
 // 上传图片
 import { uploadFile } from '@/api/oss';
+import { usePublicStore } from '@/stores/public';
 const fileList = ref<UploadUserFile[]>([])
 
 const handleSuccess = (response: any, uploadFile: UploadUserFile, uploadFiles: UploadUserFile[]) => {

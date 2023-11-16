@@ -70,11 +70,11 @@
     --bg-img: url("@/assets/light-background.jpg");
     --el-fill-color-blank: #ffffffaf;
     --color-bg: linear-gradient(to bottom, #c8bdb3, #e6ecf0);
-    --color-bg-1: #aaaaaa;
-    --color-bg-2: #bbbbbb;
-    --color-bg-3: #cccccc;
-    --color-bg-4: #dddddd;
-    --color-bg-5: #eeeeee;
+    --color-bg-1: #c89c75;
+    --color-bg-2: #c6a78d;
+    --color-bg-3: #c5b09e;
+    --color-bg-4: #c3b8af;
+    --color-bg-5: #c1bcb8;
     --color-bg-6: #ffffff;
     --color-bg-glass-active: rgba(255, 255, 255, 0.4);
     --color-text-shadow: rgba(128, 128, 128, 0.2);

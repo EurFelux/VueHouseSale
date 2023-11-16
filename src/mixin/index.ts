@@ -2,7 +2,7 @@
 export const appName: string = "House App";
 
 // DEBUG 版本
-export const debugVersion: string = '11/16'
+export const debugVersion: string = ''
 
 
 // 跳转路由
@@ -47,6 +47,7 @@ function normalError(message: string) {
 }
 
 export function generalError(err: any) {
+  console.error(err)
   if (err.response) {
     if (err.response.data.message)
       serverError(err.response)

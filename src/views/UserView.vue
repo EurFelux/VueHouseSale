@@ -121,7 +121,7 @@ const activePanel = computed(() => {
 }
 
 .el-menu {
-    --el-menu-bg-color: var(--color-bg-glass);
+    --el-menu-bg-color: var(--color-bg-6);
     margin: 0 1rem 1rem 1rem;
     border-right: 0;
 }
@@ -143,10 +143,8 @@ const activePanel = computed(() => {
         'GRAD' 0,
         'opsz' 24
 }
-</style>
 
-<style>
-.submit-button-wrapper {
+:deep(.submit-button-wrapper) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -154,7 +152,7 @@ const activePanel = computed(() => {
     height: 100%;
 }
 
-.submit-button {
+:deep(.submit-button) {
     margin-top: 2rem;
     width: 80%;
     max-width: 20rem;
@@ -165,7 +163,7 @@ const activePanel = computed(() => {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 }
 
-.el-button {
+:deep(.el-button) {
     /* --el-button-text-color: var(--color-text-on-glass); */
     margin: 1rem;
     --el-button-border-color: var(--el-color-primary);

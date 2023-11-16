@@ -151,6 +151,11 @@ import type { SellResponse, RentResponse, BuyResponse, SeekResponse } from '@/ap
 import { generalError } from '@/mixin';
 import { ChatSquare } from '@element-plus/icons-vue/global';
 import { OrientationMap, ElevatorMap, DecorationMap, RentTypeMap } from '@/api/model';
+import { useUserStore } from '@/stores/user';
+import { useRouter } from 'vue-router';
+
+const userStore = useUserStore();
+const router = useRouter();
 
 // 装点
 const houses = [
@@ -199,6 +204,11 @@ async function getSeeks() {
 
 // 生命周期钩子
 onMounted(async () => {
+  if (userStore.authorization === '') {
+    generalError('请先登录');
+    router.push('/login');
+    return;
+  }
   await getSells()
   await getRents()
   await getBuys()

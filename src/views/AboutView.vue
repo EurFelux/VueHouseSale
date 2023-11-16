@@ -31,11 +31,6 @@
 </template>
 
 <script setup lang="ts">
-import { changeActiveIndex } from '@/mixin'
-
-function test() {
-  ElMessage.info("无事发生")
-}
 
 </script>
 
@@ -52,7 +47,7 @@ function test() {
 <style scoped lang="scss">
 .panel {
     padding: 2rem;
-    background: var(--color-bg-glass);
+    background: rgba(var(--color-bg-4), 0.5);
     backdrop-filter: blur(6px);
 }
 </style>

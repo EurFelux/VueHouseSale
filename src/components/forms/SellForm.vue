@@ -44,7 +44,7 @@
             </el-form>
             <div class="button-wrapper">
                 <el-button class="submit-button" round @click="submitSell(sellFormRef)">提交</el-button>
-                <el-button @click="console.log(sellForm)">show form</el-button>
+                <el-button @click="console.log(sellForm)" v-if="publicStore.debug">show form</el-button>
             </div>
         </div>
     </el-form>
@@ -59,8 +59,9 @@ import { addSellInfo } from '@/api/sell';
 import { allRules, generalError } from '@/mixin';
 import { useUserStore } from '@/stores/user';
 import type { FormInstance, FormRules, UploadProps, UploadRequestOptions, UploadUserFile } from 'element-plus';
+import { usePublicStore } from '@/stores/public';
 
-
+const publicStore = usePublicStore()
 const userStore = useUserStore()
 
 // 获取数据

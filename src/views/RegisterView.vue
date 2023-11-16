@@ -37,7 +37,7 @@
             </el-form>
             <div class="button-wrapper">
                 <el-button class="submit-button" round @click="submitForm(registerFormRef)">提交</el-button>
-                <el-button round @click="console.log(registerForm)">显示表单</el-button>
+                <el-button round @click="console.log(registerForm)" v-if="publicStore.debug">显示表单</el-button>
             </div>
         </div>
         <div class="placeholder"></div>
@@ -133,9 +133,8 @@ async function submitForm(formEl: FormInstance | undefined) {
     height: 100%;
 
     text-align: center;
-    color: aliceblue;
 
-    background-color: rgba(128, 128, 128, 0.1);
+    background-color: var(--color-bg-4);
     backdrop-filter: blur(10px);
 
     display: flex;
@@ -151,6 +150,8 @@ async function submitForm(formEl: FormInstance | undefined) {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
 }
 
 .el-form {
@@ -178,11 +179,6 @@ h1 {
 }
 
 
-.el-radio {
-    color: aliceblue;
-}
-
-
 
 @media (max-width: 1024px) {
 
@@ -200,7 +196,7 @@ h1 {
 
 <style>
 .el-form-item__label {
-    color: aliceblue;
+    /* color: aliceblue; */
     user-select: none;
 }
 </style>
