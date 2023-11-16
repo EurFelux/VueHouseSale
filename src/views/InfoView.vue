@@ -11,7 +11,11 @@
                             <div style="width: 100%">
                                 <el-carousel height="3xl">
                                     <el-carousel-item v-for="item in pics" :key="item">
-                                        <img :src="item" class="image" />
+                                        <el-image :src="item" class="image" fit="contain">
+                                            <template #error>
+                                                <el-empty description="无图片"></el-empty>
+                                            </template>
+                                        </el-image>
                                     </el-carousel-item>
                                 </el-carousel>
                             </div>
@@ -143,7 +147,8 @@
                                 <el-descriptions-item label="朝向">
                                     {{ OrientationMap[seek?.orientation ?? Orientation.Unknown] }}
                                 </el-descriptions-item>
-                                <el-descriptions-item label="租房类型">{{ RentTypeMap[seek?.type ?? RentType.Any] }}</el-descriptions-item>
+                                <el-descriptions-item label="租房类型">{{ RentTypeMap[seek?.type ?? RentType.Any]
+                                }}</el-descriptions-item>
                                 <el-descriptions-item label="预算/月">{{ seek?.budget }}</el-descriptions-item>
                                 <el-descriptions-item label="租期/月">{{ seek?.period }}</el-descriptions-item>
                                 <el-descriptions-item label="其他要求">{{ seek?.requirement }}</el-descriptions-item>
@@ -423,7 +428,6 @@ h3 {
 .image {
     width: 100%;
     height: 100%;
-    object-fit: contain;
 }
 
 .button-wrapper {

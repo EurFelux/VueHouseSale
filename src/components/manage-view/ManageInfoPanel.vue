@@ -229,7 +229,8 @@ onMounted(() => {
 }
 
 h2 {
-    padding: 1rem 0;
+    margin: 1rem 0;
+    border-bottom: 2px solid var(--el-color-primary);
 }
 
 h2:first-child {

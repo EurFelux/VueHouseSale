@@ -307,7 +307,7 @@ async function refreshUser() {
                 if (res.data.data.id === userStore.id) {
                     userStore.setName(res.data.data.name || defaultValues.USER_NAME)
                     userStore.setRole(res.data.data.role || defaultValues.USER_ROLE)
-                    userStore.setAvatar(res.data.data.avatar || defaultValues.USER_AVATAR)
+                    userStore.setAvatar(res.data.data.avatar ?? defaultValues.USER_AVATAR)
                     userStore.setPhone(res.data.data.phone || defaultValues.USER_PHONE)
                 }
 
@@ -320,12 +320,15 @@ async function refreshUser() {
 
                 displayedUserInfo.id = res.data.data.id
                 displayedUserInfo.name = res.data.data.name
-                displayedUserInfo.avatar = getFileUrl(res.data.data.avatar) || defaultValues.USER_AVATAR
                 displayedUserInfo.sex = res.data.data.sex
                 displayedUserInfo.age = res.data.data.age
                 displayedUserInfo.introduction = res.data.data.introduction || defaultValues.USER_INTRODUCTION
                 displayedUserInfo.location = res.data.data.location || defaultValues.USER_LOCATION
                 displayedUserInfo.role = res.data.data.role
+                if (res.data.data.avatar)
+                    displayedUserInfo.avatar = getFileUrl(res.data.data.avatar)
+                else
+                    displayedUserInfo.avatar = defaultValues.USER_AVATAR
             } else {
                 console.log(res)
             }

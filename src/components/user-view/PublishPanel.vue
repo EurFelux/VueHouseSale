@@ -57,7 +57,8 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
     text-shadow: 1px 1px 0 var(--color-text-shadow);
 
     h2 {
-        margin-bottom: 1rem;
+        margin: 1rem 0;
+        border-bottom: 2px solid var(--el-color-primary);
     }
 }
 

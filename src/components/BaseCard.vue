@@ -1,7 +1,11 @@
 <template>
     <div class="base-card">
         <div class="image-wrapper">
-            <img :src="img" class="image" />
+            <el-image :src="img" class="image" >
+                <template #error>
+                    <el-empty ></el-empty>
+                </template>
+            </el-image>
         </div>
         <div class="contents">
             <h2>{{ title }}</h2>

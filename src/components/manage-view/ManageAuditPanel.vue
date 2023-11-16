@@ -28,7 +28,8 @@
                         <el-descriptions-item label="面积">{{ audit.house.area }}</el-descriptions-item>
                     </el-descriptions>
                     <h3>审核意见</h3>
-                    <el-form :model="audit.form" label-width="80px" :rules="rules" :ref="(el: FormInstance , item: number) => {audit.formRef = el}">
+                    <el-form :model="audit.form" label-width="auto" :rules="rules"
+                        :ref="(el: FormInstance, item: number) => { audit.formRef = el }">
                         <el-form-item label="审核结果" prop="status">
                             <el-radio-group v-model="audit.form.status">
                                 <el-radio-button :label="AuditStatus.approved">{{ AuditStatusText.approved
@@ -45,12 +46,11 @@
                         </el-form-item>
                     </el-form>
                 </div>
-            </el-collapse-item>
-            <div v-if="audits.length == 0">
-                <el-text type="info">暂无待审核的房产资质</el-text>
-            </div>
-
+            </el-collapse-item>    
         </el-collapse>
+        <div v-if="audits.length == 0">
+            <el-text type="info">暂无待审核的房产资质</el-text>
+        </div>
 
     </div>
 </template>
@@ -115,7 +115,7 @@ const rules = reactive<FormRules<AuditForm>>({
 async function submitAudit(formEl: FormInstance | undefined, form: AuditForm) {
 
     // console.log('formEl', formEl)
-    
+
     if (!formEl) return;
 
     form.adminId = userStore.id
@@ -137,14 +137,15 @@ async function submitAudit(formEl: FormInstance | undefined, form: AuditForm) {
 
 <style scoped lang="scss">
 h2 {
-    margin: 10px 0;
-    // border-bottom: 1px solid var(--el-text-color-regular);
+    margin: 1rem 0;
+    border-bottom: 2px solid var(--el-color-primary);
 }
 
 .el-collapse {
     h2 {
         margin: 10px 0;
         padding: 1rem;
+        border: none;
     }
 }
 

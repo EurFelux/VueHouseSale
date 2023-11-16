@@ -36,16 +36,13 @@
                                 </el-form-item>
                                 <el-form-item label="朝向" prop="house.orientation">
                                     <el-select v-model="auditForm.house.orientation" placeholder="请选择朝向" required>
-                                        <el-option
-                                            v-for="item in orientationItems"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value"
-                                        ></el-option>
+                                        <el-option v-for="item in orientationItems" :key="item.value" :label="item.label"
+                                            :value="item.value"></el-option>
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item label="房屋面积" prop="house.area">
-                                    <el-input placeholder="请输入房屋面积（平方米）" v-model.number="auditForm.house.area" required></el-input>
+                                    <el-input placeholder="请输入房屋面积（平方米）" v-model.number="auditForm.house.area"
+                                        required></el-input>
                                 </el-form-item>
                                 <el-form-item label="装修情况" prop="house.decoration">
                                     <el-radio-group v-model="auditForm.house.decoration">
@@ -90,11 +87,11 @@
                         <el-descriptions-item label="房产证编号" label-class-name="label">
                             {{ audit.house.houseId }}
                         </el-descriptions-item>
-                        
+
                         <el-descriptions-item label="房屋地址" label-class-name="label">
                             {{ audit.house.location }}
                         </el-descriptions-item>
-                        
+
                         <el-descriptions-item label="审核状态" label-class-name="label">
                             <el-tag type="info" v-if="audit.status == AuditStatus.pending">待审核</el-tag>
                             <el-tag type="success" v-if="audit.status == AuditStatus.approved">已通过</el-tag>
@@ -226,13 +223,13 @@ async function submitAudit(formEl: FormInstance | undefined) {
 <style scoped lang="scss">
 .heading-wrapper {
     // color: var(--color-text-on-glass);
-    
+
     font-size: 1rem;
     text-shadow: 1px 1px 0 var(--color-text-shadow);
 
     h2 {
-        border-bottom: 1px solid var(--color-text);
-        margin-bottom: 1rem;
+        margin: 1rem 0;
+        border-bottom: 2px solid var(--el-color-primary);
     }
 }
 
@@ -241,14 +238,25 @@ async function submitAudit(formEl: FormInstance | undefined) {
 }
 
 .el-collapse {
-    
     --el-collapse-header-bg-color: transparent;
-    --el-collapse-content-bg-color: var(--color-bg);
+    --el-collapse-content-bg-color: var(--color-bg-6);
     border-top: 0;
     background-color: transparent;
     margin-bottom: 1rem;
 }
 
+:deep(.el-collapse-item__wrap) {
+    border-radius: 1rem;
+}
+
+:deep(.el-collapse-item__header) {
+    transition: all 0.3s;
+    border-bottom: 2px solid var(--el-color-primary);
+}
+
+:deep(.el-collapse-item__header.is-active) {
+    border-bottom: none;
+}
 .button-wrapper {
     display: flex;
     justify-content: center;
@@ -256,12 +264,14 @@ async function submitAudit(formEl: FormInstance | undefined) {
 
 }
 
-button > .heading-wrapper > h2 {
+button>.heading-wrapper>h2 {
     border-bottom: 0;
 }
 
 .request-wrapper {
+    padding-bottom: 2rem;
     margin-bottom: 2rem;
+    border-bottom: 1px solid #ffffffee;
 }
 
 :deep(.label) {
