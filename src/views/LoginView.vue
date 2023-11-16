@@ -113,6 +113,7 @@ function fakeLogin() {
     height: 100%;
 
     text-align: center;
+    border-radius: 1rem;
     /* color: aliceblue; */
 
     background-color: var(--color-bg-4);

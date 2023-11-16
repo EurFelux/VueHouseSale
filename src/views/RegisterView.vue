@@ -131,6 +131,7 @@ async function submitForm(formEl: FormInstance | undefined) {
 .register-background {
     max-width: 50%;
     height: 100%;
+    border-radius: 1rem;
 
     text-align: center;
 

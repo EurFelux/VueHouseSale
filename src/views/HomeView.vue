@@ -34,6 +34,7 @@
                 <el-descriptions-item label="楼层">{{ sell.house.floor }}</el-descriptions-item>
                 <el-descriptions-item label="联系方式">{{ sell.contact }}</el-descriptions-item>
               </el-descriptions>
+              <div class="description">{{ sell.description }}</div>
             </el-popover>
           </li>
         </ul>
@@ -51,7 +52,7 @@
                   <el-text type="primary">{{ rent.house.location }}</el-text>
                 </router-link>
               </template>
-              <el-descriptions :border=true size="large" title="房屋要求">
+              <el-descriptions :border=true size="large" title="房屋信息">
                 <el-descriptions-item label="户型">{{ rent.house.layout }}</el-descriptions-item>
                 <el-descriptions-item label="面积">{{ rent.house.area }}平方米</el-descriptions-item>
                 <el-descriptions-item label="朝向">{{ OrientationMap[rent.house.orientation]
@@ -69,6 +70,7 @@
                 <el-descriptions-item label="出租要求">{{ rent.requirement }}元</el-descriptions-item>
                 <el-descriptions-item label="联系方式">{{ rent.contact }}</el-descriptions-item>
               </el-descriptions>
+              <div class="description">{{ rent.description }}</div>
             </el-popover>
           </li>
         </ul>
@@ -99,6 +101,7 @@
                 <el-descriptions-item label="楼层">{{ buy.floor }}</el-descriptions-item>
                 <el-descriptions-item label="联系方式">{{ buy.contact }}</el-descriptions-item>
               </el-descriptions>
+              <div class="description">{{ buy.description }}</div>
             </el-popover>
           </li>
         </ul>
@@ -133,6 +136,7 @@
                 <el-descriptions-item label="要求">{{ seek.requirement }}</el-descriptions-item>
                 <el-descriptions-item label="联系方式">{{ seek.contact }}</el-descriptions-item>
               </el-descriptions>
+              <div class="description">{{ seek.description }}</div>
             </el-popover>
           </li>
         </ul>
@@ -264,5 +268,9 @@ h2 {
   width: 100%;
   height: 200px;
   object-fit: cover;
+}
+
+.description {
+  padding-top: 1rem;
 }
 </style>

@@ -110,7 +110,7 @@
                             <div class="cards-wrapper">
                                 <el-popover v-for="sell in sells" :key="sell.id" :width="700">
                                     <template #reference>
-                                        <base-card v-for="sell in sells" :title="sell.house.location"
+                                        <base-card :title="sell.house.location"
                                             :description="sell.description" :image="getFileUrl(sell.pic[0])" @click="$router.push(`/sell/${sell.id}`)"></base-card>
                                     </template>
                                     <el-descriptions :border=true size="large" title="房屋信息">
