@@ -1,22 +1,17 @@
 <template>
     <div class="info-panel" v-loading.fullscreen.lock="loading" element-loading-background="transparent">
         <!-- 上传头像窗口 -->
-        <el-dialog v-model="avatarDialogVisible" title="上传头像" width="50%" 
-            :before-close="handleClose" :append-to-body="true">
+        <el-dialog v-model="avatarDialogVisible" title="上传头像" width="50%" :before-close="handleClose"
+            :append-to-body="true">
             <template #tip>
                 请选择图片上传：大小180 * 180像素支持JPG、PNG等格式，图片需小于2M
             </template>
             <template #footer>
-                
-                <el-upload :http-request="uploadAvatar" :limit="1" 
-                    :on-exceed="handleExceed" 
-                    :show-file-list="false" 
-                    :on-success="handleAvatarSuccess" 
-                    :before-upload="beforeAvatarUpload"
-                    ref="upload"
-                >
-                <el-button>选择图片</el-button>
-                
+
+                <el-upload :http-request="uploadAvatar" :limit="1" :on-exceed="handleExceed" :show-file-list="false"
+                    :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" ref="upload">
+                    <el-button>选择图片</el-button>
+
                 </el-upload>
             </template>
         </el-dialog>
@@ -25,7 +20,7 @@
             <!-- 头像 -->
             <el-col :span="8" class="avatar-wrapper">
                 <el-tooltip content="修改头像" placement="top" v-if="userId == userStore.id">
-                    <el-avatar shape="square" :src="displayedUserInfo.avatar" @click="avatarDialogVisible = true" 
+                    <el-avatar shape="square" :src="displayedUserInfo.avatar" @click="avatarDialogVisible = true"
                         @error="userStore.setAvatar(defaultValues.USER_AVATAR)"></el-avatar>
                 </el-tooltip>
                 <el-avatar shape="square" :src="displayedUserInfo.avatar" v-else></el-avatar>
@@ -58,7 +53,7 @@
             <el-col :span="4">
                 <div class="edit-button-wrapper">
                     <el-button v-if="userId == userStore.id" @click="editMode = !editMode">
-                        {{editMode ? "取消修改" : "修改信息"}}
+                        {{ editMode ? "取消修改" : "修改信息" }}
                     </el-button>
                 </div>
             </el-col>
@@ -110,8 +105,9 @@
                             <div class="cards-wrapper">
                                 <el-popover v-for="sell in sells" :key="sell.id" :width="700">
                                     <template #reference>
-                                        <base-card :title="sell.house.location"
-                                            :description="sell.description" :image="getFileUrl(sell.pic[0])" @click="$router.push(`/sell/${sell.id}`)"></base-card>
+                                        <base-card :title="sell.house.location" :description="sell.description"
+                                            :image="sell.image"
+                                            @click="$router.push(`/sell/${sell.id}`)"></base-card>
                                     </template>
                                     <el-descriptions :border=true size="large" title="房屋信息">
                                         <el-descriptions-item label="户型">{{ sell.house.layout }}</el-descriptions-item>
@@ -141,8 +137,9 @@
                             <div class="cards-wrapper">
                                 <el-popover v-for="rent in rents" :key="rent.id" :width="700">
                                     <template #reference>
-                                        <base-card :title="rent.house.location" :description="rent.description" @click="$router.push(`/rent/${rent.id}`)"
-                                            :image="getFileUrl(rent.pic[0])"></base-card>
+                                        <base-card :title="rent.house.location" :description="rent.description"
+                                            @click="$router.push(`/rent/${rent.id}`)"
+                                            :image="rent.image"></base-card>
                                     </template>
                                     <el-descriptions :border=true size="large" title="房屋要求">
                                         <el-descriptions-item label="户型">{{ rent.house.layout }}</el-descriptions-item>
@@ -177,7 +174,8 @@
                             <div class="cards-wrapper">
                                 <el-popover v-for="buy in buys" :key="buy.id" :width="600">
                                     <template #reference>
-                                        <base-card :title="buy.location" :description="buy.description" @click="$router.push(`/buy/${buy.id}`)"></base-card>
+                                        <base-card :title="buy.location" :description="buy.description"
+                                            @click="$router.push(`/buy/${buy.id}`)"></base-card>
                                     </template>
                                     <el-descriptions :border=true size="large" title="房屋要求">
                                         <el-descriptions-item label="户型">{{ buy.layout }}</el-descriptions-item>
@@ -207,7 +205,8 @@
                             <div class="cards-wrapper">
                                 <el-popover v-for="seek in seeks" :key="seek.id" :width="700">
                                     <template #reference>
-                                        <base-card :title="seek.location" :description="seek.description" @click="$router.push(`/seek/${seek.id}`)"></base-card>
+                                        <base-card :title="seek.location" :description="seek.description"
+                                            @click="$router.push(`/seek/${seek.id}`)"></base-card>
                                     </template>
                                     <el-descriptions :border=true size="large" title="房屋要求">
                                         <el-descriptions-item label="户型">{{ seek.layout }}</el-descriptions-item>
@@ -389,10 +388,10 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
 }
 
 const handleExceed: UploadProps['onExceed'] = (files) => {
-  upload.value!.clearFiles()
-  const file = files[0] as UploadRawFile
-  file.uid = genFileId()
-  upload.value!.handleStart(file)
+    upload.value!.clearFiles()
+    const file = files[0] as UploadRawFile
+    file.uid = genFileId()
+    upload.value!.handleStart(file)
 }
 
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
@@ -407,20 +406,20 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 }
 
 const uploadAvatar = async (options: UploadRequestOptions) => {
-  await uploadFile(options.file).then(async (res: any) => {
-    await updateAvatar({
-        id: userStore.id,
-        url: res.name
-    }).then((res_) => {
-      ElMessage.success('上传成功')
-      userStore.setAvatar(res.name)
-    }).catch((err) => {
-      generalError(err)
+    await uploadFile(options.file).then(async (res: any) => {
+        await updateAvatar({
+            id: userStore.id,
+            url: res.name
+        }).then((res_) => {
+            ElMessage.success('上传成功')
+            userStore.setAvatar(res.name)
+        }).catch((err) => {
+            generalError(err)
+        })
+    }).catch((err: any) => {
+        generalError(err)
     })
-  }).catch((err: any) => {
-    generalError(err)
-  })
-  // const res = await uploadFile(formData)
+    // const res = await uploadFile(formData)
 }
 
 // 监听路由，刷新数据
@@ -432,14 +431,33 @@ watch(() => route.params.id, async () => {
 })
 
 // 获取用户发布的所有信息
-const sells = ref<Array<SellResponse>>([])
-const rents = ref<Array<RentResponse>>([])
+interface SellWithSignaturedImage extends SellResponse {
+    image: string;
+}
+
+interface RentWithSignaturedImage extends RentResponse {
+    image: string;
+}
+
+
+const sells = ref<Array<SellWithSignaturedImage>>([])
+const rents = ref<Array<RentWithSignaturedImage>>([])
 const buys = ref<Array<BuyResponse>>([])
 const seeks = ref<Array<SeekResponse>>([])
 
 async function getSells() {
     await getAllSellInfoByUserId(userId.value).then((res) => {
-        sells.value = res.data.data
+        sells.value = res.data.data.map((item) => {
+            if (item.pic.length == 0)
+                return {
+                    ...item, image: ''
+                }
+            else
+                return {
+                    ...item,
+                    image: getFileUrl(item.pic[0])
+                }
+        })
     }).catch((err) => {
         generalError(err)
     })
@@ -447,7 +465,17 @@ async function getSells() {
 
 async function getRents() {
     await getAllRentInfoByUserId(userId.value).then((res) => {
-        rents.value = res.data.data
+        rents.value = res.data.data.map((item) => {
+            if (item.pic.length == 0)
+                return {
+                    ...item, image: ''
+                }
+            else
+                return {
+                    ...item,
+                    image: getFileUrl(item.pic[0])
+                }
+        })
     }).catch((err) => {
         generalError(err)
     })
@@ -577,6 +605,4 @@ h2 {
 .base-card {
     cursor: pointer;
 }
-
-
 </style>

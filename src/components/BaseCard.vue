@@ -1,9 +1,9 @@
 <template>
     <div class="base-card">
         <div class="image-wrapper">
-            <el-image :src="img" class="image" >
+            <el-image :src="img" class="image" fit="cover">
                 <template #error>
-                    <el-empty ></el-empty>
+                    <image-fail />
                 </template>
             </el-image>
         </div>
@@ -16,8 +16,7 @@
 
 
 <script setup lang="ts">
-import { defaultValues } from '@/api/model';
-
+import ImageFail from '@/components/ImageFail.vue'
 
 const props = defineProps({
     title: {
@@ -96,8 +95,8 @@ const extra_span = computed(() => {
 }
 
 .image {
-    max-width: 100%;
-    // max-height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .contents {

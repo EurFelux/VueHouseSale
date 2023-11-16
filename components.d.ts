@@ -71,6 +71,7 @@ declare module 'vue' {
     IconSex: typeof import('./src/components/icons/IconSex.vue')['default']
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
+    ImageFail: typeof import('./src/components/ImageFail.vue')['default']
     InfoPanel: typeof import('./src/components/user-view/InfoPanel.vue')['default']
     LocationPicker: typeof import('./src/components/LocationPicker.vue')['default']
     LogoItem: typeof import('./src/components/layout/LogoItem.vue')['default']
