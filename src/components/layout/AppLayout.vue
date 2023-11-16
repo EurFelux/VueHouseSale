@@ -67,7 +67,7 @@
 <!-- 覆盖Element Plus的设置，双颜色模式 -->
 <style>
 :root {
-    --bg-img: url("@/assets/light-background.jpg");
+    /* --bg-img: url("@/assets/light-background.jpg"); */
     --el-fill-color-blank: #ffffffaf;
     --color-bg: linear-gradient(to bottom, #c8bdb3, #e6ecf0);
     --color-bg-1: #c89c75;
@@ -90,7 +90,7 @@ html.dark {
     --color-bg-4: #444444;
     --color-bg-5: #555555;
     --color-bg-6: #666666;
-    --bg-img: url("@/assets/dark-background.jpeg");
+    /* --bg-img: url("@/assets/dark-background.jpeg"); */
     --color-bg-glass: rgba(127, 127, 127, 0.2);
     --color-text-shadow: rgba(255, 255, 255, 0.2);
 

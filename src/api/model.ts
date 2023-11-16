@@ -3,15 +3,15 @@ export const defaultValues = {
     USER_PASSWORD: '',
     USER_NAME: '未登录',
     USER_ROLE: -1,
-    USER_AVATAR: '/src/assets/otto.jpg',
+    USER_AVATAR: 'img/house/taffy.png',
     USER_LOCATION: '地球',
     USER_INTRODUCTION: '这个人没有简介',
     USER_SEX: 2,
     USER_AGE: 0,
     USER_PHONE: '00000000000',
 
-    ACCENT_COLOR: '#94811e',
-    ANY_PIC: '/src/assets/otto.jpg',
+    ACCENT_COLOR: '#a98e5a',
+    ANY_PIC: 'img/house/taffy.png',
 
     HOUSE_ID: -1,
     HOUSE_LOCATION: '地球',

@@ -19,7 +19,7 @@ enum Api {
  * 添加出售信息
  * @param form 出售信息表单
  */
-export function addSellInfo(form: SellForm): Promise<AxiosResponse<AddSellResponse>> {
+export async function addSellInfo(form: SellForm): Promise<AxiosResponse<AddSellResponse>> {
   const config = {
     ...globalConfig,
     headers: {
@@ -33,7 +33,7 @@ export function addSellInfo(form: SellForm): Promise<AxiosResponse<AddSellRespon
  * 获取指定id的出售信息
  * @param sellID 出售信息id
  */
-export function getSellInfoById(sellID: number): Promise<AxiosResponse<GetSellInfoByIdResponse>> {
+export async function getSellInfoById(sellID: number): Promise<AxiosResponse<GetSellInfoByIdResponse>> {
   const config = {
     ...globalConfig,
     params: {
@@ -50,7 +50,7 @@ export function getSellInfoById(sellID: number): Promise<AxiosResponse<GetSellIn
 /**
  * 获取所有出售信息
  */
-export function getAllSellInfo(): Promise<AxiosResponse<GetAllSellInfoResponse>> {
+export async function getAllSellInfo(): Promise<AxiosResponse<GetAllSellInfoResponse>> {
   const config = {
     ...globalConfig,
     headers: {
@@ -65,7 +65,7 @@ export function getAllSellInfo(): Promise<AxiosResponse<GetAllSellInfoResponse>>
  * 获取指定用户的所有出售信息
  * @param userID 用户id
  */
-export function getAllSellInfoByUserId(userID: number): Promise<AxiosResponse<GetAllSellInfoByUserIdResponse>> {
+export async function getAllSellInfoByUserId(userID: number): Promise<AxiosResponse<GetAllSellInfoByUserIdResponse>> {
   const config = {
     ...globalConfig,
     params: {
@@ -83,7 +83,7 @@ export function getAllSellInfoByUserId(userID: number): Promise<AxiosResponse<Ge
  * 删除指定id的出售信息
  * @param sellID 出售信息id
  */
-export function deleteSellInfoById(sellID: number): Promise<AxiosResponse<DeleteSellInfoByIdResponse>> {
+export async function deleteSellInfoById(sellID: number): Promise<AxiosResponse<DeleteSellInfoByIdResponse>> {
   const config = {
     ...globalConfig,
     params: {
@@ -101,7 +101,7 @@ export function deleteSellInfoById(sellID: number): Promise<AxiosResponse<Delete
  * 更新指定id的出售信息
  * @param form 出售信息表单
  */
-export function updateSellInfo(form: UpdateSellForm): Promise<AxiosResponse<UpdateSellInfoResponse>> {
+export async function updateSellInfo(form: UpdateSellForm): Promise<AxiosResponse<UpdateSellInfoResponse>> {
   const config = {
     ...globalConfig,
     headers: {

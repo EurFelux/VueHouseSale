@@ -19,7 +19,7 @@ enum Api {
  * 添加出租信息
  * @param form 出租信息表单
  */
-export function addRent(form: RentForm): Promise<AxiosResponse<AddRentResponse>> {
+export async function addRent(form: RentForm): Promise<AxiosResponse<AddRentResponse>> {
   const config = {
     ...globalConfig,
     headers: {
@@ -34,7 +34,7 @@ export function addRent(form: RentForm): Promise<AxiosResponse<AddRentResponse>>
  * 获取指定id的出租信息
  * @param rentId 出租信息id
  */
-export function getRentInfoById(rentId: number): Promise<AxiosResponse<GetRentInfoByIdResponse>> {
+export async function getRentInfoById(rentId: number): Promise<AxiosResponse<GetRentInfoByIdResponse>> {
   const config = {
     ...globalConfig,
     params: {
@@ -52,7 +52,7 @@ export function getRentInfoById(rentId: number): Promise<AxiosResponse<GetRentIn
  * 获取指定用户id的所有出租信息
  * @param userId 用户id
  */
-export function getAllRentInfoByUserId(userId: number): Promise<AxiosResponse<GetAllRentInfoByUserIdResponse>> {
+export async function getAllRentInfoByUserId(userId: number): Promise<AxiosResponse<GetAllRentInfoByUserIdResponse>> {
   const config = {
     ...globalConfig,
     params: {
@@ -69,7 +69,7 @@ export function getAllRentInfoByUserId(userId: number): Promise<AxiosResponse<Ge
 /**
  * 获取所有出租信息
  */
-export function getAllRentInfo(): Promise<AxiosResponse<GetAllRentInfoResponse>> {
+export async function getAllRentInfo(): Promise<AxiosResponse<GetAllRentInfoResponse>> {
   const config = {
     ...globalConfig,
     headers: {
@@ -84,7 +84,7 @@ export function getAllRentInfo(): Promise<AxiosResponse<GetAllRentInfoResponse>>
  * 删除指定id的出租信息
  * @param rentId 出租信息id
  */
-export function deleteRentInfoById(rentId: number): Promise<AxiosResponse<DeleteRentInfoByIdResponse>> {
+export async function deleteRentInfoById(rentId: number): Promise<AxiosResponse<DeleteRentInfoByIdResponse>> {
   const config = {
     ...globalConfig,
     params: {
@@ -102,7 +102,7 @@ export function deleteRentInfoById(rentId: number): Promise<AxiosResponse<Delete
  * 更新指定id的出租信息
  * @param form 出租信息表单
  */
-export function updateRentInfoById(form: UpdateRentForm): Promise<AxiosResponse<UpdateRentInfoResponse>> {
+export async function updateRentInfoById(form: UpdateRentForm): Promise<AxiosResponse<UpdateRentInfoResponse>> {
   const config = {
     ...globalConfig,
     headers: {

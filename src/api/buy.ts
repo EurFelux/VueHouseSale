@@ -21,7 +21,7 @@ enum Api {
  * 添加求购信息
  * @param form 求购信息表单
  */
-export function addBuy(form: BuyForm): Promise<AxiosResponse<AddBuyResponse>> {
+export async function addBuy(form: BuyForm): Promise<AxiosResponse<AddBuyResponse>> {
   const config = {
     ...globalConfig,
     headers: {
@@ -37,7 +37,7 @@ export function addBuy(form: BuyForm): Promise<AxiosResponse<AddBuyResponse>> {
  * 获取指定id的求购信息
  * @param buyId 求购信息id
  */
-export function getBuyInfoById(buyId: number): Promise<AxiosResponse<GetBuyInfoByIdResponse>> {
+export async function getBuyInfoById(buyId: number): Promise<AxiosResponse<GetBuyInfoByIdResponse>> {
   const config = {
     ...globalConfig,
     params: {
@@ -55,7 +55,7 @@ export function getBuyInfoById(buyId: number): Promise<AxiosResponse<GetBuyInfoB
  * 获取指定用户id的所有求购信息
  * @param userId 用户id
  */
-export function getAllBuyInfoByUserId(userId: number): Promise<AxiosResponse<GetAllBuyInfoByUserIdResponse>> {
+export async function getAllBuyInfoByUserId(userId: number): Promise<AxiosResponse<GetAllBuyInfoByUserIdResponse>> {
   const config = {
     ...globalConfig,
     params: {
@@ -72,7 +72,7 @@ export function getAllBuyInfoByUserId(userId: number): Promise<AxiosResponse<Get
 /**
  * 获取所有求购信息
  */
-export function getAllBuyInfo(): Promise<AxiosResponse<GetAllBuyInfoResponse>> {
+export async function getAllBuyInfo(): Promise<AxiosResponse<GetAllBuyInfoResponse>> {
   const config = {
     ...globalConfig,
     headers: {
@@ -87,7 +87,7 @@ export function getAllBuyInfo(): Promise<AxiosResponse<GetAllBuyInfoResponse>> {
  * 删除指定id的求购信息
  * @param buyId 求购信息id
  */
-export function deleteBuyInfoById(buyId: number): Promise<AxiosResponse<GetSellInfoByIdResponse>> {
+export async function deleteBuyInfoById(buyId: number): Promise<AxiosResponse<GetSellInfoByIdResponse>> {
   const config = {
     ...globalConfig,
     params: {
@@ -105,7 +105,7 @@ export function deleteBuyInfoById(buyId: number): Promise<AxiosResponse<GetSellI
  * 更新指定id的求购信息
  * @param form 求购信息表单
  */
-export function updateBuyInfoById(form: UpdateBuyForm): Promise<AxiosResponse<UpdateBuyInfoResponse>> {
+export async function updateBuyInfoById(form: UpdateBuyForm): Promise<AxiosResponse<UpdateBuyInfoResponse>> {
   const config = {
     ...globalConfig,
     headers: {

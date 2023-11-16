@@ -51,5 +51,8 @@ onMounted(() => {
 
 
 <style scoped lang="scss">
-
+h2 {
+    margin: 1rem 0;
+    border-bottom: 2px solid var(--el-color-primary);
+}
 </style>

@@ -11,7 +11,7 @@
     <el-row>
       <el-col :span="6" class="panel">
         <h2>售房</h2>
-        <ul>
+        <ul v-loading="loading_sells">
           <li v-for="sell in sells" :key="sell.id">
             <el-icon>
               <chat-square />
@@ -41,7 +41,7 @@
       </el-col>
       <el-col :span="6" class="panel">
         <h2>出租</h2>
-        <ul>
+        <ul v-loading="loading_rents">
           <li v-for="rent in rents">
             <el-icon>
               <chat-square />
@@ -67,7 +67,7 @@
                 }}</el-descriptions-item>
                 <el-descriptions-item label="最小租期">{{ rent.minPeriod }}个月</el-descriptions-item>
                 <el-descriptions-item label="租金/月">{{ rent.price }}元</el-descriptions-item>
-                <el-descriptions-item label="出租要求">{{ rent.requirement }}元</el-descriptions-item>
+                <el-descriptions-item label="出租要求">{{ rent.requirement }}</el-descriptions-item>
                 <el-descriptions-item label="联系方式">{{ rent.contact }}</el-descriptions-item>
               </el-descriptions>
               <div class="description">{{ rent.description }}</div>
@@ -77,7 +77,7 @@
       </el-col>
       <el-col :span="6" class="panel">
         <h2>求购</h2>
-        <ul>
+        <ul v-loading="loading_buys">
           <li v-for="buy in buys">
             <el-icon>
               <chat-square />
@@ -108,7 +108,7 @@
       </el-col>
       <el-col :span="6" class="panel">
         <h2>求租</h2>
-        <ul>
+        <ul v-loading="loading_seeks">
           <li v-for="seek in seeks">
             <el-icon>
               <chat-square />
@@ -157,15 +157,16 @@ import { ChatSquare } from '@element-plus/icons-vue/global';
 import { OrientationMap, ElevatorMap, DecorationMap, RentTypeMap } from '@/api/model';
 import { useUserStore } from '@/stores/user';
 import { useRouter } from 'vue-router';
+import { getFileUrl } from '@/api/oss';
 
 const userStore = useUserStore();
 const router = useRouter();
 
 // 装点
 const houses = [
-  '/src/assets/images/house1.jpg',
-  '/src/assets/images/house2.jpg',
-  '/src/assets/images/house3.jpg',
+  getFileUrl('img/house/house1.jpg'),
+  getFileUrl('img/house/house2.jpg'),
+  getFileUrl('img/house/house3.jpg'),
 ]
 
 // 获取数据
@@ -174,35 +175,53 @@ const rents = ref<Array<RentResponse>>([])
 const buys = ref<Array<BuyResponse>>([])
 const seeks = ref<Array<SeekResponse>>([])
 
+const loading_sells = ref(true)
+const loading_rents = ref(true)
+const loading_buys = ref(true)
+const loading_seeks = ref(true)
+
+
 async function getSells() {
-  await getAllSellInfo().then((res) => {
+  loading_sells.value = true
+  getAllSellInfo().then(async (res) => {
     sells.value = res.data.data
-  }).catch((err) => {
+    loading_sells.value = false
+  }).catch(async (err) => {
     generalError(err)
+    loading_sells.value = false
   })
 }
 
 async function getRents() {
-  await getAllRentInfo().then((res) => {
+  loading_rents.value = true
+  getAllRentInfo().then(async (res) => {
+    loading_rents.value = false
     rents.value = res.data.data
-  }).catch((err) => {
+  }).catch(async (err) => {
     generalError(err)
+    loading_rents.value = false
   })
 }
 
 async function getBuys() {
-  await getAllBuyInfo().then((res) => {
+  loading_buys.value = true
+  getAllBuyInfo().then(async (res) => {
     buys.value = res.data.data
-  }).catch((err) => {
+    loading_buys.value = false
+  }).catch(async (err) => {
     generalError(err)
+    loading_buys.value = false
   })
 }
 
 async function getSeeks() {
-  await getAllSeekInfo().then((res) => {
+  loading_seeks.value = true
+  getAllSeekInfo().then(async (res) => {
     seeks.value = res.data.data
-  }).catch((err) => {
+    loading_seeks.value = false
+  }).catch(async (err) => {
     generalError(err)
+    loading_seeks.value = false
   })
 }
 
@@ -213,10 +232,10 @@ onMounted(async () => {
     router.push('/login');
     return;
   }
-  await getSells()
-  await getRents()
-  await getBuys()
-  await getSeeks()
+  getSells().then(() => {})
+  getRents().then(() => {})
+  getBuys().then(() => {})
+  getSeeks().then(() => {})
 })
 
 </script>

@@ -385,6 +385,7 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
     uploadFile
 ) => {
     avatarDialogVisible.value = false
+    refreshUser()
 }
 
 const handleExceed: UploadProps['onExceed'] = (files) => {
@@ -426,8 +427,13 @@ const uploadAvatar = async (options: UploadRequestOptions) => {
 const route = useRoute()
 
 watch(() => route.params.id, async () => {
-    if (route.params.id && route.name == 'user')
+    if (route.params.id && route.name == 'user') {
         await refreshUser()
+        getSells()
+        getRents()
+        getBuys()
+        getSeeks()
+    }
 })
 
 // 获取用户发布的所有信息
@@ -500,10 +506,10 @@ async function getSeeks() {
 // 生命周期钩子
 onMounted(async () => {
     await refreshUser()
-    await getSells()
-    await getRents()
-    await getBuys()
-    await getSeeks()
+    getSells()
+    getRents()
+    getBuys()
+    getSeeks()
 })
 
 

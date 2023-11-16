@@ -59,23 +59,15 @@
                 <span class="no-user-select">{{ userStore.name }}</span>
             </template>
 
-            <el-menu-item-group>
-                <template #title>
-                    <span>分组一</span>
-                </template>
-                <el-menu-item @click="goUserView">管理面板</el-menu-item>
-                <el-menu-item @click="goManageView" v-if="role == 1">管理员界面</el-menu-item>
-                <el-menu-item @click="goBackendDashboard" v-if="role == 1">
-                    <el-icon class="material-symbols-outlined">
-                        link
-                    </el-icon>
-                    后端监控
-                </el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-                <el-menu-item @click="exit">退出登录</el-menu-item>
-            </el-menu-item-group>
-
+            <el-menu-item @click="goUserView">管理面板</el-menu-item>
+            <el-menu-item @click="goManageView" v-if="role == 1">管理员界面</el-menu-item>
+            <el-menu-item @click="goBackendDashboard" v-if="role == 1">
+                <el-icon class="material-symbols-outlined">
+                    link
+                </el-icon>
+                后端监控
+            </el-menu-item>
+            <el-menu-item @click="exit">退出登录</el-menu-item>
         </el-sub-menu>
 
 
@@ -152,8 +144,20 @@ const accentColor = computed(() => publicStore.accentColor)
 
 // 用户状态
 const isLogin = computed(() => userStore.isLogin)
-const avatar = computed(() => getFileUrl(userStore.avatar))
+const avatar = ref('')
 const role = computed(() => userStore.role)
+
+watch(() => userStore.avatar, () => {
+    if (!userStore.avatar)
+        userStore.setAvatar(defaultValues.USER_AVATAR)
+    avatar.value = getFileUrl(userStore.avatar)
+})
+
+onMounted(() => {
+    if (!userStore.avatar)
+        userStore.setAvatar(defaultValues.USER_AVATAR);
+    avatar.value = getFileUrl(userStore.avatar);
+})
 
 // 适应移动端，设置垂直导航栏
 const mobileMode = computed(() => publicStore.mobileMode)
@@ -186,8 +190,8 @@ function exit() {
         if (err.response.data) {
             userStore.$reset()
         }
-        changeActiveIndex(routesMap.home.path)
-        router.push(routesMap.home.path)
+        changeActiveIndex(routesMap.login.path)
+        router.push(routesMap.login.path)
     })
 }
 

@@ -19,7 +19,7 @@ enum Api {
  * 添加求租信息
  * @param form 求租信息表单
  */
-export function addSeek(form: SeekForm): Promise<AxiosResponse<AddSeekResponse>> {
+export async function addSeek(form: SeekForm): Promise<AxiosResponse<AddSeekResponse>> {
   const config = {
     ...globalConfig,
     headers: {
@@ -34,7 +34,7 @@ export function addSeek(form: SeekForm): Promise<AxiosResponse<AddSeekResponse>>
  * 获取指定id的求租信息
  * @param seekId 求租信息id
  */
-export function getSeekInfoById(seekId: number): Promise<AxiosResponse<GetSeekInfoByIdResponse>> {
+export async function getSeekInfoById(seekId: number): Promise<AxiosResponse<GetSeekInfoByIdResponse>> {
   const config = {
     ...globalConfig,
     params: {
@@ -52,7 +52,7 @@ export function getSeekInfoById(seekId: number): Promise<AxiosResponse<GetSeekIn
  * 获取指定用户id的所有求租信息
  * @param userId 用户id
  */
-export function getAllSeekInfoByUserId(userId: number): Promise<AxiosResponse<GetAllSeekInfoByUserIdResponse>> {
+export async function getAllSeekInfoByUserId(userId: number): Promise<AxiosResponse<GetAllSeekInfoByUserIdResponse>> {
   const config = {
     ...globalConfig,
     params: {
@@ -69,7 +69,7 @@ export function getAllSeekInfoByUserId(userId: number): Promise<AxiosResponse<Ge
 /**
  * 获取所有求租信息
  */
-export function getAllSeekInfo(): Promise<AxiosResponse<GetAllSeekInfoByUserIdResponse>> {
+export async function getAllSeekInfo(): Promise<AxiosResponse<GetAllSeekInfoByUserIdResponse>> {
   const config = {
     ...globalConfig,
     headers: {
@@ -84,7 +84,7 @@ export function getAllSeekInfo(): Promise<AxiosResponse<GetAllSeekInfoByUserIdRe
  * 删除指定id的求租信息
  * @param id 求租信息id
  */
-export function deleteSeekInfoById(id: number): Promise<AxiosResponse<DeleteSeekInfoByIdResponse>> {
+export async function deleteSeekInfoById(id: number): Promise<AxiosResponse<DeleteSeekInfoByIdResponse>> {
   const config = {
     ...globalConfig,
     params: {
@@ -102,7 +102,7 @@ export function deleteSeekInfoById(id: number): Promise<AxiosResponse<DeleteSeek
  * 更新指定id的求租信息
  * @param form 求租信息表单
  */
-export function updateSeekInfo(form: UpdateSeekForm): Promise<AxiosResponse<UpdateSeekInfoResponse>> {
+export async function updateSeekInfo(form: UpdateSeekForm): Promise<AxiosResponse<UpdateSeekInfoResponse>> {
   const config = {
     ...globalConfig,
     headers: {
